@@ -1,0 +1,2 @@
+SUCCESS,1,01harley.jp@gmail.com,ContactServices->GetContact,00b5b4b7-e9b0-ca21-f4c3-d94344a66bfd
+SUCCESS,1,01harley.jp@gmail.com,NotesServices->AddUpdateNote,Customer Note

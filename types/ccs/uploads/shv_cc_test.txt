@@ -1,0 +1,3 @@
+FAIL: Record: 1, Customer: 10063
+  Service: CreditCardServices->AddUpdateNote
+  Error:  Code: InvalidCardExpiryYear, Message: CardExpiryYear is required and must be a valid 4 digit year;

@@ -1,0 +1,15 @@
+Record 31: Fatal error: Uncaught SoapFault exception: [Client] SOAP-ERROR: Encoding: string 'Austin Smith, Noble Wine tours, has visited 178 wineries in Sonoma and written a book about them. Is now visiting Napa wineries, also visitor center host at Artesa. 1 CH, 2 GT, 1 Sem = $120.00 Daniel Prince, Artesa wine host and his girl friend? He\xc6...' is not a valid utf-8 string in /Users/Willy/Sites/wgm/services/app/vin65/models/add_update_note.php:63 Stack trace: #0 /Users/Willy/Sites/wgm/services/app/vin65/models/add_update_note.php(63): SoapClient->__call('AddUpdateNote', Array) #1 /Users/Willy/Sites/wgm/services/app/vin65/models/add_update_note.php(63): SoapClient->AddUpdateNote(Array) #2 /Users/Willy/Sites/wgm/services/app/vin65/controllers/add_update_note.php(51): wgm\vin65\models\AddUpdateNote->callService(Array) #3 /Users/Willy/Sites/wgm/services/app/vin65/controllers/add_update_note.php(35): wgm\vin65\controllers\AddUpdateNote->_queueNotesOnCustomerNumber() #4 /Users/Willy/Sites/wgm/services/types/notes/add_update_note_file.p in /Users/Willy/Sites/wgm/services/app/vin65/models/add_update_note.php on line 63
+Record 34: Fatal error: Uncaught SoapFault exception: [Client] SOAP-ERROR: Encoding: string 'Becker, Ben and sister Jennifer Becker who works at Sodari, small winery in Coombsville area as procuction ass\xc6...' is not a valid utf-8 string in /Users/Willy/Sites/wgm/services/app/vin65/models/add_update_note.php:63 Stack trace: #0 /Users/Willy/Sites/wgm/services/app/vin65/models/add_update_note.php(63): SoapClient->__call('AddUpdateNote', Array) #1 /Users/Willy/Sites/wgm/services/app/vin65/models/add_update_note.php(63): SoapClient->AddUpdateNote(Array) #2 /Users/Willy/Sites/wgm/services/app/vin65/controllers/add_update_note.php(51): wgm\vin65\models\AddUpdateNote->callService(Array) #3 /Users/Willy/Sites/wgm/services/app/vin65/controllers/add_update_note.php(35): wgm\vin65\controllers\AddUpdateNote->_queueNotesOnCustomerNumber() #4 /Users/Willy/Sites/wgm/services/types/notes/add_update_note_file.php(25): wgm\vin65\controllers\AddUpdateNote->queueNotes('./uploads/', 'shv_notes_uploa...') #5 {main} thrown in /Users/Willy/Sites/wgm/services/app/vin65/models/add_update_note.php on line 63
+Record 2: couldn't run
+Record 23: couldn't run
+Record 93 (new file): didn't run
+Record 163 (new file): Timeout
+Record 179 (new file): Timeout
+Record 186 (new file): Timeout
+Record 256 (new file): Timeout
+Record 265 (new file): Timeout
+Record 268 (new file): Timeout
+Record 298 (new file): Timeout
+Record 328 (new file): Timeout
+Record 337 (new file): Timeout
+Record 340 (new file): Timeout
