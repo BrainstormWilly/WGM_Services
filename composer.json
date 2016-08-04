@@ -6,10 +6,10 @@
     },
     "autoload":{
         "psr-4":{
-            "wgm\\services\\": "app"
+            "wgm\\services\\src\\": "app"
         },
         "files":[
-            "config/environment.php"
+            "src/config/bootstrap.php"
         ]
     }
 

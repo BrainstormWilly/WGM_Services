@@ -9,13 +9,12 @@ class ComposerStaticInitddce5f4f71807dd85b7a99bd9e791d3e
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
-        'eb3fc81f0c3858071c940c5342a9f8ee' => __DIR__ . '/../..' . '/config/environment.php',
     );
 
     public static $prefixLengthsPsr4 = array (
         'w' => 
         array (
-            'wgm\\services\\' => 13,
+            'wgm\\services\\src\\' => 17,
         ),
         'R' => 
         array (
@@ -44,7 +43,7 @@ class ComposerStaticInitddce5f4f71807dd85b7a99bd9e791d3e
     );
 
     public static $prefixDirsPsr4 = array (
-        'wgm\\services\\' => 
+        'wgm\\services\\src\\' => 
         array (
             0 => __DIR__ . '/../..' . '/app',
         ),

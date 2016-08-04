@@ -51,7 +51,9 @@ class ComposerAutoloaderInitddce5f4f71807dd85b7a99bd9e791d3e
             $includeFiles = Composer\Autoload\ComposerStaticInitddce5f4f71807dd85b7a99bd9e791d3e::$files;
         } else {
             $includeFiles = require __DIR__ . '/autoload_files.php';
+
         }
+
         foreach ($includeFiles as $fileIdentifier => $file) {
             composerRequireddce5f4f71807dd85b7a99bd9e791d3e($fileIdentifier, $file);
         }
@@ -61,6 +63,7 @@ class ComposerAutoloaderInitddce5f4f71807dd85b7a99bd9e791d3e
 }
 
 function composerRequireddce5f4f71807dd85b7a99bd9e791d3e($fileIdentifier, $file)
+
 {
     if (empty($GLOBALS['__composer_autoload_files'][$fileIdentifier])) {
         require $file;

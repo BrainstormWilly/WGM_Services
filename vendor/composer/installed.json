@@ -269,50 +269,6 @@
         ]
     },
     {
-        "name": "react/dns",
-        "version": "v0.4.2",
-        "version_normalized": "0.4.2.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/reactphp/dns.git",
-            "reference": "62f6201e487df8add209cc42f05ffca33ee1ba05"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/reactphp/dns/zipball/62f6201e487df8add209cc42f05ffca33ee1ba05",
-            "reference": "62f6201e487df8add209cc42f05ffca33ee1ba05",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.0",
-            "react/cache": "~0.4.0|~0.3.0",
-            "react/promise": "~2.0|~1.1",
-            "react/socket": "~0.4.0|~0.3.0"
-        },
-        "time": "2016-02-24 23:45:36",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "0.4-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "React\\Dns\\": "src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "description": "Async DNS resolver.",
-        "keywords": [
-            "dns",
-            "dns-resolver"
-        ]
-    },
-    {
         "name": "react/socket-client",
         "version": "v0.4.5",
         "version_normalized": "0.4.5.0",
@@ -609,6 +565,45 @@
             "soap",
             "webservice",
             "wsdl"
+        ]
+    },
+    {
+        "name": "react/dns",
+        "version": "v0.4.3",
+        "version_normalized": "0.4.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/reactphp/dns.git",
+            "reference": "751b3129556e04944f164e3556a20ca6e201e459"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/reactphp/dns/zipball/751b3129556e04944f164e3556a20ca6e201e459",
+            "reference": "751b3129556e04944f164e3556a20ca6e201e459",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0",
+            "react/cache": "~0.4.0|~0.3.0",
+            "react/promise": "~2.1|~1.2",
+            "react/socket": "~0.4.0|~0.3.0"
+        },
+        "time": "2016-08-01 10:09:07",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "React\\Dns\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "Async DNS resolver.",
+        "keywords": [
+            "dns",
+            "dns-resolver"
         ]
     }
 ]
