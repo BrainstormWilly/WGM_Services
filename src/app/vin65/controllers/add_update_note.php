@@ -16,31 +16,19 @@
 
   class AddUpdateNote extends AbstractSoapController{
 
+
     private $_contact_proxy;
     private $_note_proxy;
 
+    function __construct($session){
+      parent::__construct($session);
+      $this->_queue->appendService( new SoapServiceModel($session, GetContactModel));
+      $this->_queue->appendService( new SoapServiceModel($session, AddUpdateNoteModel));
+    }
+
     private function _processRecord(){
       $csv_record = $this->_csv_model->getNextRecord();
-      if( !$csv_record ){
-        $this->_logger->closeLog();
-        $log = $this->_logger->getLog();
-        if( $this->_csv_model->hasNextPage() ){
-          $t = "<h4>Service In-Process: " . $this->_csv_model->getRecordIndex() . " of " . $this->_csv_model->getRecordCnt() . " records processed.</h4>";
-        }else{
-          $t = "<h4>Service Complete: " . $this->_csv_model->getRecordCnt() . " records processed.</h4>";
-        }
-
-        foreach($log as $rec){
-          $t .= $rec->toHtml();
-        }
-
-        $this->setResultsTable($t);
-
-        if( $this->_csv_model->hasNextPage() ){
-          header("Refresh:1; url=add_update_note_file.php?file=" . $this->_csv_model->getFileName() . "&index=" . strval($this->_csv_model->getRecordIndex()));
-        }
-
-      }else{
+      if( $this->_queueIncomplete($csv_record) ){
         $contact = new GetContactModel($this->_session);
         $contact->setValues($csv_record);
         $this->_contact_proxy->GetContact($contact->getValues())->then(
@@ -86,37 +74,38 @@
     }
 
     public function queueRecords($file, $index=0){
-      parent::queueRecords($file, $index);
 
-      if( $this->_csv_model->readFile($file) ){
-        $this->_logger->openLog($this->_csv_model->getFile(), $index);
-
-        $loop = EventLoopFactory::create();
-        $soap = new SoapFactory($loop);
-
-        $soap->createClient($_ENV['V65_V2_CONTACT_SERVICE'])->then(
-          function($contact_client) use ($soap){
-            $this->_contact_proxy = new Proxy($contact_client);
-            $soap->createClient($_ENV['V65_NOTE_SERVICE'])->then(
-              function($note_client) use ($soap){
-                $this->_note_proxy = new Proxy($note_client);
-                $this->_processRecord();
-              },
-              function($excp){
-                $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_csv_model->getRecordIndex()+1, "0000" , 'NotesServices->createClient', $excp->getMessage()));
-              }
-
-            );
-          },
-          function($excp){
-            $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_csv_model->getRecordIndex()+1, "0000" , 'ContactServices->createClient', $excp->getMessage()));
-          }
-        );
-
-        $loop->run();
-      }else{
-        $this->_logger->writeToLog( ServiceLogger::createFailItem(1, '0000' , 'CSV Reader', 'Unable to read file.'));
-      }
+      // parent::queueRecords($file, $index);
+      //
+      // if( $this->_csv_model->readFile($file) ){
+      //   $this->_logger->openLog($this->_csv_model->getFile(), $index);
+      //
+      //   $loop = EventLoopFactory::create();
+      //   $soap = new SoapFactory($loop);
+      //
+      //   $soap->createClient($_ENV['V65_V2_CONTACT_SERVICE'])->then(
+      //     function($contact_client) use ($soap){
+      //       $this->_contact_proxy = new Proxy($contact_client);
+      //       $soap->createClient($_ENV['V65_NOTE_SERVICE'])->then(
+      //         function($note_client) use ($soap){
+      //           $this->_note_proxy = new Proxy($note_client);
+      //           $this->_processRecord();
+      //         },
+      //         function($excp){
+      //           $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_csv_model->getRecordIndex()+1, "0000" , 'NotesServices->createClient', $excp->getMessage()));
+      //         }
+      //
+      //       );
+      //     },
+      //     function($excp){
+      //       $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_csv_model->getRecordIndex()+1, "0000" , 'ContactServices->createClient', $excp->getMessage()));
+      //     }
+      //   );
+      //
+      //   $loop->run();
+      // }else{
+      //   $this->_logger->writeToLog( ServiceLogger::createFailItem(1, '0000' , 'CSV Reader', 'Unable to read file.'));
+      // }
     }
 
     public function getInputForm(){

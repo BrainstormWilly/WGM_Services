@@ -5,6 +5,10 @@ use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
 
   class AddUpdateNote extends AbstractSoapModel{
 
+    const SERVICE_WSDL = "https://webservices.vin65.com/V300/NoteService.cfc?wsdl";
+    const SERVICE_NAME = "NoteService";
+    const METHOD_NAME = "AddUpdateNote";
+
     function __construct($session, $version=3){
       $this->_value_map = [
         "Security" => [
@@ -38,44 +42,21 @@ use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
       }
     }
 
-    public function getNoteSubject(){
-      return $this->_values['Note']['Subject'];
+    public function setResult($result){
+      if( $result->isSuccessful ){
+        if( count($result->contacts) > 0 ){
+          $this->_result = $result;
+        }else{
+          $this->_error = "No contacts found";
+        }
+      }else{
+        $err = "";
+        foreach($result->Errors as $value){
+          $err .= $value["ErrorCode"] . ": " . $value["ErrorMessage"] . "; ";
+        }
+        $this->_error = $err;
+      }
     }
-
-    public function getNoteBody(){
-      return $this->_values['Note']['Note'];
-    }
-
-    public function getKeyCodeID(){
-      return $this->_values['Note']['KeyCodeID'];
-    }
-
-    public function getNoteID(){
-      return $this->_values['Note']['NoteID'];
-    }
-
-    // public function callService($values=NULL){
-    //   parent::callService($values);
-    //   $client_params = [
-    //     'trace' => 1,
-    //     'exceptions' => 1,
-    //     'connection_timeout' => 30
-    //   ];
-    //   try{
-    //     $client = new \SoapClient($_ENV['V65_NOTE_SERVICE'], $client_params);
-    //     $result = $client->AddUpdateNote($this->_values);
-    //     if( is_soap_fault($result) ){
-    //       $this->_error = "SOAP Fault: (faultcode: {$result->faultcode}, faultstring: {$result->faultstring})";
-    //       return false;
-    //     }else{
-    //       $this->_result = $result;
-    //       return true;
-    //     }
-    //   }catch(Exception $e){
-    //     return false;
-    //   }
-    //
-    // }
 
 
   }

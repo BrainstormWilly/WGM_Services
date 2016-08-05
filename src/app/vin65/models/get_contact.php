@@ -5,6 +5,10 @@
 
   class GetContact extends AbstractSoapModel{
 
+    const SERVICE_WSDL = "https://webservices.vin65.com/v201/contactService.cfc?wsdl";
+    const SERVICE_NAME = "ContactService";
+    const METHOD_NAME = "GetContact";
+
     function __construct($session, $version=2){
       // $this->_value_map = [
       //   "Security" => [
