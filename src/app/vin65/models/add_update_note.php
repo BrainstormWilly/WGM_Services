@@ -11,21 +11,14 @@ use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
 
     function __construct($session, $version=3){
       $this->_value_map = [
-        "Security" => [
-          "Username" => '',
-          "Password" => ''
-        ],
-        "Note" => [
-          "WebsiteID" => "",
-          "NoteID" => "",
-          "Type" => "",
-          "Subject" => "",
-          "Note" => "",
-          "NoteDate" => "",
-          "RelatedTo" => "",
-          "KeyCodeID" => ""
-        ],
-        "Mode" => "Strict"
+        "websiteid" => "WebsiteID",
+        "noteid" => "NoteID",
+        "type" => "Type",
+        "subject" => "Subject",
+        "note" => "Note",
+        "notedate" => "NoteDate",
+        "relatedto" => "RelatedTo",
+        "keycodeid" => "KeyCodeID"
       ];
 
       parent::__construct($session, $version);
@@ -36,27 +29,27 @@ use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
 
     public function setValues($values){
       foreach ($values as $key => $value) {
-        if( array_key_exists($key, $this->_value_map["Note"]) ){
-          $this->_values["Note"][$key] = $value;
+        if( array_key_exists(strtolower($key), $this->_value_map) ){
+          $this->_values["Note"][$this->_value_map[strtolower($key)]] = $value;
         }
       }
     }
 
-    public function setResult($result){
-      if( $result->isSuccessful ){
-        if( count($result->contacts) > 0 ){
-          $this->_result = $result;
-        }else{
-          $this->_error = "No contacts found";
-        }
-      }else{
-        $err = "";
-        foreach($result->Errors as $value){
-          $err .= $value["ErrorCode"] . ": " . $value["ErrorMessage"] . "; ";
-        }
-        $this->_error = $err;
+    public function getValuesID(){
+      if( isset($this->_values["Note"]["Subject"]) ){
+        return $this->_values["Note"]["Subject"];
       }
+      return parent::getValuesID();
     }
+
+    public function getResultID(){
+      if( isset($this->_result->NoteID) ){
+        return $this->_result->NoteID;
+      }
+      return parent::getResultID();
+    }
+
+
 
 
   }

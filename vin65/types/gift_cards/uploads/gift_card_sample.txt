@@ -1,0 +1,3 @@
+SUCCESS,1,Quick 100,GiftCardService->CreateGiftCard,Z42EATHRGZS39PKF
+SUCCESS,2,Quick 50,GiftCardService->CreateGiftCard,VDHD43V9FFGAB2PU
+SUCCESS,3,Quick 25,GiftCardService->CreateGiftCard,8UXXEU96G8QB9B6M

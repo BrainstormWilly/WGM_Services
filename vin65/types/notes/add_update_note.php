@@ -7,6 +7,7 @@
 
   use wgm\vin65\controllers\AddUpdateNote as AddUpdateNoteController;
 
+  
   $controller = new AddUpdateNoteController( $_SESSION );
 
   include $_ENV['V65_INCLUDES'] . '/service_view.php';

@@ -5,15 +5,17 @@
 
   class CreateGiftCard extends AbstractSoapModel{
 
-    const FILE_NAME = 'create_gift_card';
+    const SERVICE_WSDL = "https://webservices.vin65.com/V300/GiftCardService.cfc?wsdl";
+    const SERVICE_NAME = "GiftCardService";
+    const METHOD_NAME = "CreateGiftCard";
 
     function __construct($session, $version=3){
       $this->_value_map = [
-        "WebsiteID" => '',
-        "Title" => '',
-        "ExpiryDate" => '',
-        "Notes" => '',
-        "Amount" => 0
+        "websiteid" => 'WebsiteID',
+        "title" => 'Title',
+        "expirydate" => 'ExpiryDate',
+        "notes" => 'Notes',
+        "amount" => 'Amount'
       ];
 
       parent::__construct($session, $version);
@@ -29,7 +31,7 @@
 
     public function getResultID(){
       if( isset($this->_result->GiftCard) ){
-        return $this->_result->GiftCard->CardNumber;
+        return $this->_result->GiftCard->Code;
       }
 
       return parent::getResultID();

@@ -5,63 +5,50 @@
 
   class UpsertContact extends AbstractSoapModel{
 
-    function __construct($session){
+    const SERVICE_WSDL = "https://webservices.vin65.com/v201/contactService.cfc?wsdl";
+    const SERVICE_NAME = "ContactService";
+    const METHOD_NAME = "UpsertContact";
+
+    function __construct($session, $version=2){
       $this->_value_map = [
-        "ContactID" => '',
-        "Lastname" => '',
-        "Firstname" => '',
-        "Title" => '',
-        "Birthdate" => '',
-        "Company" => '',
-        "Address" => '',
-        "Address2" => '',
-        "City" => '',
-        "ZipCode" => '',
-        "CountryCode" => '',
-        "StateCode" => '',
-        "MainPhone" => '',
-        "CellPhone" => '',
-        "Fax" => '',
-        "Email" => '',
-        "IsSingleOptIn" => false,
-        "Username" => '',
-        "Password" => '',
-        "PriceLevel" => '',
-        "IsNonTaxable" => '',
-        "IsDirectToTrade" => '',
-        "WholesaleNumber" => '',
-        "PaymentTerms" => '',
-        "FacebookProfileID" => ''
+        "contactid" => 'ContactID',
+        "lastname" => 'Lastname',
+        "firstname" => 'Firstname',
+        "title" => 'Title',
+        "birthdate" => 'Birthdate',
+        "company" => 'Company',
+        "address" => 'Address',
+        "address2" => 'Address2',
+        "city" => 'City',
+        "zipcode" => 'ZipCode',
+        "countrycode" => 'CountryCode',
+        "statecode" => 'StateCode',
+        "mainphone" => 'MainPhone',
+        "cellphone" => 'CellPhone',
+        "fax" => 'Fax',
+        "email" => 'Email',
+        "issingleoptin" => 'IsSingleOptIn',
+        "username" => 'Username',
+        "password" => 'Password',
+        "pricelevel" => 'PriceLevel',
+        "isnontaxable" => 'IsNonTaxable',
+        "isdirecttotrade" => 'IsDirectToTrade',
+        "wholesalenumber" => 'WholesaleNumber',
+        "paymentterms" => 'PaymentTerms',
+        "facebookprofileid" => 'FacebookProfileID'
       ];
 
-      $this->_values = [
-        "username" => $session["username"],
-        'password' => $session['password'],
-        'contacts' => []
-      ];
-    }
+      parent::__construct($session, 2);
 
-    public function addContactValues($props, $contact=NULL){
-      if( $contact===NULL ){
-        $contact = [];
-      }
-      foreach($props as $key => $value){
-        if( array_key_exists($key, $this->_value_map) ){
-          $contact[$key] = $value;
-        }
-      }
-      return $contact;
+      $this->_values['contacts'] = [];
+
     }
 
     public function getResultID(){
-      if( isset($this->_result->Contact) ){
-        return $this->_result->Contact->ContactID;
+      if( isset($this->_result->internalKeyCode) ){
+        return $this->_result->internalKeyCode;
       }
-      return "Unknown";
-    }
-
-    public function addContact($contact){
-      array_push($this->_values['contacts'], $contact);
+      return parent::getResultID();
     }
 
     public function getValuesID(){
@@ -71,9 +58,20 @@
         }elseif( isset($this->_values["contacts"][0]["ContactID"]) ){
           return $this->_values["contacts"][0]["ContactID"];
         }
-        return self::getValuesID();
+        return parent::getValuesID();
       }
-      return self::getValuesID();
+      return parent::getValuesID();
+    }
+    public function setValues($values){
+      $contact = [];
+      foreach ($values as $key => $value) {
+        if(!empty($value)){
+          if( array_key_exists(strtolower($key), $this->_value_map) ){
+              $contact[$this->_value_map[strtolower($key)]] = $value;
+          }
+        }
+      }
+      array_push($this->_values["contacts"], $contact);
     }
 
     // public function callService($values=NULL){
@@ -93,10 +91,6 @@
     //     $this->_error = $e->message;
     //   }
     // }
-
-    public function getEmail(){
-      return $this->_values["contacts"][0]["Email"];
-    }
 
   }
 

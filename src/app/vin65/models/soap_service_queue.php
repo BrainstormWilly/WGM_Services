@@ -1,5 +1,8 @@
 <?php namespace wgm\vin65\models;
 
+require_once $_ENV['APP_ROOT'] . "/models/csv.php";
+
+use wgm\models\CSV as CSVModel;
 use React\EventLoop\Factory as EventLoopFactory;
 use Clue\React\Soap\Factory as SoapFactory;
 use Clue\React\Soap\Proxy;
@@ -9,44 +12,47 @@ class SoapServiceModel{
 
   private $_model_class;
   private $_proxy;
-  private $_logger;
   private $_callback;
 
-  function __construct($class, $logger, $callback){
-    $this->_logger = $logger;
+  function __construct($class, $callback){
     $this->_model_class = $class;
     $this->_callback = $callback;
   }
 
   public function getName(){
-    return $this->_model_class::SERVICE_NAME . '->' .   $this->_model_class::SERVICE_METHOD;
+    $class = $this->_model_class;
+    return $class::SERVICE_NAME . '->' . $class::METHOD_NAME;
   }
 
   public function process($session, $values, $callback){
+
     $model = new $this->_model_class($session);
     $model->setValues($values);
-    $method = $this->_model_class::METHOD_NAME;
+    $class = $this->_model_class;
+    $method = $class::METHOD_NAME;
+
     $this->_proxy->$method($model->getValues())->then(
       function($result) use ($model, $callback){
+
         $model->setResult($result);
-        $callback($model);
+        call_user_func_array($callback, [$model]);
       },
       function($excp) use ($model, $callback){
         $model->setError($excp->getMessage());
-        $callback($model);
+        call_user_func_array($callback, [$model]);
       }
     );
   }
 
   public function setProxy($soap, $callback){
-    $soap->createClient($this->_model_class::SERVICE_WSDL)->then(
+    $class = $this->_model_class;
+    $soap->createClient($class::SERVICE_WSDL)->then(
       function($client) use ($callback){
         $this->_proxy = new Proxy($client);
-        $callback(true);
+        call_user_func_array($callback, [true]);
       },
       function($excp) use ($callback){
-        $this->_logger->writeToLog( ServiceLogger::createFailItem(0, "0000" , $this->getName(), $excp->getMessage()));
-        $callback(false);
+        call_user_func_array($callback, [false]);
       }
     );
   }
@@ -63,11 +69,13 @@ class SoapServiceQueue{
     INIT = 0,
     INCOMPLETE = 1,
     FAIL = 2,
-    COMPLETE = 3;
+    PROCESS_COMPLETE = 3,
+    QUEUE_COMPLETE = 4;
 
+  private $_current_service_model;
   private $_services = [];
   private $_session;
-  private $_process_index = 0;
+  private $_process_service_index = 0;
   private $_logger;
   private $_status = 0;
   private $_status_callback;
@@ -92,14 +100,60 @@ class SoapServiceQueue{
   }
 
   public function appendService($service){
-    array_push($this->_services, $service);
+    array_push( $this->_services, new SoapServiceModel($service, [$this, 'onProcessServiceComplete']) );
   }
 
-  public function processNextService($values){
-    if( $this->_process_index+1 < count($this->_services) ){
-      $this->_services[$this->_process_index++]->process($this->_session, [$this, "onProcessServiceComplete"]);
-    }else{
+  public function getCurrentService(){
+    return $this->_services[$this->_process_service_index-1];
+  }
 
+  public function getCurrentServiceModel(){
+    return $this->_current_service_model;
+  }
+
+  public function getCurrentCsvRecord(){
+    return $this->_csv->getCurrentRecord();
+  }
+
+  public function getLog($type='html'){
+    if( $this->_csv->hasNextPage() ){
+      $s = "<h4>Service In-Process: " . $this->_csv->getRecordIndex() . " of " . $this->_csv->getRecordCnt() . " records processed.</h4>";
+    }else{
+      $s = "<h4>Service Complete: " . $this->_csv->getRecordCnt() . " records processed.</h4>";
+    }
+    $log = $this->_logger->getLog();
+    foreach($log as $item){
+      $s .= $item->toHtml();
+    }
+    return $s;
+  }
+
+  public function processNextPage($class_file){
+    if( $this->_csv->hasNextPage() ){
+      header("Refresh:1; url=" . $class_file . "_file.php?file=" . $this->_csv_model->getFileName() . "&index=" . strval($this->_csv->getRecordIndex()));
+    }
+  }
+
+  public function processNextService($record=NULL){
+    if($record===NULL){
+      $record = $this->_csv->getNextRecord();
+    }
+
+    if( $this->_process_service_index < count($this->_services) ){
+      $this->_services[$this->_process_service_index++]->process($this->_session, $record, [$this, "onProcessServiceComplete"]);
+    }else{
+      $this->processNextRecord();
+    }
+  }
+
+  public function processNextRecord(){
+    $rec = $this->_csv->getNextRecord();
+    if( $rec ){
+      $this->_process_service_index = 0;
+      $this->_services[$this->_process_service_index++]->process($this->_session, $rec, [$this, "onProcessServiceComplete"]);
+    }else{
+      $this->_logger->closeLog();
+      $this->setStatus(self::QUEUE_COMPLETE);
     }
   }
 
@@ -118,7 +172,7 @@ class SoapServiceQueue{
   }
   public function setStatus($value){
     $this->_status = $value;
-    $this->_status_callback($value);
+    call_user_func_array($this->_status_callback, [$value]);
   }
 
 
@@ -130,20 +184,27 @@ class SoapServiceQueue{
 
     if( $result ){
       foreach ($this->_services as $service) {
-        if( !isset($service->getProxy()) ){
+        if( $service->getProxy()==NULL ){
           return;
         }
       }
       $this->processNextService();
     }else{
+      $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_csv->getRecordIndex(), "0", "SOAP Service Error", "Unable to Connect to service."));
+      $this->_logger->closeLog();
       $this->setStatus(self::FAIL);
     }
   }
 
   public function onProcessServiceComplete($model){
     if( $model->success() ){
-      
+      $this->_logger->writeToLog( ServiceLogger::createSuccessItem($this->_csv->getRecordIndex(), $model->getValuesID(), $this->getCurrentService()->getName(), $model->getResultID()));
+    }else{
+      $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_csv->getRecordIndex(), $model->getValuesID(), $this->getCurrentService()->getName(), $model->getError()));
     }
+    $this->_current_service_model = $model;
+    $this->setStatus(self::PROCESS_COMPLETE);
+    //$this->_processNextService($model->getResultsID());
   }
 
 

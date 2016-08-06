@@ -5,23 +5,27 @@
 
   class UpsertShippingAddress extends AbstractSoapModel{
 
-    function __construct($session){
+    const SERVICE_WSDL = "https://webservices.vin65.com/v201/contactService.cfc?wsdl";
+    const SERVICE_NAME = "ContactService";
+    const METHOD_NAME = "UpsertShippingAddress";
+
+    function __construct($session, $version=2){
       $this->_value_map = [
-        "ContactID" => '',
-        "Lastname" => '',
-        "Firstname" => '',
-        "Nickname" => '',
-        "Birthdate" => '',
-        "Company" => '',
-        "Address" => '',
-        "Address2" => '',
-        "City" => '',
-        "StateCode" => '',
-        "ZipCode" => '',
-        "CountryCode" => '',
-        "MainPhone" => '',
-        "Email" => '',
-        "IsPrimary" => 0
+        "contactid" => 'ContactID',
+        "lastname" => 'Lastname',
+        "firstname" => 'Firstname',
+        "nickname" => 'Nickname',
+        "birthdate" => 'Birthdate',
+        "company" => 'Company',
+        "address" => 'Address',
+        "address2" => 'Address2',
+        "city" => 'City',
+        "statecode" => 'StateCode',
+        "zipcode" => 'ZipCode',
+        "countrycode" => 'CountryCode',
+        "mainphone" => 'MainPhone',
+        "email" => 'Email',
+        "isprimary" => 'IsPrimary'
       ];
 
       parent::__construct($session, 2);
@@ -29,39 +33,54 @@
 
     }
 
-    public function addAddressValues($props, $address=NULL){
-      if( $address===NULL ){
-        $address = [];
+    public function getResultID(){
+      if( isset($this->_result->internalKeyCode) ){
+        return $this->_result->internalKeyCode;
       }
-      foreach($props as $key => $value){
-        if( array_key_exists($key, $this->_value_map) ){
-          $address[$key] = $value;
-        }
-      }
-      return $address;
+      return parent::getResultID();
     }
 
-    public function addAddress($address){
-      array_push($this->_values['shippingAddresses'], $address);
+    public function getValuesID(){
+      if( count($this->_values["shippingAddresses"]) > 0) {
+        if( isset($this->_values["shippingAddresses"][0]["Email"]) ){
+          return $this->_values["shippingAddresses"][0]["Email"];
+        }elseif( isset($this->_values["shippingAddresses"][0]["ContactID"]) ){
+          return $this->_values["shippingAddresses"][0]["ContactID"];
+        }
+        return parent::getValuesID();
+      }
+      return parent::getValuesID();
     }
 
-    public function callService($values=NULL){
-      parent::callService();
-      try{
-        $client = new \SoapClient($_ENV['V65_V2_CONTACT_SERVICE']);
-        $result = $client->upsertShippingAddress($this->_values);
-        // print_r($this->_values);
-        if( is_soap_fault($result) ){
-          $this->_error = "SOAP Fault: (faultcode: {$result->faultcode}, faultstring: {$result->faultstring})";
-        }elseif(empty($result->results[0]->isSuccessful)){
-          $this->_error = $result->results[0]->message;
-        }else{
-          $this->_result = $result->results[0]->internalKeyCode ;
+    public function setValues($values){
+      $addr = [];
+      foreach ($values as $key => $value) {
+        if(!empty($value)){
+          if( array_key_exists(strtolower($key), $this->_value_map) ){
+              $addr[$this->_value_map[strtolower($key)]] = $value;
+          }
         }
-      }catch(Exception $e){
-        $this->_error = $e->message;
       }
+      array_push($this->_values["shippingAddresses"], $addr);
     }
+
+    // public function callService($values=NULL){
+    //   parent::callService();
+    //   try{
+    //     $client = new \SoapClient($_ENV['V65_V2_CONTACT_SERVICE']);
+    //     $result = $client->upsertShippingAddress($this->_values);
+    //     // print_r($this->_values);
+    //     if( is_soap_fault($result) ){
+    //       $this->_error = "SOAP Fault: (faultcode: {$result->faultcode}, faultstring: {$result->faultstring})";
+    //     }elseif(empty($result->results[0]->isSuccessful)){
+    //       $this->_error = $result->results[0]->message;
+    //     }else{
+    //       $this->_result = $result->results[0]->internalKeyCode ;
+    //     }
+    //   }catch(Exception $e){
+    //     $this->_error = $e->message;
+    //   }
+    // }
 
   }
 

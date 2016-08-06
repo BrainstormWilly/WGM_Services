@@ -1,0 +1,6 @@
+SUCCESS,1,130470,ContactService->GetContact,fd1a00c0-f3ef-47c5-8d1e-38dd9b75627c
+SUCCESS,1,Note 1,NoteService->AddUpdateNote,9BEF7F7D-D143-8D72-8BF1-81B8015D3546
+SUCCESS,2,130470,ContactService->GetContact,fd1a00c0-f3ef-47c5-8d1e-38dd9b75627c
+SUCCESS,2,Note 2,NoteService->AddUpdateNote,9BEF95B3-A14C-9B49-A508-64CA0E736B72
+SUCCESS,3,130470,ContactService->GetContact,fd1a00c0-f3ef-47c5-8d1e-38dd9b75627c
+SUCCESS,3,Note 3,NoteService->AddUpdateNote,9BEFA354-A654-5105-542C-ED0A714823B6

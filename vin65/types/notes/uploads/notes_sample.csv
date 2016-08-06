@@ -1,10 +1,4 @@
-CustomerNumber,NoteDate,Subject,Note,RelatedTo,Type
-33550,2013-10-23T11:51:50.910,Created or Updated by   through AddUpdateMember,,Contact,Note
-33550,2013-10-23T11:51:50.937,Created or Updated by   through AddUpdateShippingAddress,,Contact,Note
-33550,2013-10-23T11:51:50.943,Created or Updated by   through AddUpdateClubMembership,,Contact,Note
-33550,2013-10-23T11:51:51.013,Created or Updated by   through AddUpdateMember,,Contact,Note
-33550,2013-12-16T11:58:53.000,The order#1474 was canceled by Dustin Boggs.,,Contact,Note
-33550,2014-09-23T07:34:15.000,An order was created for this member:  #3217,,Contact,Note
-33550,2014-09-23T07:34:17.000,This order#3217 was processed successfully and now has a status of completed.,,Contact,Note
-33550,2014-12-01T13:43:54.000,An order was created for this member:  #4218,,Contact,Note
-33550,2014-12-01T13:43:56.000,This order#4218 was processed successfully and now has a status of completed.,,Contact,Note
+Type,Subject,NoteDate,Note,RelatedTo,KeyCodeID,CustomerNumber
+Note,Note 1,2016-08-05T00:00:00,This is note 1.,Contact,,130470
+Note,Note 2,2016-08-05T00:00:00,This is note 2.,Contact,,130470
+Note,Note 3,2016-08-05T00:00:00,This is note 3.,Contact,,130470

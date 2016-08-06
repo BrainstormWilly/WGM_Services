@@ -22,8 +22,6 @@
       // $ptr = 0;
       if ( ($handle = fopen($file, "r")) !== FALSE) {
         while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
-          // if( $ptr++ < $this->_index ) continue;
-          // if( $ptr == ($this->_index + $this->_page_limit) ) break;
           $this->addRecord($data);
         }
         fclose($handle);
@@ -33,13 +31,16 @@
     }
 
     public function addRecord($values){
+
       array_push( $this->_values, $values );
       if( empty($this->_headers) ){
+
         $this->_field_cnt = count($values);
         for($i=0; $i<$this->_field_cnt; $i++){
           array_push( $this->_headers, $values[$i] );
         }
       }else{
+
         $record = [];
         for($i=0; $i<$this->_field_cnt; $i++) {
           $record[$this->_headers[$i]] = $values[$i];
@@ -94,6 +95,7 @@
     }
 
     public function getNextRecord(){
+
       if( $this->hasNextRecord() ){
         return $this->_records[$this->_index++];
       }

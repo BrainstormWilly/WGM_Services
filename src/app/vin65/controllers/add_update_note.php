@@ -3,109 +3,21 @@
   require_once $_ENV['APP_ROOT'] . "/models/csv.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/controllers/abstract_soap_controller.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/add_update_note.php";
+  require_once $_ENV['APP_ROOT'] . "/vin65/models/get_contact.php";
+  require_once $_ENV['APP_ROOT'] . "/vin65/models/soap_service_queue.php";
 
-  use wgm\models\CSV as CSVModel;
   use wgm\vin65\controllers\AbstractSoapController as AbstractSoapController;
   use wgm\vin65\models\AddUpdateNote as AddUpdateNoteModel;
   use wgm\vin65\models\GetContact as GetContactModel;
-  use wgm\vin65\models\ServiceLogger as ServiceLogger;
-  use React\EventLoop\Factory as EventLoopFactory;
-  use Clue\React\Soap\Factory as SoapFactory;
-  use Clue\React\Soap\Proxy;
-  use Clue\React\Soap\Client;
+  use wgm\vin65\models\SoapServiceQueue as SoapServiceQueue;
+
 
   class AddUpdateNote extends AbstractSoapController{
 
-
-    private $_contact_proxy;
-    private $_note_proxy;
-
     function __construct($session){
       parent::__construct($session);
-      $this->_queue->appendService( new SoapServiceModel($session, GetContactModel));
-      $this->_queue->appendService( new SoapServiceModel($session, AddUpdateNoteModel));
-    }
-
-    private function _processRecord(){
-      $csv_record = $this->_csv_model->getNextRecord();
-      if( $this->_queueIncomplete($csv_record) ){
-        $contact = new GetContactModel($this->_session);
-        $contact->setValues($csv_record);
-        $this->_contact_proxy->GetContact($contact->getValues())->then(
-          function($gc_result) use ($contact, $csv_record){
-            if( $gc_result->isSuccessful){
-              if( count($gc_result->contacts) > 0 ){
-                $contact->setResult($gc_result);
-                $this->_logger->writeToLog( ServiceLogger::createSuccessItem($this->_csv_model->getRecordIndex(), $contact->getCustomerID() , 'ContactServices->GetContact', $contact->getContact()->ContactID ));
-                $csv_record['KeyCodeID'] = $contact->GetContact()->ContactID;
-                $note = new AddUpdateNoteModel($this->_session);
-                $note->setValues($csv_record);
-                $this->_note_proxy->AddUpdateNote($note->getValues())->then(
-                  function($aun_result) use ($note, $contact){
-                    $this->_logger->writeToLog( ServiceLogger::createSuccessItem($this->_csv_model->getRecordIndex(), $contact->getCustomerID() , 'NotesServices->AddUpdateNote', $note->getNoteSubject()));
-                    $this->_processRecord();
-                  },
-                  function($excp) use ($contact){
-                    $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_csv_model->getRecordIndex(), $contact->getCustomerID() , 'NotesServices->AddUpdateNote', $excp->getMessage()));
-                    $this->_processRecord();
-                  }
-                );
-              }else{
-                $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_csv_model->getRecordIndex()+1, $contact->getCustomerID() , 'ContactServices->GetContact', "Unable to find contact in system."));
-              }
-            }else{
-              $gc_err = "";
-              foreach($gc_result->Errors as $value){
-                $gc_err .= $value["ErrorCode"] . ": " . $value["ErrorMessage"] . "; ";
-              }
-              $contact->setError($gc_err);
-              $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_csv_model->getRecordIndex()+1, $contact->getCustomerID() , 'ContactServices->GetContact', $contact->getError()));
-              $this->_processRecord();
-            }
-
-
-          },
-          function($excp) use ($contact){
-            $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_csv_model->getRecordIndex()+1, $contact->getCustomerID() , 'ContactServices->GetContact', $excp->getMessage()));
-            $this->_processRecord();
-          }
-        );
-      }
-    }
-
-    public function queueRecords($file, $index=0){
-
-      // parent::queueRecords($file, $index);
-      //
-      // if( $this->_csv_model->readFile($file) ){
-      //   $this->_logger->openLog($this->_csv_model->getFile(), $index);
-      //
-      //   $loop = EventLoopFactory::create();
-      //   $soap = new SoapFactory($loop);
-      //
-      //   $soap->createClient($_ENV['V65_V2_CONTACT_SERVICE'])->then(
-      //     function($contact_client) use ($soap){
-      //       $this->_contact_proxy = new Proxy($contact_client);
-      //       $soap->createClient($_ENV['V65_NOTE_SERVICE'])->then(
-      //         function($note_client) use ($soap){
-      //           $this->_note_proxy = new Proxy($note_client);
-      //           $this->_processRecord();
-      //         },
-      //         function($excp){
-      //           $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_csv_model->getRecordIndex()+1, "0000" , 'NotesServices->createClient', $excp->getMessage()));
-      //         }
-      //
-      //       );
-      //     },
-      //     function($excp){
-      //       $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_csv_model->getRecordIndex()+1, "0000" , 'ContactServices->createClient', $excp->getMessage()));
-      //     }
-      //   );
-      //
-      //   $loop->run();
-      // }else{
-      //   $this->_logger->writeToLog( ServiceLogger::createFailItem(1, '0000' , 'CSV Reader', 'Unable to read file.'));
-      // }
+      $this->_queue->appendService( "wgm\\vin65\\models\\GetContact" );
+      $this->_queue->appendService( "wgm\\vin65\\models\\AddUpdateNote" );
     }
 
     public function getInputForm(){
@@ -147,43 +59,31 @@
 
     }
 
-    public function getCsvTable(){
-      if( $this->_csv_model->getFieldCnt() == 0 ){
-        return '';
-      }
-      $rs = $this->_csv_model->getRecords($this->_csv_model->getCurrentPage());
-      $hs = $this->_csv_model->getHeaders();
-      $t = '<strong>File Results</strong></br>';
-      $t .= '<div class="table-responsive">';
-      $t .= '<table class="table table-bordered table-condensed"><tr>';
-      foreach ($hs as $value) {
-        $t .= '<th>' . $value . '</th>';
-      }
-      $t .= '</tr>';
-      foreach ($rs as $r) {
-        $t .= '<tr>';
-        foreach($r as $key => $c){
-          $t .= '<td>' . $c . '</td>';
-        }
-        $t .= '</tr>';
-      }
-      $t .= '</table></div>';
 
-      return $t;
+    // CALLBACKS
+
+    public function onSoapServiceQueueStatus($status){
+      if( $status==SoapServiceQueue::PROCESS_COMPLETE ){
+        $model = $this->_queue->getCurrentServiceModel();
+        if( $model->getClassName()==GetContactModel::METHOD_NAME ){
+          if( $model->success() ){
+            $rec = $this->_queue->getCurrentCsvRecord();
+            $rec["KeyCodeID"] = $model->getResultID();
+            $this->_queue->processNextService($rec);
+          }else{
+            $this->_queue->processNextRecord();
+          }
+        }elseif( $model->getClassName()==AddUpdateNoteModel::METHOD_NAME ){
+          $this->_queue->processNextRecord();
+        }
+      }elseif( $status==SoapServiceQueue::QUEUE_COMPLETE ){
+        $this->setResultsTable($this->_queue->getLog());
+        $this->_queue->processNextPage( $this->getClassFileName() );
+      }elseif( $status==SoapServiceQueue::FAIL ){
+        $this->setResultsTable($this->_queue->getLog());
+      }
     }
 
-    // public function getResultsTable(){
-    //   $t = '<h4>Processed ' . $this->_csv_model->getRecordIndex() . ' of ' . $this->_csv_model->getRecordCnt() . ' Notes.</br>';
-    //   $log = $this->_logger->getLog('fail');
-    //   $log_cnt = count($log);
-    //   $t .= "<small> with $log_cnt Errors</small></h4>";
-    //   if( $log_cnt > 0 ){
-    //     foreach($log as $value){
-    //       $t .= $value->toHtml();
-    //     }
-    //   }
-    //   return $t;
-    // }
 
   }
 

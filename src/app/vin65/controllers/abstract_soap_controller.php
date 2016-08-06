@@ -33,37 +33,8 @@
       // $this->_csv_model = new CSVModel();
     }
 
-    protected function _queueIncomplete($csv_record){
-
-      if( !$csv_record ){
-        $this->_logger->closeLog();
-        $log = $this->_logger->getLog();
-        if( $this->_csv_model->hasNextPage() ){
-          $t = "<h4>Service In-Process: " . $this->_csv_model->getRecordIndex() . " of " . $this->_csv_model->getRecordCnt() . " records processed.</h4>";
-        }else{
-          $t = "<h4>Service Complete: " . $this->_csv_model->getRecordCnt() . " records processed.</h4>";
-        }
-
-        foreach($log as $rec){
-          $t .= $rec->toHtml();
-        }
-
-        $this->setResultsTable($t);
-
-        if( $this->_csv_model->hasNextPage() ){
-          header("Refresh:1; url=" . $this->getClassFileName() . "_file.php?file=" . $this->_csv_model->getFileName() . "&index=" . strval($this->_csv_model->getRecordIndex()));
-        }
-
-        return false;
-
-      }
-
-      return true;
-    }
-
     public function queueRecords($file, $index=0){
-      $this->_csv_model->resetRecordIndex($index);
-      // override
+      $this->_queue->init($file, $index);
     }
 
     public function getInputForm(){
@@ -105,7 +76,14 @@
     // CALLBACKS
 
     public function onSoapServiceQueueStatus($status){
-
+      if( $status==SoapServiceQueue::PROCESS_COMPLETE ){
+        $this->_queue->processNextRecord();
+      }elseif( $status==SoapServiceQueue::QUEUE_COMPLETE ){
+        $this->setResultsTable($this->_queue->getLog());
+        $this->_queue->processNextPage( $this->getClassFileName() );
+      }elseif( $status==SoapServiceQueue::FAIL ){
+        $this->setResultsTable($this->_queue->getLog());
+      }
     }
 
 
