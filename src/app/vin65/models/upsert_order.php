@@ -5,99 +5,103 @@
 
   class UpsertOrder extends AbstractSoapModel{
 
+    const SERVICE_WSDL = "https://webservices.vin65.com/v202/orderService.cfc?wsdl";
+    const SERVICE_NAME = "OrderService";
+    const METHOD_NAME = "UpsertOrder";
+
     private $_rms_map = [
-      "BatchID" => '',
-      "CashierID" => '',
-      "RegisterNumber" => '',
-      "StoreID" => ''
+      "batchid" => 'BatchID',
+      "cashierid" => 'CashierID',
+      "registernumber" => 'RegisterNumber',
+      "storeid" => 'StoreID'
     ];
 
     private $_tender_map = [
-      "AmountTendered" => '',
-      "CreditCardExpirationMonth" => '',
-      "CreditCardExpirationYear" => '',
-      "CreditCardName" => '',
-      "CreditCardNumber" => '',
-      "CreditCardType" => '',
-      "GiftCardCode" => '',
-      "GiftCardID" => '',
-      "GiftCardNumber" => '',
-      "GiftCardVendor" => '',
-      "PaymentDate" => '',
-      "PaymentType" => '',
-      "PointsRedeemed" => 0
+      "amounttendered" => 'AmountTendered',
+      "creditcardexpirationmonth" => 'CreditCardExpirationMonth',
+      "creditcardexpirationyear" => 'CreditCardExpirationYear',
+      "creditcardname" => 'CreditCardName',
+      "creditcardnumber" => 'CreditCardNumber',
+      "creditcardtype" => 'CreditCardType',
+      "giftcardcode" => 'GiftCardCode',
+      "giftcardid" => 'GiftCardID',
+      "giftcardnumber" => 'GiftCardNumber',
+      "giftcardvendor" => 'GiftCardVendor',
+      "paymentdate" => 'PaymentDate',
+      "paymenttype" => 'PaymentType',
+      "pointsredeemed" => 'PointsRedeemed'
     ];
 
     private $_item_map = [
-      "CostOfGood" => 0,
-      "DepartmentCode" => '',
-      "Price" => 0,
-      "ProductName" => '',
-      "ProductSKU" => '',
-      "Quantity" => 0,
-      "SalesTax" => 0,
-      "ShippingPartner" => '',
-      "ShippingService" => '',
-      "isNonTaxable" => false
+      "costofgood" => 'CostOfGood',
+      "departmentcode" => 'DepartmentCode',
+      "price" => 'Price',
+      "productname" => 'ProductName',
+      "productsku" => 'ProductSKU',
+      "quantity" => 'Quantity',
+      "salestax" => 'SalesTax',
+      "shippingpartner" => 'ShippingPartner',
+      "shippingservice" => 'ShippingService',
+      "isnontaxable" => 'isNonTaxable'
     ];
 
-    function __construct($session){
+    function __construct($session, $version=2){
       $this->_value_map = [
-        "AltContactID" => '',
-        "AltShippingAddressID" => '',
-        "BillingAddress" => '',
-        "BillingAddress2" => '',
-        "BillingBirthdate" => '',
-        "BillingCity" => '',
-        "BillingCompany" => '',
-        "BillingEmail" => '',
-        "BillingFirstName" => '',
-        "BillingLastName" => '',
-        "BillingPhone" => '',
-        "BillingStateCode" => '',
-        "BillingZipCode" => '',
-        "ContactID" => '',
-        "CreditCardExpirationMonth" => '',
-        "CreditCardExpirationYear" => '',
-        "CreditCardName" => '',
-        "CreditCardNumber" => '',
-        "CreditCardType" => '', // Visa, MasterCard, AmericanExpress, Discover
-        "CustomerNumber" => 0, // not included in spec, but used to get ContactID. Do not include if syncing by BillingEmail
-        "GiftMessage" => '',
-        "Handling" => 0,
-        "OrderDate" => '',
-        "OrderItems" => [],
-        "OrderNotes" => '',
-        "OrderNumber" => 0,
-        "OrderType" => '', // AdminPanel, ClubOrder, Facebook, iPad, Mobile, POS, Telemarketing or Website
-        "PaymentType" => 'Cash', // Cash, Check, CreditCard
-        "PreviousOrderID" => '',
-        "PreviousOrderNumber" => 0,
-        "RMS" => [],
-        "SalesAssociate" => '',
-        "SendToFulfillment" => false,
-        "ShipDate" => '',
-        "Shipping" => 0,
-        "ShippingAddress" => '',
-        "ShippingAddress2" => '',
-        "ShippingAddressID" => '',
-        "ShippingBirthdate" => '',
-        "ShippingCity" => '',
-        "ShippingCompany" => '',
-        "ShippingEmail" => '',
-        "ShippingFirstName" => '',
-        "ShippingLastName" => '',
-        "ShippingPhone" => '',
-        "ShippingStateCode" => '',
-        "ShippingStatus" => '',
-        "ShippingZipCode" => '',
-        "SubTotal" => 0,
-        "Tax" => 0,
-        "Tenders" => [],
-        "Total" => 0,
-        "TransactionType" => '', // Order, Refund
-        "WebsiteCode" => '',
-        "isPickup" => false
+        "altcontactid" => 'AltContactID',
+        "altshippingaddressid" => 'AltShippingAddressID',
+        "billingaddress" => 'BillingAddress',
+        "billingaddress2" => 'BillingAddress2',
+        "billingbirthdate" => 'BillingBirthdate',
+        "billingcity" => 'BillingCity',
+        "billingcompany" => 'BillingCompany',
+        "billingemail" => 'BillingEmail', // required regardless if using 'CustomerNumber' for id
+        "billingfirstname" => 'BillingFirstName',
+        "billinglastname" => 'BillingLastName',
+        "billingphone" => 'BillingPhone',
+        "billingstatecode" => 'BillingStateCode',
+        "billingzipcode" => 'BillingZipCode',
+        "contactid" => 'ContactID',
+        "creditcardexpirationmonth" => 'CreditCardExpirationMonth',
+        "creditcardexpirationyear" => 'CreditCardExpirationYear',
+        "creditcardname" => 'CreditCardName',
+        "creditcardnumber" => 'CreditCardNumber',
+        "creditcardtype" => 'CreditCardType', // Visa, MasterCard, AmericanExpress, Discover
+        "customernumber" => 'CustomerNumber', // not included in spec, but used to get ContactID. Do not include if syncing by BillingEmail
+        "giftmessage" => 'GiftMessage',
+        "handling" => 'Handling',
+        "orderdate" => 'OrderDate',
+        "orderitems" => 'OrderItems',
+        "ordernotes" => 'OrderNotes',
+        "ordernumber" => 'OrderNumber',
+        "ordertype" => 'OrderType', // AdminPanel, ClubOrder, Facebook, iPad, Mobile, POS, Telemarketing or Website
+        "paymenttype" => 'PaymentType', // Cash, Check, CreditCard
+        "previousorderid" => 'PreviousOrderID',
+        "previousordernumber" => 'PreviousOrderNumber',
+        "rms" => 'RMS',
+        "salesassociate" => 'SalesAssociate',
+        "sendtofulfillment" => 'SendToFulfillment',
+        "shipdate" => 'ShipDate',
+        "shipping" => 'Shipping',
+        "shippingaddress" => 'ShippingAddress',
+        "shippingaddress2" => 'ShippingAddress2',
+        "shippingaddressid" => 'ShippingAddressID',
+        "shippingbirthdate" => 'ShippingBirthdate',
+        "shippingcity" => 'ShippingCity',
+        "shippingcompany" => 'ShippingCompany',
+        "shippingemail" => 'ShippingEmail',
+        "shippingfirstname" => 'ShippingFirstName',
+        "shippinglastname" => 'ShippingLastName',
+        "shippingphone" => 'ShippingPhone',
+        "shippingstatecode" => 'ShippingStateCode',
+        "shippingstatus" => 'ShippingStatus',
+        "shippingzipcode" => 'ShippingZipCode',
+        "subtotal" => 'SubTotal',
+        "tax" => 'Tax',
+        "tenders" => 'Tenders',
+        "total" => 'Total',
+        "transactiontype" => 'TransactionType', // Order, Refund
+        "websitecode" => 'WebsiteCode',
+        "ispickup" => 'isPickup'
       ];
 
       parent::__construct($session, 2);
@@ -106,24 +110,37 @@
     }
 
     public function getValuesID(){
-      if( isset($this->_values["orders"][0]["CustomerNumber"]) && !empty($this->_values["orders"][0]["CustomerNumber"]) ){
-        return $this->_values["orders"][0]["CustomerNumber"];
+      $ids = [];
+      foreach ($this->_values['orders'] as $value) {
+        if( isset($value["CustomerNumber"]) && !empty($values["CustomerNumber"]) ){
+          array_push($ids, $value["CustomerNumber"]);
+        }else{
+          array_push($ids, $value["BillingEmail"]);
+        }
       }
-      return $this->_values["orders"][0]["BillingEmail"];
+
+      if( count($ids) > 0 ) return $explode($ids, ",");
+
+      return parent::getValuesID();
+
     }
 
     public function getResultID(){
-      // override where possible
-      return "Unknown";
+      if( isset($this->_result->internalKeyCode) ){
+        return $this->_result->internalKeyCode;
+      }
+      return parent::getResultID();
     }
 
     public function addOrderValues($props, $order=NULL){
+
       if( $order===NULL ){
         $order = [];
       }
       foreach($props as $key => $value){
-        if( array_key_exists($key, $this->_value_map) ){
-          $order[$key] = $value;
+
+        if( array_key_exists( strtolower($key), $this->_value_map) ){
+          $order[ $this->_value_map[strtolower($key)] ] = $value;
         }
       }
       return $order;
@@ -138,8 +155,8 @@
         $order_item = [];
       }
       foreach($props as $key => $value){
-        if( array_key_exists($key, $this->_item_map) ){
-          $order_item[$key] = $value;
+        if( array_key_exists(strtolower($key), $this->_item_map) ){
+          $order_item[ $this->_item_mapp[strtolower($key)] ] = $value;
         }
       }
       return $order_item;
