@@ -110,6 +110,7 @@
             <div class="panel-body">
               <div class="list-group">
                 <a class="list-group-item" href='types/orders/upsert_order.php'>UpsertOrder<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/orders/update_order_status.php'>Update Order Status Only<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>
             </div>
           </div>

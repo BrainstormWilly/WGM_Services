@@ -4,7 +4,7 @@
 
   abstract class AbstractSoapModel{
 
-
+    protected $_value_fields = [];
     protected $_value_map = [];
     protected $_values = [];
     protected $_result = [];
@@ -27,7 +27,10 @@
           'password' => $session['password']
         ];
       }
+    }
 
+    public function getValueFields(){
+      return $this->_value_fields;
     }
 
     public function getValuesID(){

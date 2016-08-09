@@ -19,6 +19,7 @@
       CONTACT_SERVICE_V300 = "https://webservices.vin65.com/V300/ContactService.cfc?wsdl",
       NOTE_SERVICE_V300 = "https://webservices.vin65.com/V300/NoteService.cfc?wsdl";
 
+    protected $_input_form;
     protected $_csv_model;
     protected $_session;
     protected $_logger;
@@ -38,6 +39,9 @@
     }
 
     public function getInputForm(){
+      if( isset($this->_input_form) ){
+        return $this->_input_form->getFormHtml();
+      }
       return "<strong>No Form Available</strong>";
     }
 
