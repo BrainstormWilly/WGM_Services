@@ -6,13 +6,19 @@
   session_start();
 
   if( isset($_GET['logout']) ){
+    unset($_SESSION);
     session_destroy();
   }
 
-  if( isset($_SESSION['username']) ){
-    header("Location: list.php");
-    exit();
+  if( isset($_SESSION['service']) ){
+    if( $_SESSION['service']=='Vin65' ){
+      header("Location: list.php");
+      exit;
+    }else{
+      session_destroy();
+    }
   }elseif( isset($_POST['username']) && isset($_POST['password']) ) {
+    $_SESSION['service'] = 'Vin65';
     $_SESSION['username'] = $_POST['username'];
     $_SESSION['password'] = $_POST['password'];
     header("Location:" . "list.php");
