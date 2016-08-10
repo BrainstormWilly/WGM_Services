@@ -6,8 +6,8 @@
 
   abstract class AbstractXmlModel{
 
-    protected $_input = "";
-    protected $_output = "";
+    protected $_input = [];
+    protected $_output = [];
     protected $_v65_map = [];
     protected $_url;
     protected $_csv;
@@ -50,7 +50,7 @@
     }
 
     public function getOutputToXml(){
-      return $this->_output;
+      return $this->_output->asXML();
     }
 
     public function getOutputToJson(){
@@ -81,6 +81,10 @@
 
       }
       return $csvs;
+    }
+
+    public function hasErrors(){
+      return array_key_exists('Error', $this->_output);
     }
 
     public function hasNextPage(){

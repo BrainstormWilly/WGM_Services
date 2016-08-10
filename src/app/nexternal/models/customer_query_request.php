@@ -29,10 +29,22 @@
         'ZipCode' => '',
         'CountryCode' => 'US',
         'MainPhone' => '',
+        'Cell' => '',
+        'Username' => '',
+        'Password' => '',
+        'NameOnCard' => '',
         'CreditCardType' => '',
         'CreditCardNumber' => '',
         'CreditCardExpiryMo' => '',
         'CreditCardExpiryYr' => '',
+        'ClubName' => '',
+        'SignupDate' => '',
+        'OnHoldStartDate' => '',
+        'OnHoldUntilDate' => '',
+        'CancelDate' => '',
+        'IsGift' => '',
+        'GiftMessage' => '',
+        'ClubNotes' => '',
         'ShipEmail' => '',
         'ShipCompany' => '',
         'ShipFirstName' => '',
@@ -42,7 +54,9 @@
         'ShipCity' => '',
         'ShipStateCode' => '',
         'ShipZipCode' => '',
-        'ShipMainPhone' => ''
+        'ShipMainPhone' => '',
+        'IsPickupAtWinery' => '',
+        'PickupLocationCode' => ''
       ];
     }
 
@@ -84,6 +98,7 @@
         $v['City'] = $n['City'];
         $v['StateCode'] = $n['StateProvCode'];
         $v['ZipCode'] = $n['ZipPostalCode'];
+        $v['CountryCode'] = $n['CountryCode'];
         $v['MainPhone'] = $n['PhoneNumber'];
       }
 
@@ -93,16 +108,34 @@
     public function getOutputToV65Array(){
       $o = $this->getOutputToArray();
       $vs = [];
+      // print_r($o);
+      // exit;
       foreach ($o['Customer'] as $c) {
+
+        // CC & CLUB MEMBERS ONLY (used for Bar Z Wines)
+        // if( !array_key_exists('SavedCreditCards', $c) ){
+        //   if( $c['CustomerType']=='Wholesale' || $c['CustomerType']=='Consumer' ){
+        //     continue;
+        //   }
+        // }
+
         $v = $this->_v65_map;
+
+        // BASIC INFO
         $v["CustomerNumber"] = $c['CustomerNo'];
         $v['Email'] = $c['Email'];
         $v['ShipEmail'] = $c['Email'];
 
+        // ADDRESSES (includes names)
         $v = $this->_parseV65Address($v, $c['Address']);
         $v = $this->_parseV65Address($v, $c['Address'], TRUE);
+
         if( array_key_exists('AdditionalAddresses', $c) ){
-            foreach($c['AdditionalAddresses'] as $s){
+            $addrs = $c['AdditionalAddresses'];
+            // if( !array_key_exists('StreetAddress1', $addrs['Address']) ){
+            //   $addrs = $addrs['Address'];
+            // }
+            foreach($addrs as $s){
               if( array_key_exists('PrimaryShip', $s) ){
                 $v = $this->_parseV65Address($v, $s, TRUE);
               }
@@ -111,17 +144,35 @@
               }
             }
         }
+
+        // CCs
         if( array_key_exists('SavedCreditCards', $c) ){
-          foreach($c['SavedCreditCards']['CreditCard'] as $cc){
-            if( is_array($cc) && array_key_exists('PreferredCreditCard', $cc) ){
+          $ccs = $c['SavedCreditCards'];
+          if( !array_key_exists('CreditCardType', $ccs["CreditCard"]) ){
+            $ccs = $c['SavedCreditCards']['CreditCard'];
+          }
+          foreach($ccs as $cc){
+            if( array_key_exists('PreferredCreditCard', $cc) ){
               $v['CreditCardType'] = $cc['CreditCardType'];
-              $v['CreditCardNumber'] = $cc['CreditCardNumber'];
+              $v['CreditCardNumber'] = "'{$cc['CreditCardNumber']}'";
               $v['CreditCardExpiryMo'] = $this->_dateSplitter($cc['CreditCardExpDate'])['mo'];
               $v['CreditCardExpiryYr'] = $this->_dateSplitter($cc['CreditCardExpDate'])['yr'];
               break;
             }
           }
         }
+
+
+        // CLUB INFO
+        $v['ClubName'] = $c['CustomerType'];
+        $v['SignupDate'] = $c['Created']['DateTime']['Date'];
+        if( !array_key_exists('Active', $c) ){
+          $v['CancelDate'] = $c['LastUpd']['DateTime']['Date'];
+        }
+        if( array_key_exists('CreatedByNote', $c['CreatedBy']) ){
+          $v['ClubNotes'] = $c['CreatedBy']['CreatedByNote'];
+        }
+
         array_push($vs, $v);
       }
 

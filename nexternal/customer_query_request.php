@@ -8,10 +8,14 @@
 
   use wgm\nexternal\models\CustomerQueryRequest as CustomerQueryRequestModel;
 
+  $page = 1;
   if( isset($_GET['page']) ){
     $page = $_GET['page'];
-  }else{
-    $page = 1;
+  }
+
+  $cnt = 0;
+  if( isset($_GET['cnt']) ){
+    $cnt = $_GET['cnt'];
   }
 
   $status = "Loading...";
@@ -19,18 +23,24 @@
   // print_r($_SESSION['key']);
   $query = new CustomerQueryRequestModel($_SESSION, $page);
   $query->processService();
-  $v65 = $query->getOutputToV65Array();
-  $csv = $query->convertOutputToCsv($v65);
-  if( $query->writeOutputToCsv($_ENV['UPLOADS_PATH'] . $_SESSION['account'] . "_customer_query.csv", $csv, $page) ){
-    $status = "<h4>SUCCESS: " . strval(count($csv) * $page) . " records loaded.</h4>";
-    if( $query->hasNextPage() ){
-      $status .= "<p>Loading page " . ++$page . "...</p>";
-      header("Refresh:1; url=customer_query_request.php?page=" . $page);
-    }else{
-      $status .= "<p>Service Complete</p>";
-    }
+
+  if($query->hasErrors()){
+    $status = "<h4>ERROR: " . $query->getOutputToArray()['Error']['ErrorDescription'] . "</h4>";
   }else{
-    $status = "<h4>FAIL: </h4>";
+    $v65 = $query->getOutputToV65Array();
+    $csv = $query->convertOutputToCsv($v65);
+    $cnt += count($csv);
+    if( $query->writeOutputToCsv($_ENV['UPLOADS_PATH'] . $_SESSION['account'] . "_customer_query.csv", $csv, $page) ){
+      $status = "<h4>SUCCESS: " . $cnt . " records loaded.</h4>";
+      if( $query->hasNextPage() ){
+        $status .= "<p>Loading page " . ++$page . "...</p>";
+        header("Refresh:1; url=customer_query_request.php?page=" . $page . "&cnt=" . $cnt);
+      }else{
+        $status .= "<p>Service Complete</p>";
+      }
+    }else{
+      $status = "<h4>FAIL: Unable to write CSV.</h4>";
+    }
   }
 
 ?>

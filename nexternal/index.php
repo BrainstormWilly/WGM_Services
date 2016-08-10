@@ -6,6 +6,7 @@
   session_start();
 
   if( isset($_GET['logout']) ){
+    unset($_SESSION);
     session_destroy();
   }
 
@@ -13,9 +14,15 @@
     header("Location: list.php");
     exit();
   }elseif( isset($_SESSION['username']) ){
-    header("Location: request_key.php");
-    exit();
+    if( $_SESSION['service'] == 'Nexternal' ){
+      header("Location: request_key.php");
+      exit();
+    }else{
+      unset($_SESSION);
+      session_destroy();
+    }
   }elseif( isset($_POST['username']) && isset($_POST['password']) && isset($_POST['account'])) {
+    $_SESSION['service'] = 'Nexternal';
     $_SESSION['username'] = $_POST['username'];
     $_SESSION['password'] = $_POST['password'];
     $_SESSION['account'] = $_POST['account'];

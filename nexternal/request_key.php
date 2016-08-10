@@ -5,16 +5,22 @@
 
   session_start();
 
-  if( !isset($_SESSION['username']) || !isset($_SESSION['password']) || !isset($_SESSION['account']) ){
-    header("Location: " . $_ENV['NEX_HOST'] . "/index.php");
-    exit();
-  }elseif( isset($_SESSION['key']) ){
-    header("Location: " . $_ENV['NEX_HOST'] . "/list.php");
-    exit();
+  if( count($_SESSION) > 0 ){
+    if( $_SESSION['service'] == 'Nexternal' ){
+      if( !isset($_SESSION['username']) || !isset($_SESSION['password']) || !isset($_SESSION['account']) ){
+        header("Location: " . $_ENV['NEX_HOST'] . "/index.php");
+        exit();
+      }elseif( isset($_SESSION['key']) ){
+        header("Location: " . $_ENV['NEX_HOST'] . "/list.php");
+        exit();
+      }
+    }else{
+      unset($_SESSION);
+      session_destroy();
+      header("Location: " . $_ENV['NEX_HOST'] . "/index.php");
+      exit;
+    }
   }
-
-
-
 
   require_once $_ENV['APP_ROOT'] . "/nexternal/models/test_submit_request.php";
   require_once $_ENV['APP_ROOT'] . "/nexternal/models/test_verify_request.php";
@@ -23,6 +29,26 @@
   use wgm\nexternal\models\TestVerifyRequest as TestVerifyRequestModel;
 
   $status = "Sending Submit Request...";
+
+  $submit = new TestSubmitRequestModel($_SESSION);
+  $submit->processService();
+  $submit_result = $submit->getOutputToArray();
+
+  $status = "Sending Verify Request...";
+  if( isset($submit_result['TestKey']) ){
+    $_SESSION['key'] = $submit_result["TestKey"];
+    $verify = new TestVerifyRequestModel($_SESSION);
+    $verify->processService();
+    $verify_result = $verify->getOutputToArray();
+    if( isset($verify_result['ActiveKey']) ){
+      $_SESSION['key'] = $verify_result['ActiveKey'];
+      header("Location: " . $_ENV['NEX_HOST'] . "/list.php");
+    }
+
+    $status = "Verification Failure: " . $verify->getOutputToXml();
+  }else{
+    $status = "Submit Failure: " . $submit->getOutputToXml();
+  }
 ?>
 
 
@@ -49,27 +75,3 @@
 
 
 </html>
-
-<?php
-  $submit = new TestSubmitRequestModel($_SESSION);
-  $submit->processService();
-  $submit_result = $submit->getOutputToArray();
-
-  $status = "Sending Verify Request...";
-  if( isset($submit_result['TestKey']) ){
-    $_SESSION['key'] = $submit_result["TestKey"];
-    $verify = new TestVerifyRequestModel($_SESSION);
-    $verify->processService();
-    $verify_result = $verify->getOutputToArray();
-    if( isset($verify_result['ActiveKey']) ){
-      $_SESSION['key'] = $verify_result['ActiveKey'];
-      header("Refresh:1; url=list.php");
-    }
-
-    $status = "Verification Failure: " . $verify->getOutputToXml();
-  }else{
-    $status = "Submit Failure: " . $submit->getOutputToXml();
-  }
-
-
-?>
