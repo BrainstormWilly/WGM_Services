@@ -19,8 +19,6 @@
   // print_r($_SESSION['key']);
   $query = new CustomerQueryRequestModel($_SESSION, $page);
   $query->processService();
-  print_r( $query->getOutputToXml()->asXML());
-  exit;
   $v65 = $query->getOutputToV65Array();
   $csv = $query->convertOutputToCsv($v65);
   if( $query->writeOutputToCsv($_ENV['UPLOADS_PATH'] . $_SESSION['account'] . "_customer_query.csv", $csv, $page) ){

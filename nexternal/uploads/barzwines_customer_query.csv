@@ -1,16 +1,16 @@
 CustomerNumber,Email,Company,FirstName,LastName,Address,Address2,City,StateCode,ZipCode,CountryCode,MainPhone,CreditCardType,CreditCardNumber,CreditCardExpiryMo,CreditCardExpiryYr,ShipEmail,ShipCompany,ShipFirstName,ShipLastName,ShipAddress,ShipAddress2,ShipCity,ShipStateCode,ShipZipCode,ShipMainPhone
-2718,barzwines@amaonline.com,"United Supermarkets",,,"United Supermarkets 543","4205 98th Street",Lubbock,TX,79424,US,1111111111,,,,,barzwines@amaonline.com,"United Supermarkets",,,"United Supermarkets 543","4205 98th Street",Lubbock,TX,79424,1111111111
+2718,barzwines@amaonline.com,,"United Supermarkets",000543,"United Supermarkets 543","4205 98th Street",Lubbock,TX,79424,US,1111111111,,,,,barzwines@amaonline.com,,"United Supermarkets",000543,"United Supermarkets 543","4205 98th Street",Lubbock,TX,79424,1111111111
 20719,diamond8422@yahoo.com,,Carol,Abraham,"7911 Pebblebrook Dr.",,Amarillo,TX,79119,US,806-355-3555,,,,,diamond8422@yahoo.com,,Carol,Abraham,"7911 Pebblebrook Dr.",,Amarillo,TX,79119,806-355-3555
 7,anniea_1999@yahoo.com,,Dwayne,Acker,"301 E Hwy 86",,Nazareth,TX,79063,US,806-945-2632,,,,,anniea_1999@yahoo.com,,Dwayne,Acker,"301 E Hwy 86",,Nazareth,TX,79063,806-945-2632
-15514,justin.adams@raymondjames.com,Justin,,,"Raymond James","1800 Washington, Suite 302",Amarillo,TX,79102,US,806-928-8722,,,,,justin.adams@raymondjames.com,Justin,,,"Raymond James","1800 Washington, Suite 302",Amarillo,TX,79102,806-928-8722
+15514,justin.adams@raymondjames.com,,Justin,Adams,"18800 Stone Creek",,Bushland,TX,79124,US,806-928-8722,,,,,justin.adams@raymondjames.com,,Justin,Adams,"Raymond James","1800 Washington, Suite 302",Amarillo,TX,79102,806-928-8722
 10021,taldredge@outlook.com,,Thomas,Aldredge,"24510 Bar Kay Ln",,Hockley,TX,77447,US,"(832) 916-5056",,,,,taldredge@outlook.com,,Thomas,Aldredge,"24510 Bar Kay Ln",,Hockley,TX,77447,"(832) 916-5056"
 23,kaylajane@plateautel.net,,Kayla,Alger,"2050 Hwy 86",,Friona,TX,79035,US,806-282-2842,,,,,kaylajane@plateautel.net,,Kayla,Alger,"2050 Hwy 86",,Friona,TX,79035,806-282-2842
 13,delilah_Allen@hotmail.com,,Delilah,Allen,"4309 south Hayden st",,Amarillo,TX,79110,US,806-220-1532,,,,,delilah_Allen@hotmail.com,,Delilah,Allen,"4309 south Hayden st",,Amarillo,TX,79110,806-220-1532
-16365,susanballen@suddenlink.net,Susan,,,"1201 West McCormick Rd",,Amarillo,TX,79118,US,8064339194,,,,,susanballen@suddenlink.net,Susan,,,"1201 West McCormick Rd",,Amarillo,TX,79118,8064339194
-23058,test@barzwines.com,Camp,,,"PO Box 7665",,Amarillo,TX,79114,US,8066765655,,,,,test@barzwines.com,Camp,,,"PO Box 7665",,Amarillo,TX,79114,8066765655
+16365,susanballen@suddenlink.net,,Susan,Allen,"1201 West McCormick Rd",,Amarillo,TX,79118,US,8064339194,,,,,susanballen@suddenlink.net,,Susan,Allen,"1201 West McCormick Rd",,Amarillo,TX,79118,8064339194
+23058,test@barzwines.com,,Camp,Alphie,"PO Box 7665",,Amarillo,TX,79114,US,8066765655,,,,,test@barzwines.com,,Camp,Alphie,"PO Box 7665",,Amarillo,TX,79114,8066765655
 22838,salvarado80@yahoo.com,,Stephanie,Alvarado,"130 Ironwood",,Hereford,TX,79045,US,806-626-7492,,,,,salvarado80@yahoo.com,,Stephanie,Alvarado,"130 Ironwood",,Hereford,TX,79045,806-626-7492
 22946,mandrews@westtexasthermoking.com,,Mark,Andrews,"7717 Vernon Ave",,Lubbock,TX,79423,US,8067734404,,,,,mandrews@westtexasthermoking.com,,Mark,Andrews,"7717 Vernon Ave",,Lubbock,TX,79423,8067734404
-22892,daniel.harter@merck.com,Merck,,,"6600 Quail Springs",,Amarillo,TX,79119,US,8062824910,,,,,daniel.harter@merck.com,Merck,,,"6600 Quail Springs",,Amarillo,TX,79119,8062824910
+22892,daniel.harter@merck.com,,Merck,"Animal Health","6600 Quail Springs",,Amarillo,TX,79119,US,8062824910,,,,,daniel.harter@merck.com,,Merck,"Animal Health","6600 Quail Springs",,Amarillo,TX,79119,8062824910
 20502,lbannen@sbcglobal.net,,Lesly,Annen,"P.O. Box 289",,Nazareth,TX,79063,US,817-975-2150,,,,,lbannen@sbcglobal.net,,Lesly,Annen,"P.O. Box 289",,Nazareth,TX,79063,817-975-2150
 498,aaustintexas@gmail.com,,Amanda,Austin,"1803 Cowboy Circle",,Canyon,TX,79015,US,214-566-5879,,,,,aaustintexas@gmail.com,,Amanda,Austin,"1803 Cowboy Circle",,Canyon,TX,79015,214-566-5879
 22961,laurenaustin15@outlook.com,,Lauren,Austin,"3603 S. Lamar",,Amarillo,TX,79109,US,8062369756,,,,,laurenaustin15@outlook.com,,Lauren,Austin,"3603 S. Lamar",,Amarillo,TX,79109,8062369756
@@ -18,10 +18,10 @@ CustomerNumber,Email,Company,FirstName,LastName,Address,Address2,City,StateCode,
 23069,kristn21@yahoo.com,,Kristin,Bailey,"282 Grouse drive ",,"Elizabeth ",PA,15037,US,4126576606,,,,,kristn21@yahoo.com,,Kristin,Bailey,"282 Grouse drive ",,"Elizabeth ",PA,15037,4126576606
 2769,robertlbaldwin@suddenlink.net,,Robert,Baldwin,"6601 Wentworth Dr",,Amarillo,TX,79109,US,806-206-7603,,,,,robertlbaldwin@suddenlink.net,,Robert,Baldwin,"6601 Wentworth Dr",,Amarillo,TX,79109,806-206-7603
 22896,ansbarnett18@yahoo.com,,ansley,Barnett,"2706 Lynette drive #121",,amarillo,TX,79109,US,8066749487,,,,,ansbarnett18@yahoo.com,,ansley,Barnett,"2706 Lynette drive #121",,amarillo,TX,79109,8066749487
-22499,gmr@russlawfirm.com,,Gretchen,Barnhill,"7111 Mosley St.",,Amarillo,TX,79119,US,806-340-6605,,,,,gmr@russlawfirm.com,,Gretchen,Barnhill,"7111 Mosley St.",,Amarillo,TX,79119,806-340-6605
+22499,gmr@russlawfirm.com,,Philip,Russ,"3505 Goodfellow",,Amarillo,TX,78121,US,806-358-9293,,,,,gmr@russlawfirm.com,,Gretchen,Barnhill,"7111 Mosley St.",,Amarillo,TX,79119,806-340-6605
 22803,cherylbartlett@fmclp.com,,Cheryl,Bartlett,"7721 Pinnacle Dr",,Amarillo,TX,79119,US,806-674-3954,,,,,cherylbartlett@fmclp.com,,Cheryl,Bartlett,"7721 Pinnacle Dr",,Amarillo,TX,79119,806-674-3954
 23006,baz_84@yahoo.com,,Antonio,Bazaldua,"19060 Mendocino dr",,Canyon,TX,79015,US,8065844883,,,,,baz_84@yahoo.com,,Antonio,Bazaldua,"19060 Mendocino dr",,Canyon,TX,79015,8065844883
-2713,trena@anginc.net,Trena,,,"Amarillo Natural Gas Inc","2915 W Interstate 40",Amarillo,TX,79109,US,8063525271,,,,,trena@anginc.net,Trena,,,"Amarillo Natural Gas Inc","2915 W Interstate 40",Amarillo,TX,79109,8063525271
+2713,trena@anginc.net,,Trena,Becker,"Amarillo Natural Gas Inc","2915 W Interstate 40",Amarillo,TX,79109,US,8063525271,,,,,trena@anginc.net,,Trena,Becker,"Amarillo Natural Gas Inc","2915 W Interstate 40",Amarillo,TX,79109,8063525271
 23015,austin.beckner@comcast.net,,Austin,Beckner,"2500 NW 4th Street","2500 NW 4th Street","Blue Springs",MO,64014,US,8167290536,,,,,austin.beckner@comcast.net,,Austin,Beckner,"2500 NW 4th Street","2500 NW 4th Street","Blue Springs",MO,64014,8167290536
 2764,jennifer.been@hotmail.com,,Jennifer,Been,"PO Box 458","918 7th St",Hartley,TX,79044,US,8063650042,,,,,jennifer.been@hotmail.com,,Jennifer,Been,"PO Box 458","918 7th St",Hartley,TX,79044,8063650042
 23053,pmbelknap@yahoo.com,,Patti,Belknap,"4305 Stella port",,Arlington,TX,76017,US,8172916718,,,,,pmbelknap@yahoo.com,,Patti,Belknap,"4305 Stella port",,Arlington,TX,76017,8172916718
@@ -53,7 +53,7 @@ CustomerNumber,Email,Company,FirstName,LastName,Address,Address2,City,StateCode,
 23034,hlbrown2@yahoo.com,,Hobert,Brown,"6902 Cayman Court",,Amarillo,TX,Texas,US,8062319138,,,,,hlbrown2@yahoo.com,,Hobert,Brown,"6902 Cayman Court",,Amarillo,TX,Texas,8062319138
 2789,wbryant92@yahoo.com,,Will,Bryant,"3801 Deann",,Amariilo,TX,79121,US,8062064935,,,,,wbryant92@yahoo.com,,Will,Bryant,"3801 Deann",,Amariilo,TX,79121,8062064935
 2738,bucklesbm2000@yahoo.com,,Brandon,Buckles,"503 S. Shore Dr.",,Amarillo,TX,79118,US,806-236-0790,,,,,bucklesbm2000@yahoo.com,,Brandon,Buckles,"503 S. Shore Dr.",,Amarillo,TX,79118,806-236-0790
-9000,gloria@dalebuckner.com,Dale,,,"301 S Polk","Suite 420",Amarillo,TX,79101,US,8063587977,,,,,gloria@dalebuckner.com,Dale,,,"301 S Polk","Suite 420",Amarillo,TX,79101,8063587977
+9000,gloria@dalebuckner.com,,Dale,Buckner,"301 S Polk","Suite 420",Amarillo,TX,79101,US,8063587977,,,,,gloria@dalebuckner.com,,Dale,Buckner,"301 S Polk","Suite 420",Amarillo,TX,79101,8063587977
 2746,buisp@me.com,,Pauline,Buis,"1460 Vinson Ray Rd",,Baker,FL,32531,US,8505290010,,,,,buisp@me.com,,Pauline,Buis,"1460 Vinson Ray Rd",,Baker,FL,32531,8505290010
 2760,lafs@live.com,,Lorna,Bulwan,"1490 CR 509",,Ignacio,CO,81137,US,970.749.1599,,,,,lafs@live.com,,Lorna,Bulwan,"1490 CR 509",,Ignacio,CO,81137,970.749.1599
 23007,spiritlander@yahoo.com,,Devery,Burch,"2231 locust",,Amarillo,TX,79109,US,8063554127,,,,,spiritlander@yahoo.com,,Devery,Burch,"2231 locust",,Amarillo,TX,79109,8063554127
@@ -61,8 +61,8 @@ CustomerNumber,Email,Company,FirstName,LastName,Address,Address2,City,StateCode,
 22906,sburge61@icloud.com,,Stacey,Burge,"19221 Sonoma Dr.",,Canyon,TX,79015,US,806-570-4413,,,,,sburge61@icloud.com,,Stacey,Burge,"19221 Sonoma Dr.",,Canyon,TX,79015,806-570-4413
 22923,sburkett.25@gmail.com,,Sharon,Burkett,"2713 Comanche St",,Amarillo,TX,79109,US,8063176716,,,,,sburkett.25@gmail.com,,Sharon,Burkett,"2713 Comanche St",,Amarillo,TX,79109,8063176716
 4,coriburns@gmail.com,,Cori,Burns,"4 Lytham Ct",,Amarillo,TX,79124,US,8066769960,,,,,coriburns@gmail.com,,Cori,Burns,"4 Lytham Ct",,Amarillo,TX,79124,8066769960
-3,cori.burns@estacar.com,,Corinne,Burns,"4 Lytham Ct.",,Amarillo,TX,79124,US,8066769960,,,,,cori.burns@estacar.com,,Corinne,Burns,"4 Lytham Ct.",,Amarillo,TX,79124,8066769960
-23047,scalcote13@gmail.com,Samantha,,,"104 sw 6th Ave","Suite 400",Amarillo,TX,79101,US,8066745459,,,,,scalcote13@gmail.com,Samantha,,,"104 sw 6th Ave","Suite 400",Amarillo,TX,79101,8066745459
+3,cori.burns@estacar.com,,Corinne,Burns,"910 Sw 7th",,Amarillo,TX,79101,US,8066769960,,,,,cori.burns@estacar.com,,Corinne,Burns,"4 Lytham Ct.",,Amarillo,TX,79124,8066769960
+23047,scalcote13@gmail.com,,Samantha,Calcote,"3803 s Roberts st",,Amarillo,TX,79118,US,8066745459,,,,,scalcote13@gmail.com,,Samantha,Calcote,"104 sw 6th Ave","Suite 400",Amarillo,TX,79101,8066745459
 22884,jscampb@okstate.edu,,Jeremy,Campbell,"2909 Crestway Dr.",,Perryton,TX,79070,US,4058085149,,,,,jscampb@okstate.edu,,Jeremy,Campbell,"2909 Crestway Dr.",,Perryton,TX,79070,4058085149
 23008,jennifer.campos@usoncology.com,,Jennifer,Campos,"8 Canyon Rim Dr.",,Canyon,TX,79015,US,8063408943,,,,,jennifer.campos@usoncology.com,,Jennifer,Campos,"8 Canyon Rim Dr.",,Canyon,TX,79015,8063408943
 22915,jcantrell@txfb-ins.com,,Jason,Cantrell,"702 w cleveland",,Dimmitt,TX,79027,US,806-240-1399,,,,,jcantrell@txfb-ins.com,,Jason,Cantrell,"702 w cleveland",,Dimmitt,TX,79027,806-240-1399
@@ -80,12 +80,27 @@ CustomerNumber,Email,Company,FirstName,LastName,Address,Address2,City,StateCode,
 22851,lcochran@sonic.net,,Linda,Cochran,"PO Box 5376",,Petaluma,CA,94955,US,7077821282,,,,,lcochran@sonic.net,,Linda,Cochran,"PO Box 5376",,Petaluma,CA,94955,7077821282
 22970,Stephanie.coggins@gmail.com,,Stephanie,Coggins,"2910 Mable Drive",,Canyon,TX,79015,US,8062821584,,,,,Stephanie.coggins@gmail.com,,Stephanie,Coggins,"2910 Mable Drive",,Canyon,TX,79015,8062821584
 23041,stephanie.coggins@hotmail.com,,Stephanie,Coggins,"2910 Mable Drive",,Canyon,TX,79015,US,8062821584,,,,,stephanie.coggins@hotmail.com,,Stephanie,Coggins,"2910 Mable Drive",,Canyon,TX,79015,8062821584
-2715,pjcole@firstunited.net,PJ,,,"First United Bank","801 23rd Street",Canyon,TX,79015,US,8066558000,,,,,pjcole@firstunited.net,PJ,,,"First United Bank","801 23rd Street",Canyon,TX,79015,8066558000
-22900,jdkhomes8@gmail.com,cat-man-du,,,"8501 SW 34th Ave",,AMARILLO,TX,79121,US,806-350-8324,,,,,jdkhomes8@gmail.com,cat-man-du,,,"8501 SW 34th Ave",,AMARILLO,TX,79121,806-350-8324
-2748,tina.connally@yahoo.com,Tina,,,"9101 Blackhawk Rd.",,Amarillo,TX,79119,US,8064338366,Visa,xxxxxxxxxxxx1915,01,2017,tina.connally@yahoo.com,Tina,,,"9101 Blackhawk Rd.",,Amarillo,TX,79119,8064338366
+2715,pjcole@firstunited.net,,PJ,Cole,"First United Bank","801 23rd Street",Canyon,TX,79015,US,8066558000,,,,,pjcole@firstunited.net,,PJ,Cole,"First United Bank","801 23rd Street",Canyon,TX,79015,8066558000
+22900,jdkhomes8@gmail.com,,cat-man-du,Computers,"8501 SW 34th Ave",,AMARILLO,TX,79121,US,806-350-8324,,,,,jdkhomes8@gmail.com,,cat-man-du,Computers,"8501 SW 34th Ave",,AMARILLO,TX,79121,806-350-8324
+2748,tina.connally@yahoo.com,,Tina,Connally,"9101 Blackhawk Rd.",,Amarillo,TX,79119,US,8064338366,Visa,xxxxxxxxxxxx1915,01,2017,tina.connally@yahoo.com,,Tina,Connally,"9101 Blackhawk Rd.",,Amarillo,TX,79119,8064338366
 3793,courtrus@sbcglobal.net,,Melinda,Conway,"3907 Linda Dr",,Amarillo,TX,79109,US,8066905155,,,,,courtrus@sbcglobal.net,,Melinda,Conway,"3907 Linda Dr",,Amarillo,TX,79109,8066905155
 23009,kstcook@att.net,,Keith,Cook,"11801 Lost Creek Trail",,Amarillo,TX,79124,US,806-678-2381,,,,,kstcook@att.net,,Keith,Cook,"11801 Lost Creek Trail",,Amarillo,TX,79124,806-678-2381
 22787,hercooper@gmail.com,,Haley,Cooper,"9423 Campbell Road",,Houston,TX,77080,US,214-738-4206,,,,,hercooper@gmail.com,,Haley,Cooper,"9423 Campbell Road",,Houston,TX,77080,214-738-4206
 33,sharon.cooper42@gmail.com,,Sharon,Cooper,"19290 FM 1541",,Canyon,TX,79015,US,806-674-1342,,,,,sharon.cooper42@gmail.com,,Sharon,Cooper,"19290 FM 1541",,Canyon,TX,79015,806-674-1342
-2757,ken.cop@fiestfoods.net,,Kaki,Copheranham,"7702 Continental Pkwy",,Amarillo,TX,79119,US,8065849291,Visa,xxxxxxxxxxxx3977,06,2018,ken.cop@fiestfoods.net,Ken,,,"7010 SW 45th Bldg. 2, Ste 3",,Amarillo,TX,79119,8065849291
-22846,luis.arroyos@owenscorning.com,Owens,,,"1701 Hollywood Dr",,Amarillo,TX,79118,US,8066224424,,,,,luis.arroyos@owenscorning.com,Owens,,,"1701 Hollywood Dr",,Amarillo,TX,79118,8066224424
+2757,ken.cop@fiestfoods.net,,Kaki,Copheranham,"7702 Continental Pkwy",,Amarillo,TX,79119,US,8065849291,Visa,xxxxxxxxxxxx3977,06,2018,ken.cop@fiestfoods.net,,Ken,Coperanham,"7010 SW 45th Bldg. 2, Ste 3",,Amarillo,TX,79119,8065849291
+22846,luis.arroyos@owenscorning.com,,Owens,Corning,"1701 Hollywood Dr",,Amarillo,TX,79118,US,8066224424,,,,,luis.arroyos@owenscorning.com,,Owens,Corning,"1701 Hollywood Dr",,Amarillo,TX,79118,8066224424
+22919,jsjcraig@gmail.com,,John,Craig,"8508 San Antonio Dr",,Amarillo,TX,79118,US,806-341-6754,,,,,jsjcraig@gmail.com,,John,Craig,"8508 San Antonio Dr",,Amarillo,TX,79118,806-341-6754
+2716,tcrail1@sbcglobal.net,,Teresa,Crail,"533 Ladin Lane",,Lakeway,TX,7834,US,"512 261 6181",,,,,tcrail1@sbcglobal.net,,Teresa,Crail,"533 Ladin Lane",,Lakeway,TX,7834,"512 261 6181"
+22842,mcrane3@gmail.com,,Matthew,Crane,"1749 OXFORD ST","APT 5",BERKELEY,CA,94709,US,4049332001,,,,,mcrane3@gmail.com,,Matthew,Crane,"1749 OXFORD ST","APT 5",BERKELEY,CA,94709,4049332001
+22952,jason@amarillolittletheatre.org,,Jason,Crespin,"9400 Orry",,Amarillo,TX,79119,US,8062361539,,,,,jason@amarillolittletheatre.org,,Jason,Crespin,"9400 Orry",,Amarillo,TX,79119,8062361539
+22799,eyesbrowntexas@yahoo.com,,Leslie,Cruger,"1819 4th Avenue",,Canyon,TX,79015,US,8063725050,,,,,eyesbrowntexas@yahoo.com,,Leslie,Cruger,"1819 4th Avenue",,Canyon,TX,79015,8063725050
+2784,linda.cuellar@esc16.net,,Linda,Cuellar,"101 South Shore Drive",,Amarillo,TX,79118,US,806-677-3475,,,,,linda.cuellar@esc16.net,,Linda,Cuellar,"101 South Shore Drive",,Amarillo,TX,79118,806-677-3475
+22859,unidentified@storefront.com,,Unidentified,Customer,"PO Box 1080",,Canyon,TX,79015,US,123-123-1234,,,,,unidentified@storefront.com,,Unidentified,Customer,"PO Box 1080",,Canyon,TX,79015,123-123-1234
+11,cjdavis730@gmail.com,,Carol,Davis,"751 Yucca Drive",,Amarillo,TX,79108,US,806-206-5152,,,,,cjdavis730@gmail.com,,Carol,Davis,"751 Yucca Drive",,Amarillo,TX,79108,806-206-5152
+19968,cdavis@txfb.org,,Coleburn,Davis,"PO BOX 2689",,Waco,TX,76702,US,2544984514,,,,,cdavis@txfb.org,,Coleburn,Davis,"PO BOX 2689",,Waco,TX,76702,2544984514
+22812,jaci2891@gmail.com,,Bonita,Giglio,"8503 Taos",,Amarillo,TX,79118,US,806-584-8021,,,,,jaci2891@gmail.com,,Jaci,Davis,"887 Union Station Pkwy",#6103,Lewisville,TX,75057,806-584-8021
+13599,pdavis120@gmail.com,,Paula,Davis,"4902 YALE ST APT B",,AMARILLO,TX,79109,US,806-679-4342,,,,,pdavis120@gmail.com,,Paula,Davis,"4902 YALE ST APT B",,AMARILLO,TX,79109,806-679-4342
+22882,sbd.3077@gmail.com,,Sarah,Davis,"8900 w us hwy 60",,Canyon,TX,79915,US,7406073033,,,,,sbd.3077@gmail.com,,Sarah,Davis,"8900 w us hwy 60",,Canyon,TX,79915,7406073033
+22940,wndavis10@yahoo.com,,Whitney,Davis,"6800 Caddell",,Amarillo,TX,79119,US,806-683-7617,,,,,wndavis10@yahoo.com,,Whitney,Davis,"6800 Caddell",,Amarillo,TX,79119,806-683-7617
+2790,debock_3@live.com,,Casey,DeBock,"po box 814",,Goodwell,OK,73939,US,580461-8861,,,,,debock_3@live.com,,Casey,DeBock,"po box 814",,Goodwell,OK,73939,580461-8861
+7704,idahliaphoto@gmail.com,,Kimberly,Deck,"2905 Bernardino Cove",,Austin,TX,78728,US,9125962939,,,,,idahliaphoto@gmail.com,,Kimberly,Deck,"2905 Bernardino Cove",,Austin,TX,78728,9125962939
