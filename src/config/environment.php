@@ -19,6 +19,9 @@ $_ENV['APP_HOST'] = "http://localhost/wgm/services";
 $_ENV['BLOYAL_HOST'] = "http://localhost/wgm/bloyal";
 $_ENV['BLOYAL_INCLUDES'] = $_SERVER['DOCUMENT_ROOT'] . "/wgm/services/bloyal/includes";
 
+$_ENV['NEX_HOST'] = "http://localhost/wgm/services/nexternal";
+$_ENV['NEX_INCLUDES'] =  $_SERVER['DOCUMENT_ROOT'] . "/wgm/services/nexternal/includes";
+
 $_ENV['V65_HOST'] = "http://localhost/wgm/services/vin65";
 $_ENV['V65_INCLUDES'] = $_SERVER['DOCUMENT_ROOT'] . "/wgm/services/vin65/includes";
 $_ENV['V65_V2_CONTACT_SERVICE'] = "https://webservices.vin65.com/v201/contactService.cfc?wsdl";

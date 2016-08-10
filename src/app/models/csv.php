@@ -30,24 +30,42 @@
       return false;
     }
 
+    public function writeFile($file, $include_headers=TRUE){
+      if( $include_headers ){
+        $perm = 'w';
+      }else{
+        array_shift($this->_values); // remove headers
+        $perm = 'a';
+      }
+      if ( ($handle = fopen($file, $perm)) !== FALSE) {
+        foreach ($this->_values as $val) {
+          fputcsv($handle, $val);
+        }
+        fclose($handle);
+        return true;
+      }
+      return false;
+    }
+
     public function addRecord($values){
 
-      array_push( $this->_values, $values );
-      if( empty($this->_headers) ){
+        array_push( $this->_values, $values );
+        if( empty($this->_headers) ){
 
-        $this->_field_cnt = count($values);
-        for($i=0; $i<$this->_field_cnt; $i++){
-          array_push( $this->_headers, $values[$i] );
+          $this->_field_cnt = count($values);
+          for($i=0; $i<$this->_field_cnt; $i++){
+            array_push( $this->_headers, $values[$i] );
+          }
+        }else{
+
+          $record = [];
+          for($i=0; $i<$this->_field_cnt; $i++) {
+            $record[$this->_headers[$i]] = $values[$i];
+          }
+          array_push( $this->_records, $record );
+
         }
-      }else{
 
-        $record = [];
-        for($i=0; $i<$this->_field_cnt; $i++) {
-          $record[$this->_headers[$i]] = $values[$i];
-        }
-        array_push( $this->_records, $record );
-
-      }
     }
 
     public function getFile(){
