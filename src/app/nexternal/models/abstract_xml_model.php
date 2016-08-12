@@ -46,7 +46,7 @@
       foreach ($data as $value) {
         $this->_csv->addRecord($value);
       }
-      return $this->_csv->writeFile($file, $page==1);
+      return $this->_csv->writeData($file, $page==1);
     }
 
     public function getOutputToXml(){

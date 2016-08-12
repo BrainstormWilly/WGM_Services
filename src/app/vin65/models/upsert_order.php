@@ -22,19 +22,20 @@
       "creditcardexpirationyear" => 'CreditCardExpirationYear',
       "creditcardname" => 'CreditCardName',
       "creditcardnumber" => 'CreditCardNumber',
-      "creditcardtype" => 'CreditCardType',
+      "creditcardtype" => 'CreditCardType', // Visa, MasterCard, AmericanExpress, Discover
       "giftcardcode" => 'GiftCardCode',
       "giftcardid" => 'GiftCardID',
       "giftcardnumber" => 'GiftCardNumber',
       "giftcardvendor" => 'GiftCardVendor',
       "paymentdate" => 'PaymentDate',
-      "paymenttype" => 'PaymentType',
+      "paymenttype" => 'PaymentType', // GiftCard,Points,Cash,Check,CreditCard,OnAccount,ZeroDollarInvoice,Other
       "pointsredeemed" => 'PointsRedeemed'
     ];
 
     private $_item_map = [
       "costofgood" => 'CostOfGood',
       "departmentcode" => 'DepartmentCode',
+      "originalprice" => 'OriginalPrice',
       "price" => 'Price',
       "productname" => 'ProductName',
       "productsku" => 'ProductSKU',
@@ -61,11 +62,6 @@
         "billingstatecode" => 'BillingStateCode',
         "billingzipcode" => 'BillingZipCode',
         "contactid" => 'ContactID',
-        "creditcardexpirationmonth" => 'CreditCardExpirationMonth',
-        "creditcardexpirationyear" => 'CreditCardExpirationYear',
-        "creditcardname" => 'CreditCardName',
-        "creditcardnumber" => 'CreditCardNumber',
-        "creditcardtype" => 'CreditCardType', // Visa, MasterCard, AmericanExpress, Discover
         "customernumber" => 'CustomerNumber', // not included in spec, but used to get ContactID. Do not include if syncing by BillingEmail
         "giftmessage" => 'GiftMessage',
         "handling" => 'Handling',
@@ -74,7 +70,6 @@
         "ordernotes" => 'OrderNotes',
         "ordernumber" => 'OrderNumber',
         "ordertype" => 'OrderType', // AdminPanel, ClubOrder, Facebook, iPad, Mobile, POS, Telemarketing or Website
-        "paymenttype" => 'PaymentType', // Cash, Check, CreditCard
         "previousorderid" => 'PreviousOrderID',
         "previousordernumber" => 'PreviousOrderNumber',
         "rms" => 'RMS',
@@ -109,17 +104,89 @@
 
     }
 
+    private function _addOrderValues($props, $order=NULL){
+
+      if( $order===NULL ){
+        $order = [];
+      }
+      foreach($props as $key => $value){
+
+        if( array_key_exists( strtolower($key), $this->_value_map)
+            && $key != "OrderItems"
+            && $key != "Tenders"
+            && $value != ''){
+          $order[ $this->_value_map[strtolower($key)] ] = $value;
+        }
+
+      }
+      return $order;
+    }
+
+    private function _addOrder($order){
+      array_push($this->_values['orders'], $order);
+    }
+
+    private function _addOrderItemValues($props, $order_item=NULL){
+      if( $order_item===NULL ){
+        $order_item = [];
+      }
+      foreach($props as $key => $value){
+        if( array_key_exists(strtolower($key), $this->_item_map) && $value != '' ){
+          $order_item[ $this->_item_map[strtolower($key)] ] = $value;
+        }
+      }
+      return $order_item;
+    }
+
+    private function _addOrderItem($order, $order_item){
+      if( !isset($order['OrderItems']) ){
+        $order['OrderItems'] = [];
+      }
+      array_push($order['OrderItems'], $order_item);
+      return $order;
+    }
+
+    private function _addTenderValues($props, $tender=NULL){
+      if( $tender==NULL ){
+        $tender = [];
+      }
+      foreach ($props as $key => $value) {
+        if( array_key_exists(strtolower($key), $this->_tender_map) && $value != '' ){
+          $tender[ $this->_tender_map[strtolower($key)] ] = $value;
+        }
+      }
+      return $tender;
+    }
+
+    private function _addTender($order, $tender){
+      if( !isset($order['Tenders']) ){
+        $order['Tenders'] = [];
+      }
+      array_push($order['Tenders'], $tender);
+      return $order;
+    }
+
+    public function setValues($values){
+
+      $order = $this->_addOrderValues($values);
+      foreach ($values["OrderItems"] as $value) {
+        $order_item = $this->_addOrderItemValues($value);
+        $order = $this->_addOrderItem($order, $order_item);
+      }
+      foreach ($values["Tenders"] as $value) {
+        $tender = $this->_addTenderValues($value);
+        $order = $this->_addTender($order, $tender);
+      }
+      $this->_addOrder($order);
+    }
+
     public function getValuesID(){
       $ids = [];
       foreach ($this->_values['orders'] as $value) {
-        if( isset($value["CustomerNumber"]) && !empty($values["CustomerNumber"]) ){
-          array_push($ids, $value["CustomerNumber"]);
-        }else{
-          array_push($ids, $value["BillingEmail"]);
-        }
+        array_push($ids, $value["BillingEmail"]);
       }
 
-      if( count($ids) > 0 ) return $explode($ids, ",");
+      if( count($ids) > 0 ) return implode($ids, ",");
 
       return parent::getValuesID();
 
@@ -132,42 +199,7 @@
       return parent::getResultID();
     }
 
-    public function addOrderValues($props, $order=NULL){
 
-      if( $order===NULL ){
-        $order = [];
-      }
-      foreach($props as $key => $value){
-
-        if( array_key_exists( strtolower($key), $this->_value_map) ){
-          $order[ $this->_value_map[strtolower($key)] ] = $value;
-        }
-      }
-      return $order;
-    }
-
-    public function addOrder($order){
-      array_push($this->_values['orders'], $order);
-    }
-
-    public function addOrderItemValues($props, $order_item=NULL){
-      if( $order_item===NULL ){
-        $order_item = [];
-      }
-      foreach($props as $key => $value){
-        if( array_key_exists(strtolower($key), $this->_item_map) ){
-          $order_item[ $this->_item_mapp[strtolower($key)] ] = $value;
-        }
-      }
-      return $order_item;
-    }
-
-    public function addOrderItem($order, $order_item){
-      if( !isset($order['OrderItems']) ){
-        $order['OrderItems'] = [];
-      }
-      array_push($order['OrderItems'], $order_item);
-    }
 
     // public function callService($values=NULL){
     //   parent::callService();
