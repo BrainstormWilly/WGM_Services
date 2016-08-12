@@ -113,11 +113,11 @@
       foreach ($o['Customer'] as $c) {
 
         // CC & CLUB MEMBERS ONLY (used for Bar Z Wines)
-        // if( !array_key_exists('SavedCreditCards', $c) ){
-        //   if( $c['CustomerType']=='Wholesale' || $c['CustomerType']=='Consumer' ){
-        //     continue;
-        //   }
-        // }
+        if( !array_key_exists('SavedCreditCards', $c) ){
+          if( $c['CustomerType']=='Wholesale' || $c['CustomerType']=='Consumer' ){
+            continue;
+          }
+        }
 
         $v = $this->_v65_map;
 
@@ -154,7 +154,7 @@
           foreach($ccs as $cc){
             if( array_key_exists('PreferredCreditCard', $cc) ){
               $v['CreditCardType'] = $cc['CreditCardType'];
-              $v['CreditCardNumber'] = "'{$cc['CreditCardNumber']}'";
+              $v['CreditCardNumber'] = $cc['CreditCardNumber'];
               $v['CreditCardExpiryMo'] = $this->_dateSplitter($cc['CreditCardExpDate'])['mo'];
               $v['CreditCardExpiryYr'] = $this->_dateSplitter($cc['CreditCardExpDate'])['yr'];
               break;

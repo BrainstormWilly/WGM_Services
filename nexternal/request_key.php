@@ -43,6 +43,7 @@
     if( isset($verify_result['ActiveKey']) ){
       $_SESSION['key'] = $verify_result['ActiveKey'];
       header("Location: " . $_ENV['NEX_HOST'] . "/list.php");
+      exit;
     }
 
     $status = "Verification Failure: " . $verify->getOutputToXml();

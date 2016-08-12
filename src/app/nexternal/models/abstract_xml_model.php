@@ -27,6 +27,7 @@
     }
 
     public function processService(){
+      
       $ch = curl_init($this->_url);
       curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
