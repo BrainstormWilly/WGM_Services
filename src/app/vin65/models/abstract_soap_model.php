@@ -29,6 +29,14 @@
       }
     }
 
+    // public function getMappedValueField($field){
+    //   $lfield = strtolower($field);
+    //   foreach ($this->_value_map as $key => $value) {
+    //     if($key == $lfield) return $value;
+    //   }
+    //   return $field;
+    // }
+
     public function getValueFields(){
       return $this->_value_fields;
     }

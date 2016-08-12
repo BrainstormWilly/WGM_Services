@@ -1,6 +1,8 @@
 <?php namespace wgm\models;
 
-  class CSV{
+  require_once $_ENV['APP_ROOT'] . "/models/i_service_data.php";
+
+  class CSV implements IServiceData{
 
     private $_headers = [];
     private $_values = [];
@@ -17,7 +19,7 @@
       $this->_max_display = $max_display;
     }
 
-    public function readFile($file){
+    public function readData($file){
       $this->_file = $file;
       // $ptr = 0;
       if ( ($handle = fopen($file, "r")) !== FALSE) {
@@ -30,7 +32,7 @@
       return false;
     }
 
-    public function writeFile($file, $include_headers=TRUE){
+    public function writeData($file, $include_headers=TRUE){
       if( $include_headers ){
         $perm = 'w';
       }else{
@@ -105,6 +107,10 @@
       return $this->_index < count($this->_records);
     }
 
+    public function getCurrentPage(){
+      return $this->_page;
+    }
+
     public function getCurrentRecord(){
       if( $this->_index==0 ){
         return $this->_records[$this->_index];
@@ -118,6 +124,10 @@
         return $this->_records[$this->_index++];
       }
       return false;
+    }
+
+    public function getPageLimit(){
+      return $this->_page_limit;
     }
 
     public function resetRecordIndex($index=0){
