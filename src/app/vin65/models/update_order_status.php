@@ -1,6 +1,10 @@
 <?php namespace wgm\vin65\models;
 
+
+  require_once $_ENV['APP_ROOT'] . "/models/service_input_form.php";
   require_once $_ENV['APP_ROOT'] . '/vin65/models/abstract_soap_model.php';
+
+  use wgm\models\ServiceInputForm as ServiceInputForm;
   use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
 
 
@@ -12,17 +16,38 @@
 
     function __construct($session, $version=2){
 
-      $this->_value_fields = [
-        ["OrderNumber", "*Order Number", "text", "Required"],
-        ["BillingEmail", "Billing Email", "text", NULL],
-        ['OrderStatus', "*Order Status", "text", "Pending, Submitted, Completed, Cancelled, Quarantined"]
-      ];
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'ordernumber';
+      $vf['name'] = "Order Number";
+      $vf['type'] = 'text';
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'billingemail';
+      $vf['name'] = "Billing Email";
+      $vf['type'] = 'text';
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'orderstatus';
+      $vf['name'] = "Order Status";
+      $vf['type'] = 'text';
+      $vf['prompt'] = 'Pending, Submitted, Completed, Cancelled, Quarantined';
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'orderdate';
+      $vf['name'] = "Order Date";
+      $vf['type'] = 'text';
+      $vf['prompt'] = 'yyyy-mm-dd';
+      array_push($this->_value_fields, $vf);
 
 
       $this->_value_map = [
         "billingemail" => 'BillingEmail', // required
         "orderstatus" => 'OrderStatus', // Pending, Submitted, Completed, Cancelled, Quarantined
-        "ordernumber" => 'OrderNumber' // required
+        "ordernumber" => 'OrderNumber', // required
+        "orderdate" => 'OrderDate' // required
       ];
 
       parent::__construct($session, 2);
@@ -34,9 +59,7 @@
     public function getValuesID(){
       $ids = [];
       foreach ($this->_values['orders'] as $value) {
-        if( isset($value["OrderNumber"]) && !empty($values["OrderNumber"]) ){
-          array_push($ids, $value["OrderNumber"]);
-        }
+        array_push($ids, $value["OrderNumber"]);
       }
 
       if( count($ids) > 0 ) return implode($ids, ",");
@@ -44,19 +67,17 @@
       return parent::getValuesID();
 
     }
+
     public function setValues($values){
       $order = [];
       foreach ($values as $key => $value) {
-        if(!empty($value)){
+        if($value != ''){
           if( array_key_exists(strtolower($key), $this->_value_map) ){
               $order[$this->_value_map[strtolower($key)]] = $value;
           }
         }
       }
       array_push($this->_values["orders"], $order);
-
-      var_dump($this->_values);
-      exit;
     }
 
     public function getResultID(){

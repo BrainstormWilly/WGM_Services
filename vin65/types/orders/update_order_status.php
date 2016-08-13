@@ -9,6 +9,9 @@
 
   $controller = new UpdateOrderStatusController($_SESSION);
 
-  include $_ENV['V65_INCLUDES'] . '/service_view.php';
+  include $_ENV['V65_INCLUDES'] . "/form_post_helper.php";
+  include $_ENV['V65_INCLUDES'] . "/service_view.php";
+
+
 
 ?>

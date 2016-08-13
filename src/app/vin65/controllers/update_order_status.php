@@ -1,13 +1,15 @@
 <?php namespace wgm\vin65\controllers;
 
+  require_once $_ENV['APP_ROOT'] . "/models/service_input.php";
+  require_once $_ENV['APP_ROOT'] . "/models/service_input_form.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/controllers/abstract_soap_controller.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/update_order_status.php";
-  require_once $_ENV['APP_ROOT'] . "/vin65/models/service_input_form.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/soap_service_queue.php";
 
+  use wgm\models\ServiceInput as ServiceInputModel;
+  use wgm\models\ServiceInputForm as ServiceInputForm;
   use wgm\vin65\controllers\AbstractSoapController as AbstractSoapController;
   use wgm\vin65\models\UpdateOrderStatus as UpdateOrderStatusModel;
-  use wgm\vin65\models\ServiceInputForm as ServiceInputForm;
   use wgm\vin65\models\SoapServiceQueue as SoapServiceQueue;
 
 
@@ -18,6 +20,16 @@
       $this->_queue->appendService( "wgm\\vin65\\models\\UpdateOrderStatus" );
       $this->_input_form = new ServiceInputForm( new UpdateOrderStatusModel($session) );
     }
+
+    public function inputRecord($record){
+      // create consumable service model for queue
+      $input = new ServiceInputModel();
+      $input->addRecord($record);
+
+      $this->_queue->setData($input);
+      $this->_queue->init($_ENV['UPLOADS_PATH'] . '/update_order_status.csv');
+    }
+
 
 
     // CALLBACKS

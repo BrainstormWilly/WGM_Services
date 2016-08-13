@@ -32,11 +32,8 @@ class SoapServiceModel{
     $model->setValues($values);
     $class = $this->_model_class;
     $method = $class::METHOD_NAME;
-    // print_r($model->getValues());
-    // exit;
     $this->_proxy->$method($model->getValues())->then(
       function($result) use ($model, $callback){
-
         $model->setResult($result);
         call_user_func_array($callback, [$model]);
       },
