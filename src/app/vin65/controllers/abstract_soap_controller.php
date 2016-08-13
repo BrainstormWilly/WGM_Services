@@ -12,6 +12,7 @@
   use wgm\vin65\models\SoapServiceQueue as SoapServiceQueue;
   use wgm\vin65\models\SoapServiceModel as SoapServiceModel;
 
+
   abstract class AbstractSoapController{
 
     const
@@ -19,16 +20,17 @@
       CONTACT_SERVICE_V300 = "https://webservices.vin65.com/V300/ContactService.cfc?wsdl",
       NOTE_SERVICE_V300 = "https://webservices.vin65.com/V300/NoteService.cfc?wsdl";
 
-    protected $_input_form;
+    protected $_input_form = [];
     protected $_csv_model;
     protected $_session;
     protected $_logger;
-    protected $_results = 'processing...';
+    protected $_results = '';
     protected $_queue;
     //protected $_proxys = [];
 
     function __construct($session){
       $this->_session = $session;
+
       $this->_queue = new SoapServiceQueue($session, [$this, "onSoapServiceQueueStatus"]);
       // $this->_logger = new ServiceLogger();
       // $this->_csv_model = new CSVModel();
@@ -38,8 +40,12 @@
       $this->_queue->init($file, $index);
     }
 
+    public function inputRecord($record){
+      // override for specific data model;
+    }
+
     public function getInputForm(){
-      if( isset($this->_input_form) ){
+      if( count($this->_input_form) > 0 ){
         return $this->_input_form->getFormHtml();
       }
       return "<strong>No Form Available</strong>";

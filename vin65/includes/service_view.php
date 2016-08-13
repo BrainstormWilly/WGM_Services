@@ -23,7 +23,7 @@
               </a>
             </h4>
           </div>
-          <div class="panel-collapse collapse" id='upload-content' role='tabPanel' aria-labelledby='upload-heading'>
+          <div class="panel-collapse collapse in" id='upload-content' role='tabPanel' aria-labelledby='upload-heading'>
             <div class="panel-body">
               <?php
                 echo '<form action="' . $controller->getClassFileName() . '_file.php" method="post" enctype="multipart/form-data">';
@@ -49,6 +49,10 @@
           </div>
         </div>
 
+      </div>
+
+      <div>
+        <?php echo $controller->getResultsTable() ?>
       </div>
 
     </div>

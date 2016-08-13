@@ -9,11 +9,7 @@
 
   $controller = new UpdateOrderStatusController($_SESSION);
 
-  if( count($_POST) > 0 ) {
-    
-  }
-
-  require $_ENV['V65_INCLUDES'] . "/csv_post_helper.php";
+  include $_ENV['V65_INCLUDES'] . "/csv_post_helper.php";
   include $_ENV['V65_INCLUDES'] . "/service_file_view.php";
 
 
