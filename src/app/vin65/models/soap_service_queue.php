@@ -27,7 +27,6 @@ class SoapServiceModel{
   }
 
   public function process($session, $values, $callback){
-
     $model = new $this->_model_class($session);
     $model->setValues($values);
     $class = $this->_model_class;
@@ -81,10 +80,10 @@ class SoapServiceQueue{
   private $_status_callback;
   private $_data;
 
-  function __construct($session, $callback, $page_limit=25, $max_display=50){
+  function __construct($session, $callback, $page_limit=25, $display_limit=50, $set_limit=1){
     $this->_session = $session;
     $this->_logger = new ServiceLogger();
-    $this->_data = new CSVModel($page_limit, $max_display); // DEFAULT TO CSV, OVERRIDE W/setData
+    $this->_data = new CSVModel($page_limit, $display_limit, $set_limit); // DEFAULT TO CSV, OVERRIDE W/setData
     $this->_status_callback = $callback;
   }
 
@@ -120,6 +119,7 @@ class SoapServiceQueue{
   }
 
   public function getLog($type='html'){
+
     if( $this->_data->hasNextPage() ){
       $s = "<h4>Service In-Process: " . $this->_data->getRecordIndex() . " of " . $this->_data->getRecordCnt() . " records processed.</h4>";
     }else{
@@ -142,7 +142,6 @@ class SoapServiceQueue{
     if($record===NULL){
       $record = $this->_data->getNextRecord();
     }
-
     if( $this->_process_service_index < count($this->_services) ){
       $this->_services[$this->_process_service_index++]->process($this->_session, $record, [$this, "onProcessServiceComplete"]);
     }else{

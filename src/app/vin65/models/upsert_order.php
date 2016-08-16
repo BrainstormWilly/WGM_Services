@@ -166,30 +166,39 @@
       return $order;
     }
 
-    public function setValues($values){
+    public function setValues($sets){
+      // print_r($sets);
+      // exit;
+      foreach ($sets as $values) {
+        $order = $this->_addOrderValues($values);
+        foreach ($values["OrderItems"] as $value) {
+          $order_item = $this->_addOrderItemValues($value);
+          $order = $this->_addOrderItem($order, $order_item);
+        }
+        foreach ($values["Tenders"] as $value) {
+          $tender = $this->_addTenderValues($value);
+          $order = $this->_addTender($order, $tender);
+        }
 
-      $order = $this->_addOrderValues($values);
-      foreach ($values["OrderItems"] as $value) {
-        $order_item = $this->_addOrderItemValues($value);
-        $order = $this->_addOrderItem($order, $order_item);
+        $this->_addOrder($order);
       }
-      foreach ($values["Tenders"] as $value) {
-        $tender = $this->_addTenderValues($value);
-        $order = $this->_addTender($order, $tender);
-      }
-      $this->_addOrder($order);
     }
 
     public function getValuesID(){
-      $ids = [];
-      foreach ($this->_values['orders'] as $value) {
-        array_push($ids, $value["BillingEmail"]);
+      if( count($this->_values['orders']) > 0 ){
+        $cnt = count($this->_values['orders']) - 1;
+        $ids = $this->_values['orders'][0]['OrderNumber'] . ":" . $this->_values['orders'][0]['BillingEmail'];
+        $ids .= ' .. ';
+        $ids .= $this->_values['orders'][$cnt]['OrderNumber'] . ":" . $this->_values['orders'][$cnt]['BillingEmail'];
+        return $ids;
       }
-
-      if( count($ids) > 0 ) return implode($ids, ",");
 
       return parent::getValuesID();
 
+    }
+
+    public function getValueCnt(){
+      return count( $this->_values['order'] );
     }
 
     public function getResultID(){
