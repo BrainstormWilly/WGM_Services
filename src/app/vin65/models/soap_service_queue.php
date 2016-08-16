@@ -28,6 +28,7 @@ class SoapServiceModel{
 
   public function process($session, $values, $callback){
     $model = new $this->_model_class($session);
+
     $model->setValues($values);
     $class = $this->_model_class;
     $method = $class::METHOD_NAME;
@@ -93,9 +94,13 @@ class SoapServiceQueue{
 
   public function init($file, $index=0){
     $this->_data->resetRecordIndex($index);
+
     if( $this->_data->readData($file) ){
+
         $this->_logger->openLog($this->_data->getFile(), $index);
+
         $this->setProxies();
+
     }else{
       $this->_logger->writeToLog( ServiceLogger::createFailItem(0, '0000' , 'CSV Reader', 'Unable to read file.'));
       $this->setStatus(self::FAIL);
@@ -139,6 +144,7 @@ class SoapServiceQueue{
   }
 
   public function processNextService($record=NULL){
+
     if($record===NULL){
       $record = $this->_data->getNextRecord();
     }
@@ -150,6 +156,7 @@ class SoapServiceQueue{
   }
 
   public function processNextRecord(){
+
     $rec = $this->_data->getNextRecord();
     if( $rec ){
       $this->_process_service_index = 0;
@@ -164,6 +171,7 @@ class SoapServiceQueue{
     $this->_status = self::INCOMPLETE;
     $loop = EventLoopFactory::create();
     $soap = new SoapFactory($loop);
+
     foreach($this->_services as $service){
       $service->setProxy($soap, [$this, "onProxyComplete"]);
     }

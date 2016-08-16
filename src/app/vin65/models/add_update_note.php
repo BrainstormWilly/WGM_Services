@@ -29,8 +29,13 @@ use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
 
     public function setValues($values){
       foreach ($values as $key => $value) {
-        if( array_key_exists(strtolower($key), $this->_value_map) ){
-          $this->_values["Note"][$this->_value_map[strtolower($key)]] = $value;
+        $lkey = strtolower($key);
+        if( array_key_exists($lkey, $this->_value_map) ){
+          if( $lkey=='notedate'){
+            $date = new DateTime($value);
+            $value = $date->format('Y-m-d\TH:i:s');
+          }
+          $this->_values["Note"][$this->_value_map[$lkey]] = $value;
         }
       }
     }
