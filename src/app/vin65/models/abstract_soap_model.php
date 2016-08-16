@@ -11,7 +11,12 @@
     protected $_error = '';
     protected $_services_version = 3;
 
-
+    /*
+    ** Pass credentials via $_SESSION to each model
+    ** Vin65 has 2 service versions (2,3)
+    ** Each handles credentials differently
+    ** so pass $version from child models
+    */
     function __construct($session, $version=3){
       $this->_services_version = $version;
       if($this->_services_version==3){
@@ -29,29 +34,41 @@
       }
     }
 
-    // public function getMappedValueField($field){
-    //   $lfield = strtolower($field);
-    //   foreach ($this->_value_map as $key => $value) {
-    //     if($key == $lfield) return $value;
-    //   }
-    //   return $field;
-    // }
-
+    /*
+    ** Form field markup for single input Form
+    ** Create in child model __construct
+    */
     public function getValueFields(){
       return $this->_value_fields;
     }
 
+    /*
+    ** Log requires some sort of ID for each send
+    ** record. Override in child model.
+    */
     public function getValuesID(){
       return "Unknown";
     }
 
+    /*
+    ** Log requires some sort of ID for each return
+    ** record. Override in child model.
+    */
     public function getResultID(){
       return "Unknown";
     }
 
+    /*
+    ** Expose values. Rarely used.
+    */
     public function getValues(){
       return $this->_values;
     }
+
+    /*
+    ** Set values by mapping keys to key maps set
+    ** in __construct. Often overridden.
+    */
     public function setValues($values){
       foreach ($values as $key => $value) {
         if(!empty($value)){
@@ -60,6 +77,12 @@
           }
         }
       }
+    }
+
+
+    public function getValueCnt(){
+      // always override this
+      return 0;
     }
 
     public function getKeys(){
