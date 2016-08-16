@@ -14,10 +14,17 @@
 
     function __construct($session){
       parent::__construct($session);
-      $this->_queue->setData( new UpsertOrderCSV() );
+
       $this->_queue->appendService( "wgm\\vin65\\models\\UpsertOrder" );
     }
 
+    public function getCsvForm($has_sets=false){
+      return parent::getCsvForm(true);
+    }
+
+    public function setData($page_limit=25, $display_limit=50, $set_limit=1){
+      $this->_queue->setData( new UpsertOrderCSV($page_limit, $display_limit, $set_limit) );
+    }
 
     // private function _processRecord(){
     //   $record = $this->_orders[$this->_order_index];

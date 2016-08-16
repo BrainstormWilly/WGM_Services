@@ -38,8 +38,8 @@
       $vf = ServiceInputForm::FieldValues();
       $vf['id'] = 'orderdate';
       $vf['name'] = "Order Date";
-      $vf['type'] = 'text';
-      $vf['prompt'] = 'yyyy-mm-dd';
+      $vf['type'] = 'date';
+      // $vf['prompt'] = 'yyyy-mm-dd';
       array_push($this->_value_fields, $vf);
 
 

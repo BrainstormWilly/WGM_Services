@@ -14,11 +14,12 @@ class UpsertOrderCSV implements IServiceData{
   private $_index = 0;
   private $_page = 1;
 
-  function __construct($page_limit=100, $display_limit=50, $set_limit=15){
+  function __construct($page_limit=100, $display_limit=50, $set_limit=1){
     $this->_csv = new CSVModel($page_limit, $display_limit, $set_limit);
   }
 
   public function readData($data){
+
     if( $this->_csv->readData($data) ){
       while( $this->_csv->hasNextRecord(true) ){
         $this->addRecord( $this->_csv->getNextRecord(true) );
@@ -45,9 +46,6 @@ class UpsertOrderCSV implements IServiceData{
       $order["Tenders"] = [$values];
       array_push($this->_records, $order);
     }
-
-
-
   }
 
   public function getCurrentPage(){
@@ -82,11 +80,12 @@ class UpsertOrderCSV implements IServiceData{
   }
 
   public function getNextRecord($override_page=false){
-    if( $this->getSetLimit() > 1 ) return $this->getNextSet();
-    if( $this->hasNextRecord($override_page) ){
-      return $this->_records[$this->_index++];
-    }
-    return false;
+    return $this->getNextSet();
+    // if( $this->getSetLimit() > 1 ) return $this->getNextSet();
+    // if( $this->hasNextRecord($override_page) ){
+    //   return $this->_records[$this->_index++];
+    // }
+    // return false;
   }
 
   public function getNextSet(){
@@ -95,6 +94,7 @@ class UpsertOrderCSV implements IServiceData{
     while( $this->hasNextRecord() && $set_index < $this->getSetLimit() ){
       $set[ $set_index++ ] = $this->_records[$this->_index++];
     }
+
     if( count($set) > 0 ){
       return $set;
     }

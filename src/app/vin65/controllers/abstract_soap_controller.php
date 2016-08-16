@@ -36,7 +36,12 @@
       // $this->_csv_model = new CSVModel();
     }
 
+    public function setData($page_limit=25, $display_limit=50, $set_limit=1){
+      // override for specific data model
+    }
+
     public function queueRecords($file, $index=0){
+
       $this->_queue->init($file, $index);
     }
 
@@ -51,13 +56,25 @@
       return "<strong>No Form Available</strong>";
     }
 
-    public function getCsvForm(){
-      return '<div class="form-group">
-        <label for="csv_file">Upload CSV file</label>
-        <input type="file" id="csv_file" name="csv_file">
-        <input type="hidden" id="input_type" name="input_type" value="file">
-      </div>
-      <button type="submit" class="btn btn-primary">Load File</button>';
+    public function getCsvForm($has_sets=false){
+      $t = '<div class="form-group">
+                <label for="csv_file">Upload CSV file</label>
+                <input type="file" id="csv_file" name="csv_file">
+              </div>
+              <div class="row">
+                <div class="col-md-2 form-group">
+                  <label for="page_limit">Page Limit</label>
+                  <input class="form-control" type="number" id="page_limit" name="page_limit" value="25">
+                </div>';
+      if( $has_sets ){
+        $t .= '<div class="col-md-2 form-group">
+                <label for="set_limit">Set Limit (15 Max.)</label>
+                <input class="form-control" type="number" id="set_limit" name="set_limit" value="1">
+              </div>';
+      }
+      $t .=   '</div>
+              <button type="submit" class="btn btn-primary">Load File</button>';
+      return $t;
     }
 
     public function setResultsTable($text){
