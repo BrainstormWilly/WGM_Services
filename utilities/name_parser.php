@@ -14,15 +14,15 @@ if( file_exists("names_out.csv") ){
 if (($handle = fopen("names_in.csv", "r")) !== FALSE) {
   $splits = "";
     while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
-        $parts = explode( ",", $data[0] );
+        $parts = explode( " ", $data[0] );
         $cnt = count($parts);
         if( $cnt==1 ){
           if( empty(trim($parts[0])) ){
             $parts[0] = "NO";
           }
-          $splits .= trim($parts[0]) . ", NAME\n";
+          $splits .= trim($parts[0]) . ", NAME" . PHP_EOL;
         }elseif( $cnt==2 ) {
-          $splits .= trim($parts[0]). "," . trim($parts[1]) . "\n";
+          $splits .= trim($parts[0]). "," . trim($parts[1]) . PHP_EOL;
         }else{
           $lastchr = count($parts) - 1;
           if( in_array(strtolower($parts[$lastchr]), $last_name_suffixes) || in_array(strtolower($parts[$lastchr-1]), $last_name_prefixes) ){
@@ -32,7 +32,7 @@ if (($handle = fopen("names_in.csv", "r")) !== FALSE) {
             $first = array_slice($parts, 0, $lastchr);
             $last = array_slice($parts, -1);
           }
-          $splits .= trim(implode(" ", $first)) . "," . trim(implode(" ", $last)) . "\n";
+          $splits .= trim(implode(" ", $first)) . "," . trim(implode(" ", $last)) . PHP_EOL;
         }
     }
     fclose($handle);
