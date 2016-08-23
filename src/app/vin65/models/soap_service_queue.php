@@ -30,7 +30,9 @@ class SoapServiceModel{
     $model->setValues($values);
     $class = $this->_model_class;
     $method = $class::METHOD_NAME;
-
+    // if( $method=='AddUpdateNote' ){
+    //   print_r($model->getValues());
+    // }
     $this->_proxy->$method($model->getValues())->then(
       function($result) use ($model, $callback){
 
@@ -130,7 +132,7 @@ class SoapServiceQueue{
 
   public function processNextPage($class_file){
     if( $this->_csv->hasNextPage() ){
-      header("Refresh:1; url=" . $class_file . "_file.php?file=" . $this->_csv_model->getFileName() . "&index=" . strval($this->_csv->getRecordIndex()));
+      header("Refresh:1; url=" . $class_file . "_file.php?file=" . $this->_csv->getFileName() . "&index=" . strval($this->_csv->getRecordIndex()));
     }
   }
 

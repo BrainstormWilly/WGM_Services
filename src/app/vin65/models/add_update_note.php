@@ -1,6 +1,8 @@
 <?php namespace wgm\vin65\models;
 
 require_once $_ENV['APP_ROOT'] . '/vin65/models/abstract_soap_model.php';
+
+use \DateTime as DateTime;
 use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
 
   class AddUpdateNote extends AbstractSoapModel{
@@ -29,8 +31,13 @@ use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
 
     public function setValues($values){
       foreach ($values as $key => $value) {
-        if( array_key_exists(strtolower($key), $this->_value_map) ){
-          $this->_values["Note"][$this->_value_map[strtolower($key)]] = $value;
+        $lkey = strtolower($key);
+        if( array_key_exists($lkey, $this->_value_map) ){
+          if( $lkey=='notedate' ){
+            $d = new DateTime($value);
+            $value = $d->format('Y-m-d\TH:m:s');
+          }
+          $this->_values["Note"][$this->_value_map[$lkey]] = $value;
         }
       }
     }

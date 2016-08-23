@@ -71,6 +71,7 @@
             $rec["KeyCodeID"] = $model->getResultID();
             $this->_queue->processNextService($rec);
           }else{
+
             $this->_queue->processNextRecord();
           }
         }elseif( $model->getClassName()==AddUpdateNoteModel::METHOD_NAME ){

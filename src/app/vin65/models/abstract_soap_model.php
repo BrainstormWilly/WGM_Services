@@ -72,7 +72,7 @@
         }else{
           $e = "";
           foreach($result->Errors as $value){
-            $e.= $value["ErrorCode"] . ": " . $value["ErrorMessage"] . "; ";
+            $e.= $value->ErrorCode . ": " . $value->ErrorMessage . "; ";
           }
           $this->setError($e);
         }
