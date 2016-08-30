@@ -1,9 +1,10 @@
 <?php namespace wgm\vin65\models;
 
 require_once $_ENV['APP_ROOT'] . '/vin65/models/abstract_soap_model.php';
+require_once $_ENV['APP_ROOT'] . '/vin65/models/date_converter.php';
 
-use \DateTime as DateTime;
-use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
+// use \DateTime as DateTime;
+// use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
 
   class AddUpdateNote extends AbstractSoapModel{
 
@@ -34,8 +35,7 @@ use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
         $lkey = strtolower($key);
         if( array_key_exists($lkey, $this->_value_map) ){
           if( $lkey=='notedate' ){
-            $d = new DateTime($value);
-            $value = $d->format('Y-m-d\TH:m:s');
+            $value = DateConverter::toYMD($value);
           }
           $this->_values["Note"][$this->_value_map[$lkey]] = $value;
         }

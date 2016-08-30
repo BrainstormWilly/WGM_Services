@@ -1,6 +1,16 @@
-SUCCESS,1,3:wgm1_courtney_russell@noemail.com .. 3:wgm1_courtney_russell@noemail.com,OrderService->UpsertOrder,d666c823-ecc6-9d05-748b-6fa5cf1b2881
-SUCCESS,2,20:wgm1_13152@noemail.com .. 20:wgm1_13152@noemail.com,OrderService->UpsertOrder,D6BE263F-F201-2630-E19C-0D261BE505E0
-SUCCESS,3,21:wgm1_13152@noemail.com .. 21:wgm1_13152@noemail.com,OrderService->UpsertOrder,D6BE3BC0-D790-AAB0-E96D-8BF4992ABD6A
-SUCCESS,4,34:wgm1_13152@noemail.com .. 34:wgm1_13152@noemail.com,OrderService->UpsertOrder,D6BEF460-D3F3-B364-4C04-DCA8E32494CA
-SUCCESS,5,67:wgm1_13152@noemail.com .. 67:wgm1_13152@noemail.com,OrderService->UpsertOrder,D6BF0503-E19F-081F-4655-473A88158634
-SUCCESS,6,138:wgm1_13152@noemail.com .. 138:wgm1_13152@noemail.com,OrderService->UpsertOrder,D6BF0E1D-0221-5436-CED1-F3816BC3B1E8
+SUCCESS,2,33087:bill@wineglassmarketing.com,OrderService->UpsertOrder,7156ddc7-c5bc-f30b-0ae7-767abc6a8a72
+SUCCESS,4,33088:bill@wineglassmarketing.com,OrderService->UpsertOrder,71571400-f9ed-f9dd-446e-fc2efc9b4855
+SUCCESS,6,33089:bill@wineglassmarketing.com,OrderService->UpsertOrder,71573cb1-92d6-6e53-5617-83e818b48919
+SUCCESS,10,33090:bill@wineglassmarketing.com,OrderService->UpsertOrder,71576fa7-f1f9-5926-c04b-5a79170285be
+SUCCESS,11,33091:bill@wineglassmarketing.com,OrderService->UpsertOrder,71578f0a-05cf-825b-cacf-4cc03d8f18cb
+SUCCESS,14,33092:bill@wineglassmarketing.com,OrderService->UpsertOrder,7157a82e-e86b-30a8-9549-c116fe21cdc9
+SUCCESS,17,33093:bill@wineglassmarketing.com,OrderService->UpsertOrder,7157b733-b014-6eb5-3a3b-8bbd3bc1b51b
+SUCCESS,18,33094:bill@wineglassmarketing.com,OrderService->UpsertOrder,715842b9-ad01-a956-6ec8-9d5dedca6c05
+SUCCESS,19,33095:bill@wineglassmarketing.com,OrderService->UpsertOrder,715852ee-0b37-534e-a311-e212db6c9fcb
+SUCCESS,20,33096:bill@wineglassmarketing.com,OrderService->UpsertOrder,715867bb-9952-5ef9-882f-18d24e73caa9
+SUCCESS,25,33097:bill@wineglassmarketing.com,OrderService->UpsertOrder,715875cb-ee3a-2fc0-3d36-bab677dd0f6e
+SUCCESS,26,33097:bill@wineglassmarketing.com,OrderService->UpsertOrder,715875cb-ee3a-2fc0-3d36-bab677dd0f6e
+SUCCESS,27,33098:bill@wineglassmarketing.com,OrderService->UpsertOrder,71593216-fadd-b1d0-7171-f4e62ec208b2
+SUCCESS,29,33099:bill@wineglassmarketing.com,OrderService->UpsertOrder,71594cd4-e7d4-7a05-23e8-ddf1a75fb827
+SUCCESS,33,33100:bill@wineglassmarketing.com,OrderService->UpsertOrder,71595a73-cfd2-13f1-fe0f-de711ea9503d
+SUCCESS,36,33101:bill@wineglassmarketing.com,OrderService->UpsertOrder,71597423-e3e1-82ef-82ad-6d1a5c49d292

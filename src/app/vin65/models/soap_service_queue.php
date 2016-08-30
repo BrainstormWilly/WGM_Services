@@ -92,15 +92,11 @@ class SoapServiceQueue{
     $this->_data = $data_model;
   }
 
-  public function init($file, $index=0){
-    $this->_data->resetRecordIndex($index);
-
+  public function init($file, $index=0, $cnt=0){
+    $this->_data->resetRecordIndex($index, $cnt);
     if( $this->_data->readData($file) ){
-
         $this->_logger->openLog($this->_data->getFile(), $index);
-
         $this->setProxies();
-
     }else{
       $this->_logger->writeToLog( ServiceLogger::createFailItem(0, '0000' , 'CSV Reader', 'Unable to read file.'));
       $this->setStatus(self::FAIL);
@@ -126,7 +122,8 @@ class SoapServiceQueue{
   public function getLog($type='html'){
 
     if( $this->_data->hasNextPage() ){
-      $s = "<h4>Service In-Process: " . $this->_data->getRecordIndex() . " of " . $this->_data->getRecordCnt() . " records processed.</h4>";
+
+      $s = "<h4>Service In-Process: " . $this->_data->getCurrentRecordIndex() . " of " . $this->_data->getRecordCnt() . " records processed. " . count($this->_data->getRecords()) . " actual records sent to service in page.</h4>";
     }else{
       $s = "<h4>Service Complete: " . $this->_data->getRecordCnt() . " records processed.</h4>";
     }
@@ -139,7 +136,8 @@ class SoapServiceQueue{
 
   public function processNextPage($class_file){
     if( $this->_data->hasNextPage() ){
-      header("Refresh:1; url=" . $class_file . "_file.php?file=" . $this->_data->getFileName() . "&index=" . strval($this->_data->getRecordIndex()));
+      $url = $class_file . "_file.php?file=" . $this->_data->getFileName() . "&index=" . strval($this->_data->getCurrentRecordIndex()) . "&cnt=" . $this->_data->getRecordCnt() . "&page_limit=" . $this->_data->getPageLimit() . "&display_limit=" . $this->_data->getDisplayLimit() . "&set_limit=" . $this->_data->getSetLimit();
+      header("Refresh:1; url=" . $url );
     }
   }
 
@@ -201,7 +199,7 @@ class SoapServiceQueue{
       }
       $this->processNextService();
     }else{
-      $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_data->getRecordIndex(), "0", "SOAP Service Error", "Unable to Connect to service."));
+      $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_data->getCurrentRecordIndex(), "0", "SOAP Service Error", "Unable to Connect to service."));
       $this->_logger->closeLog();
       $this->setStatus(self::FAIL);
     }
@@ -209,9 +207,9 @@ class SoapServiceQueue{
 
   public function onProcessServiceComplete($model){
     if( $model->success() ){
-      $this->_logger->writeToLog( ServiceLogger::createSuccessItem($this->_data->getRecordIndex(), $model->getValuesID(), $this->getCurrentService()->getName(), $model->getResultID()));
+      $this->_logger->writeToLog( ServiceLogger::createSuccessItem($this->_data->getCurrentRecordIndex(), $model->getValuesID(), $this->getCurrentService()->getName(), $model->getResultID()));
     }else{
-      $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_data->getRecordIndex(), $model->getValuesID(), $this->getCurrentService()->getName(), $model->getError()));
+      $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_data->getCurrentRecordIndex(), $model->getValuesID(), $this->getCurrentService()->getName(), $model->getError()));
     }
     $this->_current_service_model = $model;
     $this->setStatus(self::PROCESS_COMPLETE);

@@ -9,7 +9,6 @@
     public function addRecord($values){
       array_push( $this->_values, $values );
       if( empty($this->_headers) ){
-
         $this->_field_cnt = count($values);
         for($i=0; $i<$this->_field_cnt; $i++){
           array_push( $this->_headers, $values[$i] );

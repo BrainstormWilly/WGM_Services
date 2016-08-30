@@ -3,8 +3,10 @@
 interface IServiceData{
 
   public function addRecord($values);
+  public function getCurrentIndex();
   public function getCurrentPage();
   public function getCurrentRecord();
+  public function getCurrentRecordIndex();
   public function getDisplayLimit();
   public function getFile();
   public function getFileName();
@@ -20,7 +22,7 @@ interface IServiceData{
   public function hasNextPage();
   public function hasNextRecord($override_page=false);
   public function readData($file);
-  public function resetRecordIndex($index=0);
+  public function resetRecordIndex($index=0, $cnt=0);
   public function writeData($data, $include_headers=TRUE);
 
 }

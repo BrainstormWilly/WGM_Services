@@ -2,11 +2,18 @@
 $page_limit = 25;
 $display_limit = 50;
 $set_limit = 1;
+$record_cnt = 0;
 if( count($_POST) > 0 ) {
 
   if( isset($_POST['page_limit']) ) $page_limit = intval($_POST['page_limit']);
   if( isset($_POST['display_limit']) ) $display_limit = intval($_POST['display_limit']);
-  if( isset($_POST['set_limit']) &&  intval($_POST['set_limit']) <= 25) $set_limit = intval($_POST['set_limit']);
+  if( isset($_POST['set_limit']) ){
+    if( intval($_POST['set_limit']) > 15 ){
+      $set_limit = 15;
+    }else{
+      $set_limit = intval($_POST['set_limit']);
+    }
+  }
 
   $controller->setResultsTable("<h4>Preparing file " . basename($_FILES["csv_file"]["name"]) . "...</h4>");
   $file = $_ENV['UPLOADS_PATH'] . basename($_FILES["csv_file"]["name"]);
@@ -28,9 +35,18 @@ if( count($_POST) > 0 ) {
 }else{
   if( isset($_GET['page_limit']) ) $page_limit = intval($_GET['page_limit']);
   if( isset($_GET['display_limit']) ) $display_limit = intval($_GET['display_limit']);
-  if( isset($_GET['set_limit']) &&  intval($_GET['set_limit']) <= 25) $set_limit = intval($_GET['set_limit']);
+  if( isset($_GET['set_limit']) ){
+    if( intval($_GET['set_limit']) > 15 ){
+      $set_limit = 15;
+    }else{
+      $set_limit = intval($_GET['set_limit']);
+    }
+  }
+  if( !isset($_GET['cnt']) ){
+    $_GET['cnt'] = 0;
+  }
   $controller->setData($page_limit, $display_limit, $set_limit);
-  $controller->queueRecords($_ENV['UPLOADS_PATH'] . $_GET['file'], $_GET['index']);
+  $controller->queueRecords($_ENV['UPLOADS_PATH'] . $_GET['file'], $_GET['index'], $_GET['cnt']);
 }
 
 ?>

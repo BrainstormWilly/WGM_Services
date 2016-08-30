@@ -40,9 +40,9 @@
       // override for specific data model
     }
 
-    public function queueRecords($file, $index=0){
+    public function queueRecords($file, $index=0, $cnt=0){
 
-      $this->_queue->init($file, $index);
+      $this->_queue->init($file, $index, $cnt);
     }
 
     public function inputRecord($record){

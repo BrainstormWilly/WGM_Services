@@ -3,9 +3,12 @@
 
   require_once $_ENV['APP_ROOT'] . "/models/service_input_form.php";
   require_once $_ENV['APP_ROOT'] . '/vin65/models/abstract_soap_model.php';
+  require_once $_ENV['APP_ROOT'] . '/vin65/models/date_converter.php';
 
   use wgm\models\ServiceInputForm as ServiceInputForm;
-  use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
+  // use wgm\vin65\models\DateConverter as V65DateConverter;
+  //use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
+
 
 
   class UpdateOrderStatus extends AbstractSoapModel{
@@ -71,8 +74,12 @@
       $order = [];
       foreach ($values as $key => $value) {
         if($value != ''){
-          if( array_key_exists(strtolower($key), $this->_value_map) ){
-              $order[$this->_value_map[strtolower($key)]] = $value;
+          $lkey = strtolower($key);
+          if( array_key_exists($lkey, $this->_value_map) ){
+            if( $lkey=='orderdate' ){
+              $value = DateConverter::toMDY($value);
+            }
+            $order[$this->_value_map[$lkey]] = $value;
           }
         }
       }

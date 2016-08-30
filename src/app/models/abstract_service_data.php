@@ -4,16 +4,20 @@
 
   abstract class AbstractServiceData implements IServiceData{
 
+
+    protected $_display_limit = 50;   // max amount of records to show on screen
     protected $_field_cnt = 0;        // the amount of fields/keys in a record
     protected $_file;                 // the full file path of the .csv as well as the log .txt
+    protected $_has_next_page = TRUE; // set on readData to determine if the file has more records
     protected $_headers = [];         // list of fields/keys for each record
-    protected $_index = 0;            // current index of records
-    protected $_display_limit = 50;   // max amount of records to show on screen
+    protected $_index = 0;            // current index of selected records
     protected $_page = 1;             // index of current page
     protected $_page_limit = 25;      // amount of method calls allowed per service session
     protected $_records = [];         // full list of records (data & headers)
-    protected $_values = [];          // full list of records (data only + headers)
+    protected $_record_cnt = 0;       // total count of file records
+    protected $_record_index = 0;     // current file index of records
     protected $_set_limit = 1;        // amount of records allowed per service method (where allowed)
+    protected $_values = [];          // full list of records (data only + headers)
 
     function __construct($page_limit=25, $display_limit=50, $set_limit=1){
       $this->_page_limit = $page_limit;
@@ -25,6 +29,10 @@
       array_push($this->_records, $values);
     }
 
+    public function getCurrentIndex(){
+      return $this->_index;
+    }
+
     public function getCurrentPage(){
       return $this->_page;
     }
@@ -34,6 +42,10 @@
         return $this->_records[$this->_index];
       }
       return $this->_records[$this->_index - 1];
+    }
+
+    public function getCurrentRecordIndex(){
+      return $this->_index + $this->_record_index;
     }
 
     public function getDisplayLimit(){
@@ -79,20 +91,21 @@
     }
 
     public function getRecordCnt(){
-      return count( $this->_records );
+      return $this->_record_cnt;
     }
 
     public function getRecordIndex(){
-      return $this->_index;
+      return $this->_record_index;
     }
 
     public function getRecords($page=NULL){
-      if( $page===NULL ){
-        $page = $this->_current_page;
-      }
-      $r1 = $page - 1;
-      $rn = $page * $this->_display_limit;
-      return array_slice($this->_records, $r1, $rn);
+      // if( $page===NULL ){
+      //   $page = $this->_current_page;
+      // }
+      // $r1 = $page - 1;
+      // $rn = $page * $this->_display_limit;
+      // return array_slice($this->_records, $r1, $rn);
+      return $this->_records;
     }
 
     public function getSetLimit(){
@@ -104,30 +117,53 @@
     }
 
     public function hasNextPage(){
-      if( $this->_page_limit==0 ) return false;
-      return $this->_index < count($this->_records);
+      // if( $this->_page_limit==0 ) return false;
+      // return $this->_index < count($this->_records);
+      return $this->_has_next_page;
     }
 
     public function hasNextRecord($override_page=false){
-      if( $this->_page_limit==0 || $override_page ) return $this->_index < count($this->_records);
-      return $this->_index < ($this->_page * $this->_page_limit) && $this->_index < count($this->_records);
+      // if( $this->_page_limit==0 || $override_page ) return $this->_index < count($this->_records);
+      // return $this->_index < ($this->_page * $this->_page_limit) && $this->_index < count($this->_records);
+      return $this->_index < count($this->_records);
     }
 
     public function readData($file){
+      $limit = $this->_record_index + ($this->_page_limit * $this->_set_limit);
+      $current = 0;
+      $cnt = 0;
       $this->_file = $file;
-      // $ptr = 0;
+      // print_r($this->_record_index . " : " . $limit . "</br>");
       if ( ($handle = fopen($file, "r")) !== FALSE) {
-        while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
-          $this->addRecord($data);
+        while( ($data = fgetcsv($handle, 0, ",")) !== FALSE ) {
+          if( $current == 0 ){
+            $this->addRecord($data);
+            $current += 1;
+          }else{
+            $cnt += 1;
+            if( $current > $this->_record_index && $current <= $limit ){
+
+              $this->addRecord($data);
+            }
+            if( ++$current > $limit && $this->_record_cnt > 0 ){
+              break;
+            }
+          }
         }
         fclose($handle);
-        return true;
+        $this->_has_next_page = $current > $limit;
+        if( $this->_record_cnt == 0 ) $this->_record_cnt = $cnt;
+
+        return TRUE;
       }
-      return false;
+      return FALSE;
     }
 
-    public function resetRecordIndex($index=0){
-      $this->_index = $index;
+    public function resetRecordIndex($index=0, $cnt=0){
+      //print_r("Index: " . $index . "; Count: " . $cnt . "</br>");
+      $this->_record_cnt = $cnt;
+      $this->_record_index = $index;
+      $this->_index = 0;
       $this->_page = floor($index/$this->_page_limit) + 1;
     }
 
@@ -143,9 +179,9 @@
           fputcsv($handle, $val);
         }
         fclose($handle);
-        return true;
+        return TRUE;
       }
-      return false;
+      return FALSE;
     }
 
   }
