@@ -46,15 +46,16 @@
     }
 
     public function toRecord(){
+      $s = [];
       if( $this->_is_success ){
-        $s = 'SUCCESS,';
+        $s['Status'] = 'SUCCESS,';
       }else{
-        $s = 'FAIL,';
+        $s['Status'] = 'FAIL,';
       }
-      $s .= $this->_record_num . ",";
-      $s .= $this->_customer_num . ",";
-      $s .= $this->_heading . ",";
-      $s .= $this->_message . PHP_EOL;
+      $s['RecordNumber'] = $this->_record_num . ",";
+      $s['CustomerID'] = $this->_customer_num . ",";
+      $s['Heading'] = $this->_heading . ",";
+      $s['Message'] = $this->_message . PHP_EOL;
       return $s;
     }
   }
@@ -79,14 +80,15 @@
       }else{
         $perm = 'a';
       }
-      $file = str_replace('.csv','.txt',$csv);
+      $file = str_replace('.csv','_log.csv',$csv);
       $this->_file_handle = fopen( $file, $perm);
     }
 
     public function writeToLog(ServiceLogItem $log_item){
       if( isset($this->_file_handle) ){
         array_unshift($this->_log, $log_item);
-        fwrite($this->_file_handle, $log_item->toRecord() );
+        fputcsv($this->_file_handle, $log_item->toRecord() );
+        // fwrite($this->_file_handle, $log_item->toRecord() );
         // $_SESSION['log'] = 'working';
         //$_SESSION["log"] = $log_item->toHtml();
       }else{

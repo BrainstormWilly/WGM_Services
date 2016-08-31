@@ -142,11 +142,13 @@ class SoapServiceQueue{
       $s = "<h4>Service In-Process: " . $this->_data->getCurrentRecordIndex() . " of " . $this->_data->getRecordCnt() . " records processed. " . count($this->_data->getRecords()) . " actual records sent to service in page.</h4>";
     }else{
       $s = "<h4>Service Complete: " . $this->_data->getRecordCnt() . " records processed.</h4>";
+      $s .= "<p><a type='button' class='btn btn-default' href='service_log.php?file={$this->_csv->getFileName()}'>View Full Log</a></p>";
     }
     $log = $this->_logger->getLog();
     foreach($log as $item){
       $s .= $item->toHtml();
     }
+
     return $s;
   }
 
