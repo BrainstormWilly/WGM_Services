@@ -2,7 +2,10 @@
 $page_limit = 25;
 $display_limit = 50;
 $set_limit = 1;
+<<<<<<< HEAD
 $record_cnt = 0;
+=======
+>>>>>>> order-service
 if( count($_POST) > 0 ) {
 
   if( isset($_POST['page_limit']) ) $page_limit = intval($_POST['page_limit']);
@@ -14,6 +17,7 @@ if( count($_POST) > 0 ) {
       $set_limit = intval($_POST['set_limit']);
     }
   }
+
 
   $controller->setResultsTable("<h4>Preparing file " . basename($_FILES["csv_file"]["name"]) . "...</h4>");
   $file = $_ENV['UPLOADS_PATH'] . basename($_FILES["csv_file"]["name"]);
@@ -47,6 +51,7 @@ if( count($_POST) > 0 ) {
   }
   $controller->setData($page_limit, $display_limit, $set_limit);
   $controller->queueRecords($_ENV['UPLOADS_PATH'] . $_GET['file'], $_GET['index'], $_GET['cnt']);
+
 }
 
 ?>

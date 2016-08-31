@@ -4,7 +4,6 @@
 
   abstract class AbstractServiceData implements IServiceData{
 
-
     protected $_display_limit = 50;   // max amount of records to show on screen
     protected $_field_cnt = 0;        // the amount of fields/keys in a record
     protected $_file;                 // the full file path of the .csv as well as the log .txt

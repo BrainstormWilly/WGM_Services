@@ -97,6 +97,7 @@ class SoapServiceQueue{
     if( $this->_data->readData($file) ){
         $this->_logger->openLog($this->_data->getFile(), $index);
         $this->setProxies();
+
     }else{
       $this->_logger->writeToLog( ServiceLogger::createFailItem(0, '0000' , 'CSV Reader', 'Unable to read file.'));
       $this->setStatus(self::FAIL);
@@ -122,7 +123,6 @@ class SoapServiceQueue{
   public function getLog($type='html'){
 
     if( $this->_data->hasNextPage() ){
-
       $s = "<h4>Service In-Process: " . $this->_data->getCurrentRecordIndex() . " of " . $this->_data->getRecordCnt() . " records processed. " . count($this->_data->getRecords()) . " actual records sent to service in page.</h4>";
     }else{
       $s = "<h4>Service Complete: " . $this->_data->getRecordCnt() . " records processed.</h4>";

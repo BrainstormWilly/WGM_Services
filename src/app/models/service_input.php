@@ -9,8 +9,6 @@
       parent::__construct(1, $display_limit, 1);
     }
 
-
-
     public function addRecord($values){
       if( count($this->_records) > 0 ) return; // only 1 record allowed for input
       array_push($this->_records, $values);

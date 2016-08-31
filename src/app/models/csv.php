@@ -14,13 +14,11 @@
           array_push( $this->_headers, $values[$i] );
         }
       }else{
-
         $record = [];
         for($i=0; $i<$this->_field_cnt; $i++) {
           $record[$this->_headers[$i]] = $values[$i];
         }
         array_push( $this->_records, $record );
-
       }
     }
 

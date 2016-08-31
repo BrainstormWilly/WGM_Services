@@ -22,7 +22,6 @@ class UpsertOrderCSV implements IServiceData{
     $index = -1;
     $cnt = count($this->_records);
     for($i=0; $i<$cnt; $i++){
-
       if( $this->_records[$i]["OrderNumber"] == $values["OrderNumber"] ){
         array_push($this->_records[$i]['OrderItems'], $values);
         $index = $i;
@@ -137,7 +136,6 @@ class UpsertOrderCSV implements IServiceData{
   }
 
   public function resetRecordIndex($index=0, $cnt=0){
-
     $this->_csv->resetRecordIndex($index, $cnt);
     $this->_index = 0;
     $this->_page = floor($index/$this->getPageLimit()) + 1;

@@ -6,9 +6,6 @@
   require_once $_ENV['APP_ROOT'] . '/vin65/models/date_converter.php';
 
   use wgm\models\ServiceInputForm as ServiceInputForm;
-  // use wgm\vin65\models\DateConverter as V65DateConverter;
-  //use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
-
 
 
   class UpdateOrderStatus extends AbstractSoapModel{
