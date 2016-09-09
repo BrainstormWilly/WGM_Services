@@ -35,15 +35,7 @@
     }
 
     public function getCurrentRecordIndex(){
-      return 0;
-    }
-
-    public function getFile(){
-      return "ServiceInput Form";
-    }
-
-    public function getFileName(){
-      return "ServiceInput";
+      return 1;
     }
 
     public function getRecordCnt(){
@@ -51,7 +43,7 @@
     }
 
     public function getRecordIndex(){
-      return 0;
+      return 1;
     }
 
     public function hasNextPage(){

@@ -5,7 +5,6 @@
 
   class CSV extends AbstractServiceData implements IServiceData{
 
-
     public function addRecord($values){
       array_push( $this->_values, $values );
       if( empty($this->_headers) ){
@@ -26,8 +25,6 @@
       $bits = explode("/", $this->_file);
       return array_pop($bits);
     }
-
-
 
   }
 

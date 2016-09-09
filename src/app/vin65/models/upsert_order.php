@@ -65,17 +65,19 @@
         "customernumber" => 'CustomerNumber', // not included in spec, but used to get ContactID. Do not include if syncing by BillingEmail
         "giftmessage" => 'GiftMessage',
         "handling" => 'Handling',
+        // "ispickedup" => 'isPickedUp', // required if order is pickedup, 0/1
         "orderdate" => 'OrderDate',
         "orderitems" => 'OrderItems',
         "ordernotes" => 'OrderNotes',
         "ordernumber" => 'OrderNumber',
         "ordertype" => 'OrderType', // AdminPanel, ClubOrder, Facebook, iPad, Mobile, POS, Telemarketing or Website
+        // "pickupdate" => 'PickupDate', // required if order is PickedUp
         "previousorderid" => 'PreviousOrderID',
         "previousordernumber" => 'PreviousOrderNumber',
         "rms" => 'RMS',
         "salesassociate" => 'SalesAssociate',
         "sendtofulfillment" => 'SendToFulfillment',
-        "shipdate" => 'ShipDate',
+        // "shipdate" => 'ShipDate',
         "shipping" => 'Shipping',
         "shippingaddress" => 'ShippingAddress',
         "shippingaddress2" => 'ShippingAddress2',
@@ -88,7 +90,8 @@
         "shippinglastname" => 'ShippingLastName',
         "shippingphone" => 'ShippingPhone',
         "shippingstatecode" => 'ShippingStateCode',
-        "shippingstatus" => 'ShippingStatus',
+        // "shippingstatus" => 'ShippingStatus', // required if order is shipped, PickedUp, Shipped, HandledExternally, SentToFulfillment, NoShippingRequired
+        // "shippingstatusdate" => 'ShippingStatusDate', // required if order is shipped
         "shippingzipcode" => 'ShippingZipCode',
         "subtotal" => 'SubTotal',
         "tax" => 'Tax',
@@ -168,6 +171,7 @@
     public function setValues($sets){
 
       foreach ($sets as $values) {
+        // print_r($values['OrderNumber'] . "</br>");
         $order = $this->_addOrderValues($values);
         if( isset($values['OrderItems']) ){
           foreach ($values["OrderItems"] as $value) {
@@ -202,7 +206,7 @@
     }
 
     public function getValueCnt(){
-      return count( $this->_values['order'] );
+      return count( $this->_values['orders'] );
     }
 
     public function getResultID(){
@@ -212,25 +216,6 @@
       return parent::getResultID();
     }
 
-
-
-    // public function callService($values=NULL){
-    //   parent::callService();
-    //   try{
-    //     $client = new \SoapClient($_ENV['V65_V2_CONTACT_SERVICE']);
-    //     $result = $client->upsertShippingAddress($this->_values);
-    //     // print_r($this->_values);
-    //     if( is_soap_fault($result) ){
-    //       $this->_error = "SOAP Fault: (faultcode: {$result->faultcode}, faultstring: {$result->faultstring})";
-    //     }elseif(empty($result->results[0]->isSuccessful)){
-    //       $this->_error = $result->results[0]->message;
-    //     }else{
-    //       $this->_result = $result->results[0]->internalKeyCode ;
-    //     }
-    //   }catch(Exception $e){
-    //     $this->_error = $e->message;
-    //   }
-    // }
 
   }
 

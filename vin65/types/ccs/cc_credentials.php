@@ -10,6 +10,14 @@ require_once $_ENV['V65_INCLUDES'] . "/session_policy.php";
     $form_path = "add_update_cc.php";
   }
 
+  if( count($_POST) > 0 ){
+    if( isset($_POST['service']) ){
+      $_SESSION['CC_KEY'] = $_POST['cc_key'];
+      $_SESSION['CC_SALT'] = $_POST['cc_salt'];
+      header("Location: " . $_POST['service']);
+    }
+  }
+
 ?>
 
 <html>
@@ -29,7 +37,7 @@ require_once $_ENV['V65_INCLUDES'] . "/session_policy.php";
 
     <h4>Enter CreditCard Access Key and Salt for Customer.</h4>
 
-    <form action="<?php echo $form_path ?>" method="post">
+    <form method="post">
       <div class="form-group">
         <label for="cc_key">Key</label>
         <input type="text" class="form-control" id="cc_key" name="cc_key">
@@ -38,7 +46,7 @@ require_once $_ENV['V65_INCLUDES'] . "/session_policy.php";
         <label for="cc_salt">Salt</label>
         <input type="text" class="form-control" id="cc_salt" name="cc_salt">
       </div>
-      <input type="hidden" id="input_type" name="input_type" value="cc_credentials">
+      <?php echo "<input type=\"hidden\" id=\"input_type\" name=\"service\" value=\"{$form_path}\">"; ?>
       <button class="btn btn-primary" type="submit">Submit</button>
     </form>
 

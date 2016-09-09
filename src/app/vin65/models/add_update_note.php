@@ -2,6 +2,9 @@
 
 require_once $_ENV['APP_ROOT'] . '/vin65/models/abstract_soap_model.php';
 require_once $_ENV['APP_ROOT'] . '/vin65/models/date_converter.php';
+require_once $_ENV['APP_ROOT'] . "/models/service_input_form.php";
+
+use wgm\models\ServiceInputForm as ServiceInputForm;
 
 // use \DateTime as DateTime;
 // use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
@@ -13,6 +16,65 @@ require_once $_ENV['APP_ROOT'] . '/vin65/models/date_converter.php';
     const METHOD_NAME = "AddUpdateNote";
 
     function __construct($session, $version=3){
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'noteid';
+      $vf['name'] = "Note ID";
+      $vf['required'] = FALSE;
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'customernumber';
+      $vf['name'] = "CustomerNumber <small>(has to include order or customer number)</small>";
+      $vf['type'] = "tel";
+      $vf['required'] = FALSE;
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'ordernumber';
+      $vf['name'] = "OrderNumber <small>(has to include order or customer number)</small>";
+      $vf['type'] = "tel";
+      $vf['required'] = FALSE;
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'notedate';
+      $vf['name'] = "Note Date";
+      $vf['type'] = "date";
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'subject';
+      $vf['name'] = "Subject";
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'note';
+      $vf['name'] = "Note (body)";
+      $vf['type'] = 'textarea';
+      $vf['required'] = FALSE;
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'relatedto';
+      $vf['name'] = "Note is Related To:";
+      $vf['type'] = 'radio';
+      $vf['choices'] = [
+        0 => ['id'=>'contact', 'value'=>'Contact', 'name'=>'Contact'],
+        1 => ['id'=>'order', 'value'=>'Order', 'name'=>'Order']
+      ];
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'type';
+      $vf['name'] = "Note Type:";
+      $vf['type'] = 'radio';
+      $vf['choices'] = [
+        0 => ['id'=>'note', 'value'=>'Note', 'name'=>'Note'],
+        1 => ['id'=>'flag', 'value'=>'Flag', 'name'=>'Flag']
+      ];
+      array_push($this->_value_fields, $vf);
+
       $this->_value_map = [
         "websiteid" => "WebsiteID",
         "noteid" => "NoteID",

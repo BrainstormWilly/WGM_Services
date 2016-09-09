@@ -2,10 +2,7 @@
 $page_limit = 25;
 $display_limit = 50;
 $set_limit = 1;
-<<<<<<< HEAD
 $record_cnt = 0;
-=======
->>>>>>> order-service
 if( count($_POST) > 0 ) {
 
   if( isset($_POST['page_limit']) ) $page_limit = intval($_POST['page_limit']);

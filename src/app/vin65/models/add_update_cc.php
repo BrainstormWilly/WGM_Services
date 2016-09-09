@@ -2,8 +2,9 @@
 
   require_once $_ENV['APP_ROOT'] . '/vin65/models/abstract_soap_model.php';
   require_once $_ENV['APP_ROOT'] . '/vin65/models/cc_encoder.php';
+  require_once $_ENV['APP_ROOT'] . "/models/service_input_form.php";
 
-
+  use wgm\models\ServiceInputForm as ServiceInputForm;
   use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
   use wgm\vin65\models\CCEncoder as CCE;
 
@@ -16,6 +17,60 @@
     const METHOD_NAME = "AddUpdateCreditCard";
 
     function __construct($session){
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'customernumber';
+      $vf['name'] = "Customer Number";
+      $vf['type'] = 'integer';
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'creditcardtype';
+      $vf['name'] = "Card Type";
+      $vf['type'] = 'radio';
+      $vf['choices'] = [
+        0 => ['id'=>'visa', 'value'=>"Visa", 'name'=>'Visa'],
+        1 => ['id'=>'mc', 'value'=>"MasterCard", 'name'=>'MasterCard'],
+        2 => ['id'=>'ae', 'value'=>'AmericanExpress', 'name'=>'AmericanExpress'],
+        3 => ['id'=>'d', 'value'=>'Discover', 'name'=>'Discover'],
+        4 => ['id'=>'jcb', 'value'=>'JCB', 'name'=>'JCB']
+      ];
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'cardnumber';
+      $vf['name'] = "Card Number";
+      $vf['type'] = "integer";
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'cardexpirymonth';
+      $vf['name'] = "Card Expiration Month (1-12)";
+      $vf['type'] = "month";
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'cardexpiryyear';
+      $vf['name'] = "Card Expiration Year (YYYY)";
+      $vf['type'] = "year";
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'nameoncard';
+      $vf['name'] = "Name on Card";
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'isprimary';
+      $vf['name'] = "Is Primary?";
+      $vf['type'] = 'radio';
+      $vf['choices'] = [
+        0 => ['id'=>'yes', 'value'=>1, 'name'=>'Yes'],
+        1 => ['id'=>'no', 'value'=>0, 'name'=>'No']
+      ];
+      array_push($this->_value_fields, $vf);
+
+
       $this->_value_map = [
         "websiteid" => "WebsiteID",
         "creditcardid" => "CreditCardID",
@@ -24,6 +79,7 @@
         "cardexpirymonth" => "CardExpiryMonth",
         "cardexpiryyear" => "CardExpiryYear",
         "encryptedcardnumber" => "EncryptedCardNumber",
+        "nameoncard" => "NameOnCard",
         "contactid" => "ContactID"
       ];
 

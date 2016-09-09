@@ -59,7 +59,9 @@
       return $this->_file;
     }
     public function getFileName(){
-      return $this->_file;
+      $bits = explode("/", $this->_file);
+      $file_bits = explode(".", array_pop($bits));
+      return array_shift($file_bits);
     }
 
     public function getHeaders(){
@@ -135,13 +137,13 @@
       // print_r($this->_record_index . " : " . $limit . "</br>");
       if ( ($handle = fopen($file, "r")) !== FALSE) {
         while( ($data = fgetcsv($handle, 0, ",")) !== FALSE ) {
+
           if( $current == 0 ){
             $this->addRecord($data);
             $current += 1;
           }else{
             $cnt += 1;
             if( $current > $this->_record_index && $current <= $limit ){
-
               $this->addRecord($data);
             }
             if( ++$current > $limit && $this->_record_cnt > 0 ){
@@ -152,14 +154,13 @@
         fclose($handle);
         $this->_has_next_page = $current > $limit;
         if( $this->_record_cnt == 0 ) $this->_record_cnt = $cnt;
-
         return TRUE;
       }
       return FALSE;
     }
 
     public function resetRecordIndex($index=0, $cnt=0){
-      //print_r("Index: " . $index . "; Count: " . $cnt . "</br>");
+
       $this->_record_cnt = $cnt;
       $this->_record_index = $index;
       $this->_index = 0;

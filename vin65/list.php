@@ -36,7 +36,7 @@
           <div class="panel-collapse collapse" id='contact-services-content' role='tabPanel' aria-labelledby='contact-services-heading'>
             <div class="panel-body">
               <div class="list-group">
-                <a class="list-group-item" href='types/contacts/search_contacts.php'>SearchContacts<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/contacts/get_contact.php'>GetContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/upsert_contact.php'>UpsertContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/upsert_shipping_address.php'>UpsertShippingAddress<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>
@@ -72,6 +72,7 @@
           <div class="panel-collapse collapse" id='gift-card-services-content' role='tabPanel' aria-labelledby='gift-card-services-heading'>
             <div class="panel-body">
               <div class="list-group">
+                <a class="list-group-item" href='types/gift_cards/get_gift_card.php'>GetGiftCard<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/gift_cards/create_gift_card.php'>CreateGiftCard<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/gift_cards/update_gift_card.php'>UpdateGiftCard<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>
@@ -90,8 +91,8 @@
           <div class="panel-collapse collapse" id='note-services-content' role='tabPanel' aria-labelledby='note-services-heading'>
             <div class="panel-body">
               <div class="list-group">
-                <a class="list-group-item" href='types/notes/search_notes.php'>SearchNotes<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
-                <a class="list-group-item" href='#'>GetNote<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <!-- <a class="list-group-item" href='types/notes/search_notes.php'>SearchNotes<span class="glyphicon glyphicon-chevron-right pull-right"></span></a> -->
+                <!-- <a class="list-group-item" href='#'>GetNote<span class="glyphicon glyphicon-chevron-right pull-right"></span></a> -->
                 <a class="list-group-item" href='types/notes/add_update_note.php'>AddUpdateNote<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>
             </div>
@@ -109,6 +110,10 @@
           <div class="panel-collapse collapse" id='order-services-content' role='tabPanel' aria-labelledby='order-services-heading'>
             <div class="panel-body">
               <div class="list-group">
+                <a class="list-group-item" href='types/orders/get_order_detail.php'>GetOrderDetail<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/orders/post_order_shipping_status.php'>PostOrderShippingStatus<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/orders/post_order_tracking.php'>PostOrderTracking<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/orders/post_pickup.php'>PostPickup<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/orders/upsert_order.php'>UpsertOrder<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/orders/update_order_status.php'>Update Order Status Only<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>

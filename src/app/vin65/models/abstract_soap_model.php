@@ -1,5 +1,7 @@
 <?php namespace wgm\vin65\models;
 
+  require_once $_ENV['APP_ROOT'] . "/models/service_input_form.php";
+
   use \ReflectionClass as ReflectionClass;
 
   abstract class AbstractSoapModel{
@@ -71,9 +73,10 @@
     */
     public function setValues($values){
       foreach ($values as $key => $value) {
-        if(!empty($value)){
-          if( array_key_exists(strtolower($key), $this->_value_map) ){
-            $this->_values[$this->_value_map[strtolower($key)]] = $value;
+        $lkey = strtolower($key);
+        if( $value!=='' ){
+          if( array_key_exists($lkey, $this->_value_map) ){
+            $this->_values[$this->_value_map[$lkey]] = $value;
           }
         }
       }
@@ -87,6 +90,14 @@
 
     public function getKeys(){
       return array_keys($this->_value_map);
+    }
+
+    public function valueKeyExists($key){
+      $lkey = strtolower($key);
+      if( array_key_exists($lkey, $this->_value_map) ){
+        return array_key_exists($key, $this->_values);
+      }
+      return false;
     }
 
     public function getError(){
@@ -148,14 +159,6 @@
       return $file_bits[0];
     }
 
-    // public function callService($values=NULL){
-    //   $this->_result = [];
-    //   $this->_error = '';
-    //   if( $values ){
-    //     $this->setValues($values);
-    //   }
-    //   // extend from here
-    // }
 
   }
 

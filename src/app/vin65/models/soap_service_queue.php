@@ -26,12 +26,23 @@ class SoapServiceModel{
     return $class::SERVICE_NAME . '->' . $class::METHOD_NAME;
   }
 
+  public function getMethod(){
+    $class = $this->_model_class;
+    return $class::METHOD_NAME;
+  }
+
   public function process($session, $values, $callback){
     $model = new $this->_model_class($session);
+
 
     $model->setValues($values);
     $class = $this->_model_class;
     $method = $class::METHOD_NAME;
+    // print_r($class::METHOD_NAME);
+    // print_r("</br>");
+    // print_r($values);
+    // print_r("</br></br>");
+    // exit;
     $this->_proxy->$method($model->getValues())->then(
       function($result) use ($model, $callback){
         $model->setResult($result);
@@ -97,11 +108,17 @@ class SoapServiceQueue{
     if( $this->_data->readData($file) ){
         $this->_logger->openLog($this->_data->getFile(), $index);
         $this->setProxies();
-
     }else{
       $this->_logger->writeToLog( ServiceLogger::createFailItem(0, '0000' , 'CSV Reader', 'Unable to read file.'));
       $this->setStatus(self::FAIL);
     }
+    // print_r("Getting Data</br>");
+    // print_r($this->_data->getNextRecord());
+    // print_r("</br>");
+    // print_r($this->_data->getNextRecord());
+    // print_r("</br>");
+    // print_r('end at SoapServiceQueue');
+    // exit;
   }
 
   public function appendService($service){
@@ -121,7 +138,6 @@ class SoapServiceQueue{
   }
 
   public function getLog($type='html'){
-
     if( $this->_data->hasNextPage() ){
       $s = "<h4>Service In-Process: " . $this->_data->getCurrentRecordIndex() . " of " . $this->_data->getRecordCnt() . " records processed. " . count($this->_data->getRecords()) . " actual records sent to service in page.</h4>";
     }else{
@@ -134,6 +150,10 @@ class SoapServiceQueue{
     return $s;
   }
 
+  public function getPrimaryService(){
+    return $this->_services[0];
+  }
+
   public function processNextPage($class_file){
     if( $this->_data->hasNextPage() ){
       $url = $class_file . "_file.php?file=" . $this->_data->getFileName() . "&index=" . strval($this->_data->getCurrentRecordIndex()) . "&cnt=" . $this->_data->getRecordCnt() . "&page_limit=" . $this->_data->getPageLimit() . "&display_limit=" . $this->_data->getDisplayLimit() . "&set_limit=" . $this->_data->getSetLimit();
@@ -142,7 +162,6 @@ class SoapServiceQueue{
   }
 
   public function processNextService($record=NULL){
-
     if($record===NULL){
       $record = $this->_data->getNextRecord();
     }
@@ -150,6 +169,23 @@ class SoapServiceQueue{
       $this->_services[$this->_process_service_index++]->process($this->_session, $record, [$this, "onProcessServiceComplete"]);
     }else{
       $this->processNextRecord();
+    }
+  }
+
+  public function processWithService($service, $record=NULL){
+    if($record===NULL){
+      $record = $this->_data->getNextRecord();
+    }
+    if($record){
+      foreach ($this->_services as $value) {
+        if( $value->getMethod()==$service ){
+          $value->process($this->_session, $record, [$this, "onProcessServiceComplete"]);
+          break;
+        }
+      }
+    }else{
+      $this->_logger->closeLog();
+      $this->setStatus(self::QUEUE_COMPLETE);
     }
   }
 
@@ -206,10 +242,11 @@ class SoapServiceQueue{
   }
 
   public function onProcessServiceComplete($model){
+    $svc= $model->getClassName();
     if( $model->success() ){
-      $this->_logger->writeToLog( ServiceLogger::createSuccessItem($this->_data->getCurrentRecordIndex(), $model->getValuesID(), $this->getCurrentService()->getName(), $model->getResultID()));
+      $this->_logger->writeToLog( ServiceLogger::createSuccessItem($this->_data->getCurrentRecordIndex(), $model->getValuesID(), $svc, $model->getResultID()));
     }else{
-      $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_data->getCurrentRecordIndex(), $model->getValuesID(), $this->getCurrentService()->getName(), $model->getError()));
+      $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_data->getCurrentRecordIndex(), $model->getValuesID(), $svc, $model->getError()));
     }
     $this->_current_service_model = $model;
     $this->setStatus(self::PROCESS_COMPLETE);

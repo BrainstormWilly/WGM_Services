@@ -1,0 +1,2 @@
+SUCCESS,1,1004,GetGiftCard,4832c7c1-c6bf-1ff3-dc05-661e44bfb50b
+FAIL,1,1004,UpdateGiftCard,HTTP status code 500 (Internal Server Error)

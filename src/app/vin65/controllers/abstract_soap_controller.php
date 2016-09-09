@@ -1,16 +1,21 @@
 <?php namespace wgm\vin65\controllers;
 
   require_once $_ENV['APP_ROOT'] . "/models/csv.php";
+  require_once $_ENV['APP_ROOT'] . "/models/service_input.php";
+  require_once $_ENV['APP_ROOT'] . "/models/service_input_form.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/get_contact.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/service_logger.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/soap_service_queue.php";
 
   use \ReflectionClass as ReflectionClass;
   use wgm\models\CSV as CSVModel;
+  use wgm\models\ServiceInput as ServiceInputModel;
+  use wgm\models\ServiceInputForm as ServiceInputForm;
   use wgm\vin65\models\GetContact as GetContactModel;
   use wgm\vin65\models\ServiceLogger as ServiceLogger;
   use wgm\vin65\models\SoapServiceQueue as SoapServiceQueue;
   use wgm\vin65\models\SoapServiceModel as SoapServiceModel;
+
 
 
   abstract class AbstractSoapController{
@@ -20,7 +25,7 @@
       CONTACT_SERVICE_V300 = "https://webservices.vin65.com/V300/ContactService.cfc?wsdl",
       NOTE_SERVICE_V300 = "https://webservices.vin65.com/V300/NoteService.cfc?wsdl";
 
-    protected $_input_form = [];
+    protected $_input_form;
     protected $_csv_model;
     protected $_session;
     protected $_logger;
@@ -45,14 +50,20 @@
     }
 
     public function inputRecord($record){
-      // override for specific data model;
+      // create consumable service model for queue
+
+      $input = new ServiceInputModel();
+      $input->addRecord($record);
+
+      $this->_queue->setData($input);
+      $this->_queue->init($_ENV['UPLOADS_PATH'] . $this->getClassFileName() . "_input.csv");
     }
 
     public function getInputForm(){
-      if( count($this->_input_form) > 0 ){
+      if( isset($this->_input_form) ){
         return $this->_input_form->getFormHtml();
       }
-      return "<strong>No Form Available</strong>";
+      return "";
     }
 
     public function getCsvForm($has_sets=false){
@@ -82,6 +93,18 @@
     public function getResultsTable(){
       return $this->_results;
     }
+    public function getFullResultsTable(){
+      // override for displaying data vs. just results
+      $model = $this->_queue->getCurrentServiceModel();
+
+      if( !empty($model) ){
+        if( $model->success() ){
+          return print_r($this->_results);
+        }else{
+          return "<div><h4 style='color:red'>" . $model->getError() . "</h4><div>";
+        }
+      }
+    }
 
     public function getClassName(){
       $class_ns = get_class($this);
@@ -96,6 +119,10 @@
       $file = array_pop($path_bits);
       $file_bits = explode(".", $file);
       return $file_bits[0];
+    }
+
+    public function hasInputForm(){
+      return isset( $this->_input_form );
     }
 
 

@@ -1,7 +1,8 @@
 <?php namespace wgm\vin65\models;
 
   require_once $_ENV['APP_ROOT'] . '/vin65/models/abstract_soap_model.php';
-  use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
+
+  use wgm\models\ServiceInputForm as ServiceInputForm;
 
   class GetContact extends AbstractSoapModel{
 
@@ -10,20 +11,27 @@
     const METHOD_NAME = "GetContact";
 
     function __construct($session, $version=2){
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'customernumber';
+      $vf['name'] = "Customer Number";
+      array_push($this->_value_fields, $vf);
+
       $this->_value_map = [
         "contactid" => 'contactID',
         "customernumber" => 'customerNumber',
         "email" => 'eMail'
       ];
-      parent::__construct($session, $version);
+
+      parent::__construct($session, 2);
     }
 
-    public function getContact(){
-      if( empty($this->_result) || !$this->_result->isSuccessful || empty($this->_result->contacts) ){
-        return NULL;
-      }
-      return $this->_result->contacts[0];
-    }
+    // public function getContact(){
+    //   if( empty($this->_result) || !$this->_result->isSuccessful || empty($this->_result->contacts) ){
+    //     return NULL;
+    //   }
+    //   return $this->_result->contacts[0];
+    // }
 
     public function getValuesID(){
 
@@ -36,7 +44,7 @@
     }
     public function setValues($values){
       foreach ($values as $key => $value) {
-        if(!empty($value)){
+        if( $value !== '' ){
           if( array_key_exists(strtolower($key), $this->_value_map) ){
             $this->_values[$this->_value_map[strtolower($key)]] = $value;
           }
