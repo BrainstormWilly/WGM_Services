@@ -7,7 +7,7 @@
     public static function toYMD($date_str){
       $d = new DateTime($date_str);
       // return $d->format('Y-m-d\TH:m:s');
-      return $d->format('Y-m-d\TH:m:s');
+      return $d->format('Y-m-d\T12:00:00');
     }
 
     public static function toMDY($date_str){

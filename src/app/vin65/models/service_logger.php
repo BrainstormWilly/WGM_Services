@@ -1,5 +1,7 @@
 <?php namespace wgm\vin65\models;
 
+  use \DateTime as DateTime;
+
   class ServiceLogItem{
     private $_is_success = true;
     private $_record_num = 0;
@@ -26,9 +28,14 @@
         $s = '<p style="color:red"><strong>FAIL: </strong>';
       }
       $s .= 'Record: ' . $this->_record_num . ", ";
-      $s .= 'Upload ID: ' . $this->_customer_num . "</br>";
-      $s .= '&nbsp;&nbsp;' . $this->_heading . "</br>";
-      $s .= '&nbsp;&nbsp;Result ID: ' . $this->_message . "</p>";
+      $s .= 'UploadID: ' . $this->_customer_num . "</br>";
+      $s .= '&nbsp;&nbsp;Heading: ' . $this->_heading . "</br>";
+      if( $this->_is_success ){
+        $s .= '&nbsp;&nbsp;ResultID: ' . $this->_message . "</p>";
+      }else{
+        $s .= '&nbsp;&nbsp;Message: ' . $this->_message . "</p>";
+      }
+
       return $s;
     }
 
@@ -39,23 +46,28 @@
         $s = 'FAIL: ';
       }
       $s .= 'Record: ' . $this->_record_num . ", ";
-      $s .= 'Upload ID: ' . $this->_customer_num . PHP_EOL;
-      $s .= '  ' . $this->_heading . PHP_EOL;
-      $s .= '  Error: ' . $this->_message . PHP_EOL;
+      $s .= 'UploadID: ' . $this->_customer_num . PHP_EOL;
+      $s .= '  Heading:' . $this->_heading . PHP_EOL;
+      $s .= '  Message: ' . $this->_message . PHP_EOL;
+      if( $this->_is_success ){
+        $s .= '  ResultID: ' . $this->_message . PHP_EOL;
+      }else{
+        $s .= '  Message: ' . $this->_message . PHP_EOL;
+      }
       return $s;
     }
 
     public function toRecord(){
-      $s = [];
+      $s = "";
       if( $this->_is_success ){
-        $s['Status'] = 'SUCCESS,';
+        $s .= 'SUCCESS,';
       }else{
-        $s['Status'] = 'FAIL,';
+        $s .= 'FAIL,';
       }
-      $s['RecordNumber'] = $this->_record_num . ",";
-      $s['CustomerID'] = $this->_customer_num . ",";
-      $s['Heading'] = $this->_heading . ",";
-      $s['Message'] = $this->_message . PHP_EOL;
+      $s .= $this->_record_num . ",";
+      $s .= $this->_customer_num . ",";
+      $s .= $this->_heading . ",";
+      $s .= $this->_message . PHP_EOL;
       return $s;
     }
   }
@@ -74,20 +86,22 @@
     }
 
     public function openLog($csv, $index){
-      if( $index==0 ){
-        $this->_log = [];
-        $perm = 'w';
-      }else{
-        $perm = 'a';
-      }
+      $d = new DateTime();
       $file = str_replace('.csv','_log.csv',$csv);
-      $this->_file_handle = fopen( $file, $perm);
+      if( file_exists($file) ){
+        $this->_file_handle = fopen( $file, 'a');
+      }else{
+        $this->_file_handle = fopen( $file, 'w');
+        $this->_log = [];
+        fwrite( $this->_file_handle, "Status,Record,UploadID,Service,Result" . PHP_EOL);
+      }
+      fwrite( $this->_file_handle, "TIMESTAMP,0,OPEN," . $d->format('Y-m-d H:i:s') . PHP_EOL);
     }
 
     public function writeToLog(ServiceLogItem $log_item){
       if( isset($this->_file_handle) ){
         array_unshift($this->_log, $log_item);
-        fputcsv($this->_file_handle, $log_item->toRecord() );
+        fwrite($this->_file_handle, $log_item->toRecord() );
         // fwrite($this->_file_handle, $log_item->toRecord() );
         // $_SESSION['log'] = 'working';
         //$_SESSION["log"] = $log_item->toHtml();
@@ -99,6 +113,8 @@
 
     public function closeLog(){
       if( isset($this->_file_handle) ){
+        $d = new DateTime();
+        fwrite( $this->_file_handle, "TIMESTAMP,0,CLOSE," . $d->format('Y-m-d H:i:s') . PHP_EOL);
         fclose($this->_file_handle);
       }
     }

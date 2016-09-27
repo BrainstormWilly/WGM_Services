@@ -142,7 +142,8 @@ class SoapServiceQueue{
       $s = "<h4>Service In-Process: " . $this->_data->getCurrentRecordIndex() . " of " . $this->_data->getRecordCnt() . " records processed. " . count($this->_data->getRecords()) . " actual records sent to service in page.</h4>";
     }else{
       $s = "<h4>Service Complete: " . $this->_data->getRecordCnt() . " records processed.</h4>";
-      $s .= "<p><a type='button' class='btn btn-default' href='service_log.php?file={$this->_csv->getFileName()}'>View Full Log</a></p>";
+      $l = $this->_data->getFileName() . "_log.csv";
+      $s .= "<p><a type='button' class='btn btn-default' href='?download={$l}'>Download Full Log</a></p>";
     }
     $log = $this->_logger->getLog();
     foreach($log as $item){
@@ -158,7 +159,7 @@ class SoapServiceQueue{
 
   public function processNextPage($class_file){
     if( $this->_data->hasNextPage() ){
-      $url = $class_file . "_file.php?file=" . $this->_data->getFileName() . "&index=" . strval($this->_data->getCurrentRecordIndex()) . "&cnt=" . $this->_data->getRecordCnt() . "&page_limit=" . $this->_data->getPageLimit() . "&display_limit=" . $this->_data->getDisplayLimit() . "&set_limit=" . $this->_data->getSetLimit();
+      $url = $class_file . "_file.php?file=" . $this->_data->getFileName() . ".csv&index=" . strval($this->_data->getCurrentRecordIndex()) . "&cnt=" . $this->_data->getRecordCnt() . "&page_limit=" . $this->_data->getPageLimit() . "&display_limit=" . $this->_data->getDisplayLimit() . "&set_limit=" . $this->_data->getSetLimit();
       header("Refresh:1; url=" . $url );
     }
   }

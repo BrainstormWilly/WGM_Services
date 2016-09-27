@@ -21,10 +21,10 @@
       }
     }
 
-    public function getFileName(){
-      $bits = explode("/", $this->_file);
-      return array_pop($bits);
-    }
+    // public function getFileName(){
+    //   $bits = explode("/", $this->_file);
+    //   return array_pop($bits);
+    // }
 
   }
 

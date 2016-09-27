@@ -1,30 +1,4 @@
 Type,Subject,NoteDate,Note,RelatedTo,KeyCodeID,CustomerNumber
-Note,Note 2,2016-08-05,Here are my notes from row 2,Contact,,1557
-Note,Note 3,2016-08-05,Here are my notes from row 3,Contact,,1557
-Note,Note 4,2016-08-05,Here are my notes from row 4,Contact,,1557
-Note,Note 5,2016-08-05,Here are my notes from row 5,Contact,,1557
-Note,Note 6,2016-08-05,Here are my notes from row 6,Contact,,1557
-Note,Note 7,2016-08-05,Here are my notes from row 7,Contact,,1557
-Note,Note 8,2016-08-05,Here are my notes from row 8,Contact,,1557
-Note,Note 9,2016-08-05,Here are my notes from row 9,Contact,,1557
-Note,Note 10,2016-08-05,Here are my notes from row 10,Contact,,1557
-Note,Note 11,2016-08-05,Here are my notes from row 11,Contact,,1557
-Note,Note 12,2016-08-05,Here are my notes from row 12,Contact,,1557
-Note,Note 13,2016-08-05,Here are my notes from row 13,Contact,,1557
-Note,Note 14,2016-08-05,Here are my notes from row 14,Contact,,1557
-Note,Note 15,2016-08-05,Here are my notes from row 15,Contact,,1557
-Note,Note 16,2016-08-05,Here are my notes from row 16,Contact,,1557
-Note,Note 17,2016-08-05,Here are my notes from row 17,Contact,,1557
-Note,Note 18,2016-08-05,Here are my notes from row 18,Contact,,1557
-Note,Note 19,2016-08-05,Here are my notes from row 19,Contact,,1557
-Note,Note 20,2016-08-05,Here are my notes from row 20,Contact,,1557
-Note,Note 21,2016-08-05,Here are my notes from row 21,Contact,,1557
-Note,Note 22,2016-08-05,Here are my notes from row 22,Contact,,1557
-Note,Note 23,2016-08-05,Here are my notes from row 23,Contact,,1557
-Note,Note 24,2016-08-05,Here are my notes from row 24,Contact,,1557
-Note,Note 25,2016-08-05,Here are my notes from row 25,Contact,,1557
-Note,Note 26,2016-08-05,Here are my notes from row 26,Contact,,1557
-Note,Note 27,2016-08-05,Here are my notes from row 27,Contact,,1557
-Note,Note 28,2016-08-05,Here are my notes from row 28,Contact,,1557
-Note,Note 29,2016-08-05,Here are my notes from row 29,Contact,,1557
-Note,Note 30,2016-08-05,Here are my notes from row 30,Contact,,1557
+Note,Note 1,2016-08-05,This is note 1.,Contact,,1557
+Note,Note 2,2016-08-05,This is note 2.,Contact,,1557
+Note,Note 3,2016-08-05,This is note 3.,Contact,,1557

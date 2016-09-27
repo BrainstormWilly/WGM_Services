@@ -3,7 +3,10 @@ $page_limit = 25;
 $display_limit = 50;
 $set_limit = 1;
 $record_cnt = 0;
-if( count($_POST) > 0 ) {
+
+if( isset($_GET['download']) ){
+  require_once $_ENV['V65_INCLUDES'] . "/file_uploader.php";
+}elseif( count($_POST) > 0 ) {
 
   if( isset($_POST['page_limit']) ) $page_limit = intval($_POST['page_limit']);
   if( isset($_POST['display_limit']) ) $display_limit = intval($_POST['display_limit']);
@@ -16,8 +19,8 @@ if( count($_POST) > 0 ) {
   }
 
 
-  $controller->setResultsTable("<h4>Preparing file " . basename($_FILES["csv_file"]["name"]) . "...</h4>");
-  $file = $_ENV['UPLOADS_PATH'] . basename($_FILES["csv_file"]["name"]);
+  $controller->setResultsTable("<h4>Preparing file " . basename($_FILES["csv_file"]["name"]) . ".csv ...</h4>");
+  $file = $_ENV['UPLOADS_PATH'] . basename($_FILES["csv_file"]["name"]) . '.csv';
   $file_type = pathinfo($file,PATHINFO_EXTENSION); //looking for csv
   if( $file_type == 'csv' ){
     if( move_uploaded_file($_FILES['csv_file']['tmp_name'], $file) ){

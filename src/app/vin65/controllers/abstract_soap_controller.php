@@ -56,7 +56,7 @@
       $input->addRecord($record);
 
       $this->_queue->setData($input);
-      $this->_queue->init($_ENV['UPLOADS_PATH'] . $this->getClassFileName() . "_input.csv");
+      $this->_queue->init($_ENV['UPLOADS_PATH'] . $this->_session['username'] . "_" . $this->getClassFileName() . ".csv");
     }
 
     public function getInputForm(){
@@ -99,7 +99,7 @@
 
       if( !empty($model) ){
         if( $model->success() ){
-          return print_r($this->_results);
+          return $this->_results;
         }else{
           return "<div><h4 style='color:red'>" . $model->getError() . "</h4><div>";
         }
