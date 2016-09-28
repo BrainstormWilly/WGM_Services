@@ -20,10 +20,10 @@
         "clubname" => "ClubName",
         "contactid" => "ContactID",
         "creditcardid" => "CreditCardID",
-        "GiftMessage" => "GiftMessage",
-        "IsGift" => "IsGift",
-        "IsPickup" => "IsPickup",
-        "IsPrePay" => "IsPrePay",
+        "giftmessage" => "GiftMessage",
+        "isgift" => "IsGift",
+        "ispickup" => "IsPickup",
+        "isprepay" => "IsPrePay",
         "notes" => "Notes",
         "onholdstartdate" => "OnHoldStartDate",
         "onholduntildate" => "OnHoldUntilDate",
@@ -59,20 +59,23 @@
           return $this->_values["clubMemberships"][0]["CustomerNumber"];
         }elseif( isset($this->_values["clubMemberships"][0]["Email"]) ){
           return $this->_values["clubMemberships"][0]["Email"];
+        }elseif( isset($this->_values["clubMemberships"][0]["ContactID"]) ){
+          return $this->_values["clubMemberships"][0]["ContactID"];
         }
+        return parent::getValuesID();
       }
       return parent::getValuesID();
     }
     public function setValues($values){
-      $contact = [];
+      $cm = [];
       foreach ($values as $key => $value) {
         if(!empty($value)){
           if( array_key_exists(strtolower($key), $this->_value_map) ){
-              $contact[$this->_value_map[strtolower($key)]] = $value;
+              $cm[$this->_value_map[strtolower($key)]] = $value;
           }
         }
       }
-      array_push($this->_values["clubMemberships"], $contact);
+      array_push($this->_values["clubMemberships"], $cm);
     }
 
     // public function callService($values=NULL){
