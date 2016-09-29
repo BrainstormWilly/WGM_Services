@@ -36,7 +36,10 @@
           <div class="panel-collapse collapse" id='contact-services-content' role='tabPanel' aria-labelledby='contact-services-heading'>
             <div class="panel-body">
               <div class="list-group">
+                <a class="list-group-item" href='types/contacts/add_contact_type_to_contact.php'>AddContactTypeToContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/get_contact.php'>GetContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/contacts/search_contact_types.php'>SearchContactTypes<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='#'>UpsertClubMembership (not working)<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/upsert_contact.php'>UpsertContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/upsert_shipping_address.php'>UpsertShippingAddress<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>

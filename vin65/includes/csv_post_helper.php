@@ -18,9 +18,9 @@ if( isset($_GET['download']) ){
     }
   }
 
-
-  $controller->setResultsTable("<h4>Preparing file " . basename($_FILES["csv_file"]["name"]) . ".csv ...</h4>");
-  $file = $_ENV['UPLOADS_PATH'] . basename($_FILES["csv_file"]["name"]) . '.csv';
+  //
+  $controller->setResultsTable("<h4>Preparing file " . basename($_FILES["csv_file"]["name"]) . " ...</h4>");
+  $file = $_ENV['UPLOADS_PATH'] . basename($_FILES["csv_file"]["name"]);
   $file_type = pathinfo($file,PATHINFO_EXTENSION); //looking for csv
   if( $file_type == 'csv' ){
     if( move_uploaded_file($_FILES['csv_file']['tmp_name'], $file) ){
