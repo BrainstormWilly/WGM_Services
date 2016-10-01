@@ -26,6 +26,24 @@
       <div class="panel-group" id="services-group">
 
         <div class="panel panel-default">
+          <div class="panel-heading" id='clubmembership-services-heading'>
+            <h4 class="panel-title">
+              <a role='button' data-toggle="collapse" data-parent='#services-group' href="#clubmembership-services-content">
+                Club Membership Services
+              </a>
+            </h4>
+          </div>
+          <div class="panel-collapse collapse" id='clubmembership-services-content' role='tabPanel' aria-labelledby='clubmembership-services-heading'>
+            <div class="panel-body">
+              <div class="list-group">
+                <a class="list-group-item" href='types/club_memberships/search_club_memberships.php'>SearchContactTypes<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='#'>UpsertClubMembership (not working)<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel panel-default">
           <div class="panel-heading" id='contact-services-heading'>
             <h4 class="panel-title">
               <a role='button' data-toggle="collapse" data-parent='#services-group' href="#contact-services-content">

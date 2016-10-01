@@ -20,10 +20,10 @@
 
   abstract class AbstractSoapController{
 
-    const
-      CONTACT_SERVICE_V201 = "https://webservices.vin65.com/v201/contactService.cfc?wsdl",
-      CONTACT_SERVICE_V300 = "https://webservices.vin65.com/V300/ContactService.cfc?wsdl",
-      NOTE_SERVICE_V300 = "https://webservices.vin65.com/V300/NoteService.cfc?wsdl";
+    // const
+    //   CONTACT_SERVICE_V201 = "https://webservices.vin65.com/v201/contactService.cfc?wsdl",
+    //   CONTACT_SERVICE_V300 = "https://webservices.vin65.com/V300/ContactService.cfc?wsdl",
+    //   NOTE_SERVICE_V300 = "https://webservices.vin65.com/V300/NoteService.cfc?wsdl";
 
     protected $_input_form;
     protected $_csv_model;
