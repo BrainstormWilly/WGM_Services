@@ -9,6 +9,7 @@
     const METHOD_NAME = "UpsertShippingAddress";
 
     function __construct($session, $version=2){
+
       $this->_value_map = [
         "contactid" => 'ContactID',
         "lastname" => 'Lastname',

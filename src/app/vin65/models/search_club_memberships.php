@@ -47,9 +47,21 @@
       array_push($this->_value_fields, $vf);
 
       $vf = ServiceInputForm::FieldValues();
-      $vf['id'] = 'contactid';
-      $vf['name'] = "Contact ID";
+      $vf['id'] = 'clubname';
+      $vf['name'] = "Club Name";
       $vf['required'] = FALSE;
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'currentmembershipstatus';
+      $vf['name'] = "Current Membership Status";
+      $vf['required'] = FALSE;
+      $vf['type'] = 'checkbox';
+      $vf['choices'] = [
+        0 => ['id'=>'active', 'value'=>'Active', 'name'=>'Active'],
+        1 => ['id'=>'cancelled', 'value'=>'Cancelled', 'name'=>'Cancelled'],
+        2 => ['id'=>'onhold', 'value'=>'OnHold', 'name'=>'OnHold']
+      ];
       array_push($this->_value_fields, $vf);
 
       $this->_value_map = [
@@ -58,8 +70,9 @@
         "altclubmembershipid" => 'AltClubMembershipID',
         "clubid" => 'ClubID',
         "altclubid" => 'AltClubID',
+        "clubname" => "ClubName",
         "contactid" => 'ContactID',
-        "clubmembershipstatus" => "ClubMembershipStatus",
+        "currentmembershipstatus" => "CurrentMembershipStatus",
         "datemodifiedfrom" => 'DateModifiedFrom',
         "datemodifiedto" => 'DateModifiedTo',
         "customernumber" => "CustomerNumber",

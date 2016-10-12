@@ -9,6 +9,22 @@
     const METHOD_NAME = "UpsertClubMembership";
 
     function __construct($session, $version=2){
+
+      // $vf = ServiceInputForm::FieldValues();
+      // $vf['id'] = 'contactid';
+      // $vf['name'] = "Contact ID";
+      // array_push($this->_value_fields, $vf);
+      //
+      // $vf = ServiceInputForm::FieldValues();
+      // $vf['id'] = 'clubname';
+      // $vf['name'] = "Club Name";
+      // array_push($this->_value_fields, $vf);
+      //
+      // $vf = ServiceInputForm::FieldValues();
+      // $vf['id'] = 'clubname';
+      // $vf['name'] = "Club Name";
+      // array_push($this->_value_fields, $vf);
+
       $this->_value_map = [
         "altclubid" => "AltClubID",
         "altclubmembershipid" => "AltClubMembershipID",
@@ -37,7 +53,9 @@
         "sourcecode" => "SourceCode",
         "totalnumberofshipments" => "TotalNumberOfShipments",
         "customernumber" => "CustomerNumber",
-        "email" => "Email"
+        "email" => "Email",
+        "updatekey" => "UpdateKey",
+        "updatevalue" => "UpdateValue"
       ];
 
       parent::__construct($session, 2);
@@ -55,14 +73,14 @@
 
     public function getValuesID(){
       if( count($this->_values["clubMemberships"]) > 0) {
-        if( isset($this->_values["clubMemberships"][0]["CustomerNumber"]) ){
-          return $this->_values["clubMemberships"][0]["CustomerNumber"];
+        $id = $this->_values["clubMemberships"][0]["UpdateBy"];
+        if( isset($id) ){
+          return $this->_values["clubMemberships"][0][$id];
         }elseif( isset($this->_values["clubMemberships"][0]["Email"]) ){
           return $this->_values["clubMemberships"][0]["Email"];
         }elseif( isset($this->_values["clubMemberships"][0]["ContactID"]) ){
           return $this->_values["clubMemberships"][0]["ContactID"];
         }
-        return parent::getValuesID();
       }
       return parent::getValuesID();
     }
@@ -70,8 +88,12 @@
       $cm = [];
       foreach ($values as $key => $value) {
         if(!empty($value)){
-          if( array_key_exists(strtolower($key), $this->_value_map) ){
-              $cm[$this->_value_map[strtolower($key)]] = $value;
+          $lkey = strtolower($key);
+          if( array_key_exists($lkey, $this->_value_map) ){
+              if( $lkey=="updatekey" ){
+                $value = $this->_value_map[$this->_value_map[strtolower($value)]]
+              }
+              $cm[$this->_value_map[$lkey]] = $value;
           }
         }
       }

@@ -33,16 +33,16 @@ class SoapServiceModel{
 
   public function process($session, $values, $callback){
     $model = new $this->_model_class($session);
-
-
     $model->setValues($values);
     $class = $this->_model_class;
     $method = $class::METHOD_NAME;
+
     // print_r($class::METHOD_NAME);
     // print_r("</br>");
     // print_r($values);
     // print_r("</br></br>");
     // exit;
+
     $this->_proxy->$method($model->getValues())->then(
       function($result) use ($model, $callback){
         $model->setResult($result);
@@ -84,6 +84,7 @@ class SoapServiceQueue{
     QUEUE_COMPLETE = 4;
 
   private $_current_service_model;
+  private $_current_csv_record;
   private $_services = [];
   private $_session;
   private $_process_service_index = 0;
@@ -134,7 +135,7 @@ class SoapServiceQueue{
   }
 
   public function getCurrentCsvRecord(){
-    return $this->_data->getCurrentRecord();
+    return $this->_current_csv_record;
   }
 
   public function getLog($type='html'){
@@ -166,10 +167,12 @@ class SoapServiceQueue{
 
   public function processNextService($record=NULL){
     if($record===NULL){
-      $record = $this->_data->getNextRecord();
+      $this->_current_csv_record = $this->_data->getNextRecord();
+    }else{
+      $this->_current_csv_record = $record;
     }
     if( $this->_process_service_index < count($this->_services) ){
-      $this->_services[$this->_process_service_index++]->process($this->_session, $record, [$this, "onProcessServiceComplete"]);
+      $this->_services[$this->_process_service_index++]->process($this->_session, $this->_current_csv_record, [$this, "onProcessServiceComplete"]);
     }else{
       $this->processNextRecord();
     }
@@ -177,12 +180,14 @@ class SoapServiceQueue{
 
   public function processWithService($service, $record=NULL){
     if($record===NULL){
-      $record = $this->_data->getNextRecord();
+      $this->_current_csv_record = $this->_data->getNextRecord();
+    }else{
+      $this->_current_csv_record = $record;
     }
     if($record){
       foreach ($this->_services as $value) {
         if( $value->getMethod()==$service ){
-          $value->process($this->_session, $record, [$this, "onProcessServiceComplete"]);
+          $value->process($this->_session, $this->_current_csv_record , [$this, "onProcessServiceComplete"]);
           break;
         }
       }
@@ -194,10 +199,10 @@ class SoapServiceQueue{
 
   public function processNextRecord(){
 
-    $rec = $this->_data->getNextRecord();
-    if( $rec ){
+    $this->_current_csv_record  = $this->_data->getNextRecord();
+    if( $this->_current_csv_record  ){
       $this->_process_service_index = 0;
-      $this->_services[$this->_process_service_index++]->process($this->_session, $rec, [$this, "onProcessServiceComplete"]);
+      $this->_services[$this->_process_service_index++]->process($this->_session, $this->_current_csv_record , [$this, "onProcessServiceComplete"]);
     }else{
       $this->_logger->closeLog();
       $this->setStatus(self::QUEUE_COMPLETE);
@@ -221,6 +226,11 @@ class SoapServiceQueue{
   public function setStatus($value){
     $this->_status = $value;
     call_user_func_array($this->_status_callback, [$value]);
+  }
+
+  public function recordModelError($model, $error){
+    $svc= $model->getClassName();
+    $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_data->getCurrentRecordIndex(), $model->getValuesID(), $svc, $error));
   }
 
 
@@ -249,7 +259,7 @@ class SoapServiceQueue{
     if( $model->success() ){
       $this->_logger->writeToLog( ServiceLogger::createSuccessItem($this->_data->getCurrentRecordIndex(), $model->getValuesID(), $svc, $model->getResultID()));
     }else{
-      $this->_logger->writeToLog( ServiceLogger::createFailItem($this->_data->getCurrentRecordIndex(), $model->getValuesID(), $svc, $model->getError()));
+      $this->recordModelError($model, $model->getError());
     }
     $this->_current_service_model = $model;
     $this->setStatus(self::PROCESS_COMPLETE);

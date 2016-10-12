@@ -36,8 +36,9 @@
           <div class="panel-collapse collapse" id='clubmembership-services-content' role='tabPanel' aria-labelledby='clubmembership-services-heading'>
             <div class="panel-body">
               <div class="list-group">
-                <a class="list-group-item" href='types/club_memberships/search_club_memberships.php'>SearchContactTypes<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
-                <a class="list-group-item" href='#'>UpsertClubMembership (not working)<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/club_memberships/get_club_membership.php'>GetClubMembership<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/club_memberships/upsert_club_membership.php'>AddClubMembership<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/club_memberships/search_club_memberships.php'>SearchClubMemberships<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>
             </div>
           </div>
@@ -56,8 +57,8 @@
               <div class="list-group">
                 <a class="list-group-item" href='types/contacts/add_contact_type_to_contact.php'>AddContactTypeToContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/get_contact.php'>GetContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/contacts/get_shipping_address.php'>GetShippingAddress<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/search_contact_types.php'>SearchContactTypes<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
-                <a class="list-group-item" href='#'>UpsertClubMembership (not working)<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/upsert_contact.php'>UpsertContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/upsert_shipping_address.php'>UpsertShippingAddress<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>
@@ -77,6 +78,7 @@
             <div class="panel-body">
               <div class="list-group">
                 <a class="list-group-item" href='types/ccs/add_update_cc.php'>AddUpdateCreditCard<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/ccs/search_credit_cards.php'>SearchCreditCards<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>
             </div>
           </div>

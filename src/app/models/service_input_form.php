@@ -32,6 +32,15 @@
           $f .= $c['name'];
           $f .= "</label></div>";
         }
+      }elseif( $this->_values['type']=='checkbox'){
+        $f .= "<strong>" . $this->_values['name'] . "</strong>";
+        for($i=0; $i<count($this->_values['choices']); $i++){
+          $c = $this->_values['choices'][$i];
+          $f .= "<div class='checkbox'>";
+          $f .= "<label><input type='checkbox' name='{$this->_values['id']}' id='{$c['id']}' value='{$c['value']}'>";
+          $f .= $c['name'];
+          $f .= "</label></div>";
+        }
       }elseif( $this->_values['type']=='textarea' ){
         $f .= "<label for=\"{$this->_values['id']}\">{$this->_values['name']}</label>";
         $f .= "<textarea rows=\"3\" class=\"form-control\" id=\"{$this->_values['id']}\" name=\"{$this->_values['id']}\" ";

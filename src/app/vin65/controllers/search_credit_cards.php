@@ -1,36 +1,66 @@
 <?php namespace wgm\vin65\controllers;
 
+  require_once $_ENV['APP_ROOT'] . "/models/service_input.php";
   require_once $_ENV['APP_ROOT'] . "/models/service_input_form.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/controllers/abstract_soap_controller.php";
-  require_once $_ENV['APP_ROOT'] . "/vin65/models/upsert_club_membership.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/get_contact.php";
-  require_once $_ENV['APP_ROOT'] . "/vin65/models/search_club_memberships.php";
+  require_once $_ENV['APP_ROOT'] . "/vin65/models/search_credit_cards.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/soap_service_queue.php";
 
-
+  use wgm\models\ServiceInput as ServiceInputModel;
   use wgm\models\ServiceInputForm as ServiceInputForm;
   use wgm\vin65\models\GetContact as GetContactModel;
-  use wgm\vin65\models\SearchClubMemberships as SearchClubMembershipsModel;
-  use wgm\vin65\models\UpsertClubMembership as UpsertClubMembershipModel;
+  use wgm\vin65\models\SearchCreditCards as SearchCreditCardsModel;
   use wgm\vin65\models\SoapServiceQueue as SoapServiceQueue;
 
 
-  class UpdateClubMembership extends AbstractSoapController{
+  class SearchCreditCards extends AbstractSoapController{
 
     function __construct($session){
       parent::__construct($session);
       $this->_queue->appendService( "wgm\\vin65\\models\\GetContact" );
-      $this->_queue->appendService( "wgm\\vin65\\models\\SearchClubMemberships" );
-      $this->_queue->appendService( "wgm\\vin65\\models\\UpsertClubMembership" );
-      $this->_input_form = new ServiceInputForm( new UpsertClubMembershipModel($session) );
+      $this->_queue->appendService( "wgm\\vin65\\models\\SearchCreditCards" );
+      $this->_input_form = new ServiceInputForm( new SearchCreditCardsModel($session) );
     }
+
+    public function getFullResultsTable(){
+
+      $model = $this->_queue->getCurrentServiceModel();
+
+      if( isset($model) ){
+        $res = $model->getResult();
+        if( !empty($res) ){
+          $r = "<table class='table table-condensed'>";
+          $r .= "<tr>" .
+                "<th>CreditCard ID</th>" .
+                "<th>Masked Card Number</th>" .
+                "<th>Expiry Month</th>" .
+                "<th>Expiry Year</th>" .
+                "</tr>";
+          foreach ($res->CreditCards as $value) {
+            $r .= "<tr>" .
+                  "<td>" . $value->CreditCardID . "</td>" .
+                  "<td>" . $value->MaskedCardNumber . "</td>" .
+                  "<td>" . $value->CardExpiryMonth . "</td>" .
+                  "<td>" . $value->CardExpiryYear . "</td>" .
+                  "</tr>";
+          }
+
+          $r .= "</table>";
+          return $r;
+        }
+      }
+
+      return parent::getFullResultsTable();
+
+    }
+
+
 
 
     // CALLBACKS
 
     public function onSoapServiceQueueStatus($status){
-      // print_r($rec);
-      // exit;
       if( $status==SoapServiceQueue::PROCESS_COMPLETE ){
         $model = $this->_queue->getCurrentServiceModel();
         if( $model->getClassName()==GetContactModel::METHOD_NAME ){
@@ -41,25 +71,7 @@
           }else{
             $this->_queue->processNextRecord();
           }
-        }elseif ($model->getClassName()==SearchClubMembershipsModel::METHOD_NAME) {
-          if( $model->success() ){
-            $res = $model->getResult();
-            $rec = $this->_queue->getCurrentCsvRecord();
-            foreach ($res->ClubMemberships as $cm) {
-              if( $cm->$rec["UpdateKey"]==$rec["UpdateValue"] ){
-                $rec["ClubMembershipID"] = $cm->ClubMembershipID;
-                break;
-              }
-            }
-            print_r($rec["ClubName"]);
-            print_r("</br>");
-            print_r($rec["ClubMembershipID"]);
-            exit;
-            $this->_queue->processNextService($rec);
-          }else{
-            $this->_queue->processNextRecord();
-          }
-        }elseif( $model->getClassName()==UpsertClubMembershipModel::METHOD_NAME ){
+        }elseif( $model->getClassName()==SearchCreditCardsModel::METHOD_NAME ){
           $this->_queue->processNextRecord();
         }
       }elseif( $status==SoapServiceQueue::QUEUE_COMPLETE ){
@@ -71,6 +83,8 @@
     }
 
 
+
   }
 
-  ?>
+
+?>
