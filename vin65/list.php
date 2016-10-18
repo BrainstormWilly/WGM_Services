@@ -37,8 +37,9 @@
             <div class="panel-body">
               <div class="list-group">
                 <a class="list-group-item" href='types/club_memberships/get_club_membership.php'>GetClubMembership<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
-                <a class="list-group-item" href='types/club_memberships/upsert_club_membership.php'>AddClubMembership<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/club_memberships/insert_club_membership.php'>InsertClubMembership<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/club_memberships/search_club_memberships.php'>SearchClubMemberships<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/club_memberships/update_club_membership.php'>UpdateClubMembership<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>
             </div>
           </div>

@@ -6,19 +6,42 @@
 
   class GetClubMembership extends AbstractSoapModel{
 
-    const SERVICE_WSDL = "https://webservices.vin65.com/v300/ClubMembershipService.cfc?wsdl";
-    const SERVICE_NAME = "ClubMembershipService";
+    const SERVICE_WSDL = "https://webservices.vin65.com/v201/contactService.cfc?wsdl";
+    const SERVICE_NAME = "ContactService";
     const METHOD_NAME = "GetClubMembership";
 
     function __construct($session, $version=2){
 
       $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'contactid';
+      $vf['name'] = "Contact ID";
+      $vf['required'] = false;
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'customernumber';
+      $vf['name'] = "Customer Number";
+      $vf['type'] = 'integer';
+      $vf['required'] = false;
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'email';
+      $vf['name'] = "Customer Email";
+      $vf['required'] = false;
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
       $vf['id'] = 'clubmembershipid';
       $vf['name'] = "Club Membership ID";
+      $vf['required'] = false;
       array_push($this->_value_fields, $vf);
 
       $this->_value_map = [
-        "clubmembershipid" => 'ClubMembershipID'
+        "clubmembershipid" => 'ClubMembershipID',
+        'contactid' => 'contactID',
+        'customernumber' => 'CustomerNumber',
+        'email' => "Email"
       ];
 
       parent::__construct($session, 2);
@@ -32,8 +55,13 @@
     // }
 
     public function getValuesID(){
-
-      if( isset($this->_values["ClubMembershipID"]) && !empty($this->_values["ClubMembershipID"]) ){
+      if( isset($this->values['CustomerNumber']) && $this->_values["CustomerNumber"] != '' ){
+        return $this->_values["CustomerNumber"];
+      }elseif( isset($this->_values["Email"]) && $this->_values["Email"] != '' ){
+        return $this->_values["Email"];
+      }elseif( isset($this->_values["ContactID"]) && $this->_values["ContactID"] != '' ){
+        return $this->_values["ContactID"];
+      }elseif( isset($this->_values["ClubMembershipID"]) && $this->_values["ClubMembershipID"] != '' ){
         return $this->_values["ClubMembershipID"];
       }
       return parent::getValuesID();
@@ -52,8 +80,11 @@
     // }
 
     public function getResultID(){
-      if( isset($this->_result->ClubMembership) && $this->_result->ClubMembership!="" ){
-        return $this->_result->ClubMembership->ClubName;
+      if( count($this->_result->clubMemberships) > 0 ){
+        $r = '';
+        foreach ($this->_result->clubMemberships as $value) {
+          $r .= $value->ClubMembershipID . ", ";
+        }
       }
       return parent::getResultID();
     }
