@@ -171,11 +171,13 @@
       if( $include_headers ){
         $perm = 'w';
       }else{
-        array_shift($this->_values); // remove headers
         $perm = 'a';
       }
       if ( ($handle = fopen($file, $perm)) !== FALSE) {
-        foreach ($this->_values as $val) {
+        if( $include_headers && !empty($this->_headers) ){
+          fputcsv($handle, $this->_headers);
+        }
+        foreach ($this->_records as $val) {
           fputcsv($handle, $val);
         }
         fclose($handle);

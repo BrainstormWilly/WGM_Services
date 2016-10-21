@@ -1,7 +1,8 @@
 {
     "require": {
         "php": ">=5.4.0",
-        "clue/soap-react": "^0.1.0"
+        "clue/soap-react": "^0.1.0",
+        "phpoffice/phpexcel": "1.8.0"
 
     },
     "autoload":{

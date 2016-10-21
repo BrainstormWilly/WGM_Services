@@ -9,6 +9,7 @@ class ComposerStaticInitddce5f4f71807dd85b7a99bd9e791d3e
     public static $files = array (
         'ad155f8f1cf0d418fe49e248db8c661b' => __DIR__ . '/..' . '/react/promise/src/functions_include.php',
         'a0edc8309cc5e1d60e3047b5df6b7052' => __DIR__ . '/..' . '/guzzlehttp/psr7/src/functions_include.php',
+        'f9e4203aff212ef57961f54fdadc370a' => __DIR__ . '/../..' . '/src/config/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -98,6 +99,13 @@ class ComposerStaticInitddce5f4f71807dd85b7a99bd9e791d3e
     );
 
     public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'PHPExcel' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpoffice/phpexcel/Classes',
+            ),
+        ),
         'E' => 
         array (
             'Evenement' => 

@@ -6,5 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'PHPExcel' => array($vendorDir . '/phpoffice/phpexcel/Classes'),
     'Evenement' => array($vendorDir . '/evenement/evenement/src'),
 );
