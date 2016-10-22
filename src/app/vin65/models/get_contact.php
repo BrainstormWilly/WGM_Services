@@ -15,12 +15,26 @@
       $vf = ServiceInputForm::FieldValues();
       $vf['id'] = 'customernumber';
       $vf['name'] = "Customer Number";
+      $vf['required'] = FALSE;
       array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'email';
+      $vf['name'] = "Customer Email";
+      $vf['required'] = FALSE;
+      array_push($this->_value_fields, $vf);
+
+      // $vf = ServiceInputForm::FieldValues();
+      // $vf['id'] = 'lookupemail';
+      // $vf['name'] = "Lookup Email";
+      // $vf['required'] = FALSE;
+      // array_push($this->_value_fields, $vf);
 
       $this->_value_map = [
         "contactid" => 'contactID',
         "customernumber" => 'customerNumber',
-        "email" => 'eMail'
+        "email" => 'eMail',
+        "lookupemail" => 'lookupemail'
       ];
 
       parent::__construct($session, 2);
@@ -43,12 +57,18 @@
       return parent::getValuesID();
     }
     public function setValues($values){
+
       foreach ($values as $key => $value) {
+        $lkey = strtolower($key);
         if( $value !== '' ){
-          if( array_key_exists(strtolower($key), $this->_value_map) ){
-            $this->_values[$this->_value_map[strtolower($key)]] = $value;
+          if( array_key_exists($lkey, $this->_value_map) ){
+            $this->_values[$this->_value_map[$lkey]] = $value;
           }
         }
+      }
+      if( isset($this->_values['lookupemail']) ){
+        $this->_values['eMail'] = $this->_values['lookupemail'];
+        unset( $this->_values['lookupemail'] );
       }
       if( isset($this->_values["customerNumber"]) && isset($this->_values['eMail']) ){
         unset($this->_values['eMail']);

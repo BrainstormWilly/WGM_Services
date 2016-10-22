@@ -57,7 +57,7 @@
       foreach ($values as $key => $value) {
         if( $value !== '' ){
           if( array_key_exists(strtolower($key), $this->_value_map) ){
-              $addr[$this->_value_map[strtolower($key)]] = $value;
+              $addr[$this->_value_map[strtolower($key)]] = utf8_encode($value);
           }
         }
       }
