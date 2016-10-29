@@ -16,6 +16,10 @@
       return $d->format('m/d/Y');
     }
 
+    public static function equals($date_str_1, $date_str_2){
+      return self::toMDY($date_str_1) == self::toMDY($date_str_2);
+    }
+
   }
 
 ?>

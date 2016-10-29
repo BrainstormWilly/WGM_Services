@@ -115,9 +115,9 @@
           <div class="panel-collapse collapse" id='note-services-content' role='tabPanel' aria-labelledby='note-services-heading'>
             <div class="panel-body">
               <div class="list-group">
-                <!-- <a class="list-group-item" href='types/notes/search_notes.php'>SearchNotes<span class="glyphicon glyphicon-chevron-right pull-right"></span></a> -->
-                <!-- <a class="list-group-item" href='#'>GetNote<span class="glyphicon glyphicon-chevron-right pull-right"></span></a> -->
-                <a class="list-group-item" href='types/notes/add_update_note.php'>AddUpdateNote<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/notes/search_notes.php'>SearchNotes<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/notes/update_note.php'>UpdateNote<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/notes/add_update_note.php'>AddNote<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>
             </div>
           </div>

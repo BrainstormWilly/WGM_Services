@@ -57,10 +57,9 @@
       return parent::getValuesID();
     }
     public function setValues($values){
-
       foreach ($values as $key => $value) {
         $lkey = strtolower($key);
-        if( $value !== '' ){
+        if( $value !== NULL ){
           if( array_key_exists($lkey, $this->_value_map) ){
             $this->_values[$this->_value_map[$lkey]] = $value;
           }

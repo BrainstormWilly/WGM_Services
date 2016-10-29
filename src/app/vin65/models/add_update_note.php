@@ -25,15 +25,21 @@ use wgm\models\ServiceInputForm as ServiceInputForm;
 
       $vf = ServiceInputForm::FieldValues();
       $vf['id'] = 'customernumber';
-      $vf['name'] = "CustomerNumber <small>(has to include order or customer number)</small>";
-      $vf['type'] = "tel";
+      $vf['name'] = "CustomerNumber";
+      $vf['type'] = "integer";
+      $vf['required'] = FALSE;
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'email';
+      $vf['name'] = "Email";
       $vf['required'] = FALSE;
       array_push($this->_value_fields, $vf);
 
       $vf = ServiceInputForm::FieldValues();
       $vf['id'] = 'ordernumber';
       $vf['name'] = "OrderNumber <small>(has to include order or customer number)</small>";
-      $vf['type'] = "tel";
+      $vf['type'] = "integer";
       $vf['required'] = FALSE;
       array_push($this->_value_fields, $vf);
 
