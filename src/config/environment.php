@@ -4,14 +4,8 @@
 
 $_ENV['APP_ENV'] = 'dev';
 
-if( strpos( $_SERVER['HTTP_USER_AGENT'], "Windows") ){
-  // $_ENV['TYPES_ROOT'] = $_SERVER['DOCUMENT_ROOT'] . "\\wgm\\services\\types";
-  $_ENV['APP_ROOT'] = $_SERVER['DOCUMENT_ROOT'] . "\wgm\services\src\app";
-  $_ENV['APP_INCLUDES'] = $_SERVER['DOCUMENT_ROOT'] . "\wgm\services\includes";
-}else{
-  $_ENV['APP_ROOT'] = $_SERVER['DOCUMENT_ROOT'] . "/wgm/services/src/app";
-  $_ENV['APP_INCLUDES'] = $_SERVER['DOCUMENT_ROOT'] . "/wgm/services/includes";
-}
+$_ENV['APP_ROOT'] = $_SERVER['DOCUMENT_ROOT'] . "/wgm/services/src/app";
+$_ENV['APP_INCLUDES'] = $_SERVER['DOCUMENT_ROOT'] . "/wgm/services/includes";
 $_ENV['TYPES_ROOT'] = $_SERVER['DOCUMENT_ROOT'] . "/wgm/services/types";
 $_ENV['UPLOADS_PATH'] = "./uploads/";
 $_ENV['APP_HOST'] = "http://localhost/wgm/services";
