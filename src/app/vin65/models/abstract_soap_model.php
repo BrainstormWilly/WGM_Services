@@ -159,8 +159,11 @@
       return $file_bits[0];
     }
 
-    protected function _isRealValue($value){
-      return ( isset($value) && trim($value) !== '' );
+    protected function _isRealValue($value, $key=NULL){
+      if( $key===NULL ){
+        return ( isset($value) && trim($value) !== '' && $value !== NULL );
+      }
+      return ( isset($value[$key]) && trim($value[$key]) !== '' && $value[$key] !== NULL );
     }
 
 

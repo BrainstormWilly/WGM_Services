@@ -64,10 +64,11 @@
           }
         }
       }
-      if( $this->_isRealValue($values['lookupemail']) ){
+
+      if( $this->_isRealValue($values, 'lookupemail') ){
         $this->_values['eMail'] = $values['lookupemail'];
       }
-      if( $this->_isRealValue($values["customernumber"]) ){
+      if( $this->_isRealValue($values, "customernumber") ){
         unset($this->_values['eMail']);
       }
     }
