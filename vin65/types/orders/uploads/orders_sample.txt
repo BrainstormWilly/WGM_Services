@@ -1,3 +1,0 @@
-SUCCESS,6,2540611:jeannine.mansur@noemail.com,OrderService->UpsertOrder,41A89FA9-EBD2-F780-1CCC-31FBBBC79ED7
-SUCCESS,6,41A89FA9-EBD2-F780-1CCC-31FBBBC79ED7,OrderService->UpsertOrder,61116
-SUCCESS,6,Unknown,OrderService->UpsertOrder,41a89fa9-ebd2-f780-1ccc-31fbbbc79ed7
