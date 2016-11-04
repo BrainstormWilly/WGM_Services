@@ -27,7 +27,7 @@
         if( $model->getClassName()==GetContactModel::METHOD_NAME ){
           if( $model->success() ){
             $rec = $this->_queue->getCurrentCsvRecord();
-            $rec["ContactID"] = $model->getResultID();
+            $rec["contactid"] = $model->getResultID();
             $this->_queue->processNextService($rec);
           }else{
             $this->_queue->processNextRecord();

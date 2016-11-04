@@ -74,7 +74,7 @@
     public function setValues($values){
       foreach ($values as $key => $value) {
         $lkey = strtolower($key);
-        if( $value!=='' ){
+        if( $this->_isRealValue($value) ){
           if( array_key_exists($lkey, $this->_value_map) ){
             $this->_values[$this->_value_map[$lkey]] = $value;
           }
@@ -157,6 +157,10 @@
       $file = array_pop($path_bits);
       $file_bits = explode(".", $file);
       return $file_bits[0];
+    }
+
+    protected function _isRealValue($value){
+      return ( isset($value) && trim($value) !== '' );
     }
 
 

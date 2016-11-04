@@ -33,8 +33,7 @@
       $this->_value_map = [
         "contactid" => 'contactID',
         "customernumber" => 'customerNumber',
-        "email" => 'eMail',
-        "lookupemail" => 'lookupemail'
+        "email" => 'eMail'
       ];
 
       parent::__construct($session, 2);
@@ -59,17 +58,16 @@
     public function setValues($values){
       foreach ($values as $key => $value) {
         $lkey = strtolower($key);
-        if( $value !== NULL ){
+        if( $this->_isRealValue($value) ){
           if( array_key_exists($lkey, $this->_value_map) ){
             $this->_values[$this->_value_map[$lkey]] = $value;
           }
         }
       }
-      if( isset($this->_values['lookupemail']) ){
-        $this->_values['eMail'] = $this->_values['lookupemail'];
-        unset( $this->_values['lookupemail'] );
+      if( $this->_isRealValue($values['lookupemail']) ){
+        $this->_values['eMail'] = $values['lookupemail'];
       }
-      if( isset($this->_values["customerNumber"]) && isset($this->_values['eMail']) ){
+      if( $this->_isRealValue($values["customernumber"]) ){
         unset($this->_values['eMail']);
       }
     }

@@ -1,6 +1,7 @@
 <?php namespace wgm\vin65\models;
 
   require_once $_ENV['APP_ROOT'] . '/vin65/models/abstract_soap_model.php';
+  require_once $_ENV['APP_ROOT'] . '/vin65/models/date_converter.php';
 
   class UpsertShippingAddress extends AbstractSoapModel{
 
@@ -55,9 +56,14 @@
     public function setValues($values){
       $addr = [];
       foreach ($values as $key => $value) {
-        if( $value !== '' ){
-          if( array_key_exists(strtolower($key), $this->_value_map) ){
-              $addr[$this->_value_map[strtolower($key)]] = utf8_encode($value);
+        $lkey = strtolower($key);
+        if( $this->_isRealValue($value) ){
+          if( array_key_exists($lkey, $this->_value_map) ){
+            if( $lkey=='birthdate' ){
+              $addr[$this->_value_map[$lkey]] = DateConverter::toYMD($value);
+            }else{
+              $addr[$this->_value_map[$lkey]] = utf8_encode($value);
+            }
           }
         }
       }
