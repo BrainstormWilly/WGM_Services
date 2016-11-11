@@ -52,7 +52,7 @@
     public function setValues($values){
       foreach ($values as $key => $value) {
         $lkey = strtolower($key);
-        if(!empty($value)){
+        if($this->_isRealValue($value)){
           if( array_key_exists($lkey, $this->_value_map) ){
             if( $lkey=="expirydate" ){
               $value = DateConverter::toYMD($value);
