@@ -110,6 +110,7 @@ class SoapServiceQueue{
         $this->_logger->openLog($this->_data->getFile(), $index);
         $this->setProxies();
     }else{
+
       $this->_logger->writeToLog( ServiceLogger::createFailItem(0, '0000' , 'CSV Reader', 'Unable to read file.'));
       $this->setStatus(self::FAIL);
     }
@@ -199,8 +200,10 @@ class SoapServiceQueue{
 
   public function processNextRecord(){
 
-    $this->_current_csv_record  = $this->_data->getNextRecord();
+    $this->_current_csv_record = $this->_data->getNextRecord();
+
     if( $this->_current_csv_record  ){
+      // print_r("next record: <br/>");
       $this->_process_service_index = 0;
       $this->_services[$this->_process_service_index++]->process($this->_session, $this->_current_csv_record , [$this, "onProcessServiceComplete"]);
     }else{
