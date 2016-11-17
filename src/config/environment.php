@@ -41,6 +41,8 @@ if( $_ENV['APP_ENV'] === 'dev' ){
   $_ENV['V65_HOST'] = "/services/vin65";
   $_ENV['V65_INCLUDES'] = $_ENV['SERVICES_ROOT'] . "/vin65/includes";
 
+  echo $_SERVER['SERVER_NAME'];
+  echo "<br/>";
   echo $_ENV['SERVICES_ROOT'];
 }
 
