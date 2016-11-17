@@ -2,8 +2,10 @@
 
 if( $_SERVER['SERVER_NAME']=='wgm.dev' ){
   $_ENV['APP_ENV'] = 'dev';
+}else if($_SERVER['SERVER_NAME']=='bsc.sytes.net' ){
+  $_ENV['APP_ENV'] = 'syn';
 }else{
-  $_ENV['APP_ENV'] = 'prod';
+  $_ENV['APP_ENV'] = 'prd';
 }
 
 if( $_ENV['APP_ENV'] === 'dev' ){
@@ -23,6 +25,23 @@ if( $_ENV['APP_ENV'] === 'dev' ){
 
   $_ENV['V65_HOST'] = "/services/vin65";
   $_ENV['V65_INCLUDES'] = $_ENV['SERVICES_ROOT'] . "/vin65/includes";
+}else if($_ENV['APP_ENV'] === 'syn'){
+  $_ENV['SERVICES_ROOT'] = dirname(dirname(__DIR__));
+
+  $_ENV['APP_ROOT'] = $_ENV['SERVICES_ROOT'] . "/src/app";
+  $_ENV['APP_INCLUDES'] = $_ENV['SERVICES_ROOT'] . "/includes";
+  $_ENV['TYPES_ROOT'] = $_ENV['SERVICES_ROOT'] . "/types";
+  $_ENV['UPLOADS_PATH'] = "./uploads/";
+  $_ENV['APP_HOST'] = "/";
+
+  $_ENV['BLOYAL_HOST'] = "/bloyal";
+  $_ENV['BLOYAL_INCLUDES'] = $_ENV['SERVICES_ROOT'] . "/bloyal/includes";
+
+  $_ENV['NEX_HOST'] = "/nexternal";
+  $_ENV['NEX_INCLUDES'] =  $_ENV['SERVICES_ROOT'] . "/nexternal/includes";
+
+  $_ENV['V65_HOST'] = "/vin65";
+  $_ENV['V65_INCLUDES'] = $_ENV['SERVICES_ROOT'] . "/vin65/includes";
 }else{
   $_ENV['SERVICES_ROOT'] = dirname(dirname(__DIR__));
 
@@ -41,9 +60,6 @@ if( $_ENV['APP_ENV'] === 'dev' ){
   $_ENV['V65_HOST'] = "/services/vin65";
   $_ENV['V65_INCLUDES'] = $_ENV['SERVICES_ROOT'] . "/vin65/includes";
 
-  echo $_SERVER['SERVER_NAME'];
-  echo "<br/>";
-  echo $_ENV['SERVICES_ROOT'];
 }
 
 ?>

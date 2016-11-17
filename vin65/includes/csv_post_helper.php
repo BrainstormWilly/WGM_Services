@@ -20,6 +20,9 @@ if( isset($_GET['download']) ){
 
   //
   $controller->setResultsTable("<h4>Preparing file " . basename($_FILES["csv_file"]["name"]) . " ...</h4>");
+  if( !is_dir($_ENV['UPLOADS_PATH']) ){
+    mkdir( $_ENV['UPLOADS_PATH'], 0777, true);
+  }
   $file = $_ENV['UPLOADS_PATH'] . basename($_FILES["csv_file"]["name"]);
   $file_type = pathinfo($file,PATHINFO_EXTENSION); //looking for csv
   if( $file_type == 'csv' ){
