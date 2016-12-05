@@ -3,7 +3,7 @@
   require_once $_ENV['APP_ROOT'] . '/vin65/models/abstract_soap_model.php';
   require_once $_ENV['APP_ROOT'] . '/vin65/models/date_converter.php';
 
-  class UpsertShippingAddress extends AbstractSoapModel{
+  class InsertShippingAddress extends AbstractSoapModel{
 
     const SERVICE_WSDL = "https://webservices.vin65.com/v201/contactService.cfc?wsdl";
     const SERVICE_NAME = "ContactService";
@@ -13,6 +13,7 @@
 
       $this->_value_map = [
         "contactid" => 'ContactID',
+        "shippingaddressid" => "ShippingAddressID",
         "lastname" => 'Lastname',
         "firstname" => 'Firstname',
         "nickname" => 'Nickname',

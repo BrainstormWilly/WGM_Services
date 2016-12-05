@@ -59,9 +59,10 @@
                 <a class="list-group-item" href='types/contacts/add_contact_type_to_contact.php'>AddContactTypeToContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/get_contact.php'>GetContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/get_shipping_address.php'>GetShippingAddress<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/contacts/insert_shipping_address.php'>InsertShippingAddress<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>    
                 <a class="list-group-item" href='types/contacts/search_contact_types.php'>SearchContactTypes<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/upsert_contact.php'>UpsertContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
-                <a class="list-group-item" href='types/contacts/upsert_shipping_address.php'>UpsertShippingAddress<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/contacts/update_shipping_address.php'>UpdateShippingAddress<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>
             </div>
           </div>

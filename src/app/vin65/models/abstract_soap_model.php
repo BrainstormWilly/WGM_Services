@@ -100,6 +100,13 @@
       return false;
     }
 
+    public function getValueForKey($key){
+      if( $this->valueKeyExists($key) ){
+        return $this->_value_map[strtolower($key)];
+      }
+      return $key;
+    }
+
     public function getError(){
       return $this->_error;
     }

@@ -10,7 +10,7 @@
   use wgm\vin65\models\SoapServiceQueue as SoapServiceQueue;
 
 
-  class UpsertShippingAddress extends AbstractSoapController{
+  class InsertShippingAddress extends AbstractSoapController{
 
     function __construct($session){
       parent::__construct($session);
