@@ -167,7 +167,7 @@
       $this->_page = floor($index/$this->_page_limit) + 1;
     }
 
-    public function writeData($data, $include_headers=TRUE){
+    public function writeData($file, $include_headers=TRUE){
       if( $include_headers ){
         $perm = 'w';
       }else{
