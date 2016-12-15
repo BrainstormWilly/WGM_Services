@@ -124,6 +124,9 @@
     }
 
     public function uploadFile($file){
+      if( !is_dir($_ENV['UPLOADS_PATH']) ){
+        mkdir( $_ENV['UPLOADS_PATH'], 0777, true);
+      }
       $file_with_path = $_ENV['UPLOADS_PATH'] . basename($file['name']);
       if( move_uploaded_file($_FILES['data_file']['tmp_name'], $file_with_path) ){
         if( $this->_reader->readData($file_with_path) ){
