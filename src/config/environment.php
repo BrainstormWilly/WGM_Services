@@ -57,7 +57,7 @@ if( $_ENV['APP_ENV'] === 'dev' ){
 }else{
   $_ENV['SERVICES_ROOT'] = dirname(dirname(__DIR__));
 
-  $_ENV['DB_HOST'] = 'localhost';
+  $_ENV['DB_HOST'] = 'exw.zhc.mybluehost.me';
   $_ENV['DB_USERNAME'] = 'exwzhcmy_wgm';
   $_ENV['DB_PASSWORD'] = '0&QP*Cmy9SGp';
   $_ENV['DB_NAME'] = 'exwzhcmy_wgm';
