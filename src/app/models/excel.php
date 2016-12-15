@@ -18,7 +18,7 @@
       $current = 0;
       $cnt = 0;
       $this->_file = $file;
-      $file_parts = pathinfo($file['name']);
+      $file_parts = pathinfo($file);
 
       switch($file_parts['extension']){
         case 'xls' :
@@ -32,7 +32,7 @@
       }
 
       if( isset($reader) ){
-        $data = $reader->load($file['name']);
+        $data = $reader->load($file);
         $records = $data->getActiveSheet()->toArray(null,true,true,true);
         $this->_record_cnt = count($records) - 1;
         $headers = array_shift($records);

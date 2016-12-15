@@ -2,6 +2,7 @@
 
   require_once $_ENV['APP_ROOT'] . '/models/excel.php';
 
+  use \ReflectionClass as ReflectionClass;
   use \wgm\models\Excel as Excel;
 
 
@@ -24,6 +25,21 @@
     function __construct($db){
       $this->_db = $db;
       $this->_reader = new Excel();
+    }
+
+    public function getClassName(){
+      $class_ns = get_class($this);
+      $class_bits = explode("\\", $class_ns);
+      return array_pop($class_bits);
+    }
+
+    public function getClassFileName(){
+      $class = new ReflectionClass($this);
+      $path = $class->getFileName();
+      $path_bits = explode("/", $path);
+      $file = array_pop($path_bits);
+      $file_bits = explode(".", $file);
+      return $file_bits[0];
     }
 
     public function getState(){
@@ -108,13 +124,18 @@
     }
 
     public function uploadFile($file){
-      if( $this->_reader->readData($file) ){
-        $this->_status = "File uploaded successfully.</br>";
-        if( $this->createTables() ){
-          $this->_status .= "Database table(s) for " . implode(",", array_keys($this->_tables)) . " created.<br>";
-          $this->_state = self::STATE_UPLOAD_COMPLETE;
+      $file_with_path = $_ENV['UPLOADS_PATH'] . basename($file['name']);
+      if( move_uploaded_file($_FILES['data_file']['tmp_name'], $file_with_path) ){
+        if( $this->_reader->readData($file_with_path) ){
+          $this->_status = "File uploaded successfully.</br>";
+          if( $this->createTables() ){
+            $this->_status .= "Database table(s) for " . implode(",", array_keys($this->_tables)) . " created.<br>";
+            $this->_state = self::STATE_UPLOAD_COMPLETE;
+          }else{
+            $this->_status .= "Unable to create database tables.</br>";
+          }
         }else{
-          $this->_status .= "Unable to create database tables.</br>";
+          $this->_status = "Invalid file type. Requires .xls, .xlsx, or .csv.</br>";
         }
       }else{
         $this->_status = "Unable to upload file.</br>";

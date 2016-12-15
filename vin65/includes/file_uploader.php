@@ -1,7 +1,6 @@
 <?php
 
 ignore_user_abort(true);
-set_time_limit(0); // disable the time limit for this script
 
 $path = $_ENV['UPLOADS_PATH'] ; // change the path to fit your websites document structure
 
@@ -14,6 +13,10 @@ if ($fd = fopen ($fullPath, "r")) {
     $path_parts = pathinfo($fullPath);
     $ext = strtolower($path_parts["extension"]);
     switch ($ext) {
+        case "xlsx":
+        header("Content-type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        header("Content-Disposition: attachment; filename=\"".$path_parts["basename"]."\""); // use 'attachment' to force a file download
+        break;
         case "pdf":
         header("Content-type: application/pdf");
         header("Content-Disposition: attachment; filename=\"".$path_parts["basename"]."\""); // use 'attachment' to force a file download
