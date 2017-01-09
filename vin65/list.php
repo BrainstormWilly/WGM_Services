@@ -57,6 +57,7 @@
             <div class="panel-body">
               <div class="list-group">
                 <a class="list-group-item" href='types/contacts/add_contact_type_to_contact.php'>AddContactTypeToContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='types/contacts/add_shipping_address.php'>AddShippingAddress<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/get_contact.php'>GetContact<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/get_shipping_address.php'>GetShippingAddress<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='types/contacts/insert_shipping_address.php'>InsertShippingAddress<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>    

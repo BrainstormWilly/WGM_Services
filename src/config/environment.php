@@ -1,5 +1,6 @@
 <?php
 
+
 if( $_SERVER['SERVER_NAME']=='wgm.dev' ){
   $_ENV['APP_ENV'] = 'dev';
 }else if($_SERVER['SERVER_NAME']=='bsc.sytes.net' ){

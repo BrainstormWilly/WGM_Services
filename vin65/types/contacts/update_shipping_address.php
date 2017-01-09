@@ -9,6 +9,7 @@ require_once $_ENV['V65_INCLUDES'] . "/session_policy.php";
 
   $controller = new UpdateShippingAddressController($_SESSION);
 
+  include $_ENV['V65_INCLUDES'] . "/form_post_helper.php";
   include $_ENV['V65_INCLUDES'] . '/service_view.php';
 
 ?>
