@@ -32,7 +32,7 @@
           }else{
             $this->_queue->processNextRecord();
           }
-        }elseif( $model->getClassName()=="AddShippingAddressModel" ){
+        }elseif( $model->getClassName()=="AddShippingAddress" ){
           $this->_queue->processNextRecord();
         }
       }elseif( $status==SoapServiceQueue::QUEUE_COMPLETE ){

@@ -3,11 +3,7 @@
   require_once $_ENV['APP_ROOT'] . '/vin65/models/abstract_soap_model.php';
   require_once $_ENV['APP_ROOT'] . '/vin65/models/date_converter.php';
 
-<<<<<<< HEAD
-  class InsertShippingAddress extends AbstractSoapModel{
-=======
   class AddShippingAddress extends AbstractSoapModel{
->>>>>>> in progress
 
     const SERVICE_WSDL = "https://webservices.vin65.com/v201/contactService.cfc?wsdl";
     const SERVICE_NAME = "ContactService";
@@ -31,10 +27,7 @@
         "countrycode" => 'CountryCode',
         "mainphone" => 'MainPhone',
         "email" => 'Email',
-<<<<<<< HEAD
-=======
-        "lookup_email" => "LookupEmail",
->>>>>>> in progress
+        "lookupemail" => "lookupemail",
         "isprimary" => 'IsPrimary'
       ];
 
