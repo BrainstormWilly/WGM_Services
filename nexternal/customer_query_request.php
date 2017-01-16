@@ -27,7 +27,8 @@
   if($query->hasErrors()){
     $status = "<h4>ERROR: " . $query->getOutputToArray()['Error']['ErrorDescription'] . "</h4>";
   }else{
-    $v65 = $query->getOutputToV65Array();
+    // $v65 = $query->getOutputToV65Array();
+    $ary = $query->convertOutputArray();
     $csv = $query->convertOutputToCsv($v65);
     $cnt += count($csv);
     if( $query->writeOutputToCsv($_ENV['UPLOADS_PATH'] . $_SESSION['account'] . "_customer_query.csv", $csv, $page) ){
