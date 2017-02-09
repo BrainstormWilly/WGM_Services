@@ -5,7 +5,7 @@ if( !file_exists("names_in.csv") ){
 }
 
 $last_name_prefixes = ["st.", "st", "van", "von", "de", "da"];
-$last_name_suffixes = ["jr", "jr.", "sr", "sr.", "i", "ii", "iii", "i i", "i i i"];
+$last_name_suffixes = ["jr", "jr.", "sr", "sr.", "i", "ii", "iii", "i i", "i i i", "md", "m.d.", "m. d."];
 
 if( file_exists("names_out.csv") ){
   unlink("names_out.csv");
@@ -25,7 +25,7 @@ if (($handle = fopen("names_in.csv", "r")) !== FALSE) {
           $splits .= trim($parts[0]). "," . trim($parts[1]) . PHP_EOL;
         }else{
           $lastchr = count($parts) - 1;
-          if( in_array(strtolower($parts[$lastchr]), $last_name_suffixes) || in_array(strtolower($parts[$lastchr-1]), $last_name_prefixes) ){
+          if( in_array(trim(strtolower($parts[$lastchr])), $last_name_suffixes) || in_array(trim(strtolower($parts[$lastchr-1])), $last_name_prefixes) ){
             $first = array_slice($parts, 0, $lastchr-1);
             $last = array_slice($parts, -2);
           }else{
