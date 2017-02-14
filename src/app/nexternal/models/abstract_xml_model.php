@@ -9,6 +9,8 @@
     protected $_input = [];
     protected $_output = [];
     protected $_v65_map = [];
+    protected $_nxt_map = [];
+    protected $_keys = [];
     protected $_url;
     protected $_csv;
 
@@ -27,7 +29,7 @@
     }
 
     public function processService(){
-      
+
       $ch = curl_init($this->_url);
       curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -70,8 +72,7 @@
     public function convertOutputToCsv($data){
       $keys = array_keys($data[0]);
       $csv;
-      $csvs = [];
-      array_push($csvs, $keys);
+      $csvs = [$keys];
       foreach($data as $rec){
         $csv = [];
         foreach($rec as $k => $v){

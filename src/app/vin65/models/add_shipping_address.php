@@ -13,6 +13,7 @@
 
       $this->_value_map = [
         "contactid" => 'ContactID',
+        "customernumber" => 'customerNumber',
         "shippingaddressid" => "ShippingAddressID",
         "lastname" => 'Lastname',
         "firstname" => 'Firstname',

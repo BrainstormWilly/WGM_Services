@@ -26,6 +26,7 @@
         <div class="panel-body">
           <div class="list-group">
             <a class="list-group-item" href='customer_query_request.php'>Download Customer Data<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+            <a class="list-group-item" href='additional_addresses_query_request.php'>Download Additional Address Data<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
           </div>
         </div>
       </div>

@@ -4,9 +4,9 @@
   require_once "../src/config/bootstrap.php";
   require $_ENV['NEX_INCLUDES'] . "/session_policy.php";
 
-  require_once $_ENV['APP_ROOT'] . "/nexternal/models/customer_query_request.php";
+  require_once $_ENV['APP_ROOT'] . "/nexternal/models/additional_addresses_query_request.php";
 
-  use wgm\nexternal\models\CustomerQueryRequest as CustomerQueryRequestModel;
+  use wgm\nexternal\models\AdditionalAddressesQueryRequest as AdditionalAddressesQueryRequest;
 
   $page = 1;
   if( isset($_GET['page']) ){
@@ -21,21 +21,21 @@
   $status = "Loading...";
 
   // print_r($_SESSION['key']);
-  $query = new CustomerQueryRequestModel($_SESSION, $page);
+  $query = new AdditionalAddressesQueryRequest($_SESSION, $page);
   $query->processService();
 
   if($query->hasErrors()){
     $status = "<h4>ERROR: " . $query->getOutputToArray()['Error']['ErrorDescription'] . "</h4>";
   }else{
-    // $v65 = $query->getOutputToV65Array();
-    $ary = $query->getOutputToArray();
-    $csv = $query->convertOutputToCsv($ary);
+    $v65 = $query->getOutputToV65Array();
+    // $ary = $query->getOutputToArray();
+    $csv = $query->convertOutputToCsv($v65);
     $cnt += count($csv);
-    if( $query->writeOutputToCsv($_ENV['UPLOADS_PATH'] . $_SESSION['account'] . "_customer_query.csv", $csv, $page) ){
+    if( $query->writeOutputToCsv($_ENV['UPLOADS_PATH'] . $_SESSION['account'] . "_additional_addresses_query.csv", $csv, $page) ){
       $status = "<h4>SUCCESS: " . $cnt . " records loaded.</h4>";
       if( $query->hasNextPage() ){
         $status .= "<p>Loading page " . ++$page . "...</p>";
-        header("Refresh:1; url=customer_query_request.php?page=" . $page . "&cnt=" . $cnt);
+        header("Refresh:1; url=additional_addresses_query_request.php?page=" . $page . "&cnt=" . $cnt);
       }else{
         $status .= "<p>Service Complete</p>";
       }
@@ -60,7 +60,7 @@
       <?php include $_ENV['NEX_INCLUDES'] . "/nav.php" ?>
 
       <div class="page-header">
-        <h1>Nexternal Web Services -> Customer Query</br>
+        <h1>Nexternal Web Services -> Additional Addresses Query</br>
         <small>for <?php echo $_SESSION['account'] ?></small></h1>
       </div>
 

@@ -174,6 +174,7 @@ class SoapServiceQueue{
   }
 
   public function processNextService($record=NULL){
+    // print_r($record);exit;
     if($record===NULL){
       $this->_current_csv_record = $this->_data->getNextRecord();
     }else{
@@ -208,7 +209,6 @@ class SoapServiceQueue{
   public function processNextRecord(){
 
     $this->_current_csv_record = $this->_data->getNextRecord();
-
     if( $this->_current_csv_record  ){
       // print_r("next record: <br/>");
       $this->_process_service_index = 0;

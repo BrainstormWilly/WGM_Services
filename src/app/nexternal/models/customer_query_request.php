@@ -105,12 +105,31 @@
       return $v;
     }
 
+    // public function convertOutputToCsv($data){
+    //   $keys = array_keys($data["Customer"][0]);
+    //   $csv;
+    //   print_r($data["Customer"][0]);exit;
+    //   $csvs = [];
+    //   foreach($data as $rec){
+    //     $csv = [];
+    //     foreach($rec as $k => $v){
+    //       $i = array_search($k, $keys);
+    //       $csv[$i] = $v;
+    //     }
+    //     array_push($csvs, $csv);
+    //
+    //   }
+    //   return $csvs;
+    // }
+
     public function getOutputToV65Array(){
       $o = $this->getOutputToArray();
       $vs = [];
-      // print_r($o);
-      // exit;
+
+
       foreach ($o['Customer'] as $c) {
+
+        
 
         // CC & CLUB MEMBERS ONLY (used for Bar Z Wines)
         if( !array_key_exists('SavedCreditCards', $c) ){
