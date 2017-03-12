@@ -16,6 +16,12 @@
       return $d->format('m/d/Y');
     }
 
+    public static function toBirthdate($date_str){
+      $d = new DateTime($date_str);
+      // return $d->format('Y-m-d\TH:m:s');
+      return $d->format('Y-m-d');
+    }
+
     public static function equals($date_str_1, $date_str_2){
       return self::toMDY($date_str_1) == self::toMDY($date_str_2);
     }

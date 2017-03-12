@@ -43,6 +43,8 @@
       return parent::getResultID();
     }
 
+
+
     public function getValuesID(){
       if( count($this->_values["shippingAddresses"]) > 0) {
         if( isset($this->_values["shippingAddresses"][0]["Email"]) ){
@@ -62,7 +64,7 @@
         if( $this->_isRealValue($value) ){
           if( array_key_exists($lkey, $this->_value_map) ){
             if( $lkey=='birthdate' ){
-              $addr[$this->_value_map[$lkey]] = DateConverter::toYMD($value);
+              $addr[$this->_value_map[$lkey]] = DateConverter::toBirthdate($value);
             }else{
               $addr[$this->_value_map[$lkey]] = utf8_encode($value);
             }
