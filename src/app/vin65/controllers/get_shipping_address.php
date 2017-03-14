@@ -48,6 +48,7 @@
               $r .= "<row>" .
                   "<div class='col-sm-2'>" .
                     "<strong>ID: </strong></br>" .
+                    "<strong>Alt ID: </strong></br>" .
                     "<strong>Birthdate: </strong></br>" .
                     "<strong>Firstname: </strong></br>" .
                     "<strong>Lastname: </strong></br>" .
@@ -64,6 +65,7 @@
                   "</div>" .
                   "<div class='col-sm-4'>" .
                     $res->ShippingAddressID . "</br>" .
+                    $res->AltShippingAddressID . "</br>" .
                     DateConverter::toMDY($res->Birthdate) . "</br>" .
                     $res->Firstname . "</br>" .
                     $res->Lastname . "</br>" .

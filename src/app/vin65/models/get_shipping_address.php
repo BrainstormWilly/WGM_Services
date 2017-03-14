@@ -37,13 +37,18 @@
       $vf['required'] = FALSE;
       array_push($this->_value_fields, $vf);
 
+      // $vf = ServiceInputForm::FieldValues();
+      // $vf['id'] = 'altshippingaddressid';
+      // $vf['name'] = "Alt Shipping Address ID";
+      // $vf['required'] = FALSE;
+      // array_push($this->_value_fields, $vf);
+
       $this->_value_map = [
         "altcontactid" => 'altContactID',
         "contactid" => 'contactID',
         "customernumber" => 'customerNumber',
         "email" => 'eMail',
-        "shippingaddressid" => 'shippingAddressID',
-        "altshippingaddressid" => 'altShippingAddressID'
+        "shippingaddressid" => 'ShippingAddressID'
       ];
 
       parent::__construct($session, 2);
