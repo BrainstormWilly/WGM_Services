@@ -35,7 +35,7 @@
 
       if( isset($model) ){
         if( $model->success() ){
-          // print_r($model->getResult());
+          print_r($model->getResult());
           $res = $model->getResult()->contacts[0];
           if( !empty($res) ){
             $r = "<div class='panel panel-default'>" .
@@ -59,6 +59,7 @@
                           DateConverter::toMDY($res->Birthdate) . "</br>" .
                           $res->Email . "</br>" .
                           $res->MainPhone . "</br>" .
+                          $res->CellPhone . "<br/>" .
                           $res->Address . "</br>";
             if( $res->Company !== '' ){
                           $r .= $res->Company . "</br>";

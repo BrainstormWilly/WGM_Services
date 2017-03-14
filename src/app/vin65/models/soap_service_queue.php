@@ -71,6 +71,13 @@ class SoapServiceModel{
     return $this->_proxy;
   }
 
+  public function out($value){
+    print_r("SoapServiceModel->");
+    print_r($this->_model_class);
+    print_r(": ");
+    print_r($value);
+    print_r("<br/><br/>");
+  }
 
 }
 
@@ -269,7 +276,12 @@ class SoapServiceQueue{
     //$this->_processNextService($model->getResultsID());
   }
 
-
+  public function out($value){
+    print_r("SoapServiceQueue");
+    print_r(": ");
+    print_r($value);
+    print_r("<br/><br/>");
+  }
 }
 
 ?>

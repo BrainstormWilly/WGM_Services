@@ -3,7 +3,7 @@
   require_once $_ENV['APP_ROOT'] . '/vin65/models/abstract_soap_model.php';
   use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
 
-  class UpsertContact extends AbstractSoapModel{
+  class AddContact extends AbstractSoapModel{
 
     const SERVICE_WSDL = "https://webservices.vin65.com/v201/contactService.cfc?wsdl";
     const SERVICE_NAME = "ContactService";
@@ -63,11 +63,15 @@
       return parent::getValuesID();
     }
     public function setValues($values){
+
       $contact = [];
       foreach ($values as $key => $value) {
+        $key = strtolower($key);
         if(!empty($value)){
-          if( array_key_exists(strtolower($key), $this->_value_map) ){
-              $contact[$this->_value_map[strtolower($key)]] = $value;
+          if( $key=="birthdate" ){
+            $contact[$this->_value_map[$key]] = DateConverter.toBirthdate($value);
+          }elseif( array_key_exists($key, $this->_value_map) ){
+            $contact[$this->_value_map[$key]] = $value;
           }
         }
       }

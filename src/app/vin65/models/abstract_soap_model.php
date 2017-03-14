@@ -1,6 +1,7 @@
 <?php namespace wgm\vin65\models;
 
   require_once $_ENV['APP_ROOT'] . "/models/service_input_form.php";
+  require_once $_ENV['APP_ROOT'] . "/vin65/models/date_converter.php";
 
   use \ReflectionClass as ReflectionClass;
 
@@ -72,6 +73,7 @@
     ** in __construct. Often overridden.
     */
     public function setValues($values){
+      print_r("Abstract::setValues<br/>");
       foreach ($values as $key => $value) {
         $lkey = strtolower($key);
         if( $this->_isRealValue($value) ){
@@ -171,6 +173,13 @@
         return ( isset($value) && trim($value) !== '' && $value !== NULL );
       }
       return ( isset($value[$key]) && trim($value[$key]) !== '' && $value[$key] !== NULL );
+    }
+
+    public function out($value){
+      print_r($this->getClassName());
+      print_r(": ");
+      print_r($value);
+      print_r("<br/>");
     }
 
 
