@@ -30,6 +30,8 @@
       if( $status==SoapServiceQueue::PROCESS_COMPLETE ){
         $model = $this->_queue->getCurrentServiceModel();
         if( $model->getClassName()==GetContactModel::METHOD_NAME ){
+          $this->_completed_addresses = [];
+          $this->_total_addresses = [];
           if( $model->success() ){
             $rec = $this->_queue->getCurrentCsvRecord();
             $rec["contactid"] = $model->getResultID();
@@ -40,25 +42,36 @@
         }elseif( $model->getClassName()==GetShippingAddressModel::METHOD_NAME ){
           $rec = $this->_queue->getCurrentCsvRecord();
           $res = $model->getResult();
-          $addrs = [];
-          // $update_model = new UpdateShippingAddressModel($this->_session);
+          $update_model = new UpdateShippingAddressModel($this->_session);
           // $key = $update_model->getValueForKey($rec["changekey"]);
-
+          $this->_remaining_addresses = [];
+          $min_date = 1921;
           foreach ($res->shippingAddresses as $value) {
-            print_r($value);
-            print_r('<br/><br/>');
-          }
-          exit;
 
-          // if( isset($addr) ){
-          //   $rec["shippingaddressid"] = $addr->ShippingAddressID;
-          //   $this->_queue->processNextService($rec);
-          // }else{
-          //   $this->_queue->recordModelError($model, "Unable to find record with criteria: " . $rec["changekey"] . " = " . $rec["changevalue"]);
-          //   $this->_queue->processNextRecord();
-          // }
+            $year = (int)explode("-", $value->Birthdate)[0];
+            if( $value->Birthdate=='' || $year < $min_date || $year > 2000 ){
+              array_push($this->_remaining_addresses, $value);
+            }
+
+          }
+
+          if( count($this->_remaining_addresses) > 0 ){
+            $rec["shippingaddressid"] = array_pop($this->_remaining_addresses)->ShippingAddressID;
+            $this->_queue->processNextService($rec);
+
+          }else{
+            $this->_queue->recordModelError($model, "Unable to find record with criteria: " . $rec["changekey"] . " = " . $rec["changevalue"]);
+            $this->_queue->processNextRecord();
+          }
+
         }elseif( $model->getClassName()=="UpdateShippingAddress" ){
-          $this->_queue->processNextRecord();
+          if( count($this->_remaining_addresses) > 0 ){
+            $rec = $this->_queue->getCurrentCsvRecord();
+            $rec["shippingaddressid"] = array_pop($this->_remaining_addresses)->ShippingAddressID;
+            $this->_queue->processWithService(UpdateShippingAddressModel::METHOD_NAME, $rec);
+          }else{
+            $this->_queue->processNextRecord();
+          }
         }
       }elseif( $status==SoapServiceQueue::QUEUE_COMPLETE ){
         $this->setResultsTable($this->_queue->getLog());
