@@ -9,7 +9,7 @@ use wgm\models\ServiceInputForm as ServiceInputForm;
 // use \DateTime as DateTime;
 // use wgm\vin65\models\AbstractSoapModel as AbstractSoapModel;
 
-  class AddUpdateNote extends AbstractSoapModel{
+  class AddNote extends AbstractSoapModel{
 
     const SERVICE_WSDL = "https://webservices.vin65.com/V300/NoteService.cfc?wsdl";
     const SERVICE_NAME = "NoteService";

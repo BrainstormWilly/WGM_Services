@@ -10,7 +10,7 @@
     <?php include $_ENV['V65_INCLUDES'] . "/nav.php" ?>
 
     <div class="page-header">
-      <h1><?php echo $controller->getClassName() ?> <small>for <?php echo $_SESSION['username'] ?></small></h1>
+      <h1><?php echo "<a href='" . $controller->getClassFileName() . ".php'>" . $controller->getClassName() . "</a>" ?> <small>for <?php echo $_SESSION['username'] ?></small></h1>
     </div>
 
     <div>

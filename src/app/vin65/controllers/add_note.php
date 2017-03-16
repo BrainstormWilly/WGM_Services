@@ -2,25 +2,25 @@
 
   require_once $_ENV['APP_ROOT'] . "/models/service_input_form.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/controllers/abstract_soap_controller.php";
-  require_once $_ENV['APP_ROOT'] . "/vin65/models/add_update_note.php";
+  require_once $_ENV['APP_ROOT'] . "/vin65/models/add_note.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/get_contact.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/soap_service_queue.php";
 
 
   use wgm\models\ServiceInputForm as ServiceInputForm;
   use wgm\vin65\controllers\AbstractSoapController as AbstractSoapController;
-  use wgm\vin65\models\AddUpdateNote as AddUpdateNoteModel;
+  use wgm\vin65\models\AddNote as AddNoteModel;
   use wgm\vin65\models\GetContact as GetContactModel;
   use wgm\vin65\models\SoapServiceQueue as SoapServiceQueue;
 
 
-  class AddUpdateNote extends AbstractSoapController{
+  class AddNote extends AbstractSoapController{
 
     function __construct($session){
       parent::__construct($session);
       $this->_queue->appendService( "wgm\\vin65\\models\\GetContact" );
-      $this->_queue->appendService( "wgm\\vin65\\models\\AddUpdateNote" );
-      $this->_input_form = new ServiceInputForm( new AddUpdateNoteModel($session) );
+      $this->_queue->appendService( "wgm\\vin65\\models\\AddNote" );
+      $this->_input_form = new ServiceInputForm( new AddNoteModel($session) );
     }
 
 
@@ -38,7 +38,7 @@
 
             $this->_queue->processNextRecord();
           }
-        }elseif( $model->getClassName()==AddUpdateNoteModel::METHOD_NAME ){
+        }elseif( $model->getClassName()=="AddNote" ){
           $this->_queue->processNextRecord();
         }
       }elseif( $status==SoapServiceQueue::QUEUE_COMPLETE ){
