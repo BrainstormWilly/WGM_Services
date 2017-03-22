@@ -104,10 +104,8 @@ use wgm\models\ServiceInputForm as ServiceInputForm;
         if( array_key_exists($lkey, $this->_value_map) ){
           if( $lkey=='notedate' ){
             $value = DateConverter::toYMD($value);
-          }
-          if( $lkey=='note' || $lkey=='subject' ){
-            // $value = preg_replace("/\\[nr]/", " ", $value);
-            $value = mb_convert_encoding($value, "UTF-8");
+          }else{
+            $value = utf8_encode($value);
           }
           $this->_values["Note"][$this->_value_map[$lkey]] = $value;
         }

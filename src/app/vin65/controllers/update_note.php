@@ -2,7 +2,6 @@
 
   require_once $_ENV['APP_ROOT'] . "/models/service_input_form.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/controllers/abstract_soap_controller.php";
-  require_once $_ENV['APP_ROOT'] . "/vin65/models/add_update_note.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/update_note.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/search_notes.php";
   require_once $_ENV['APP_ROOT'] . "/vin65/models/get_contact.php";
@@ -37,29 +36,19 @@
       if( $status==SoapServiceQueue::PROCESS_COMPLETE ){
         $model = $this->_queue->getCurrentServiceModel();
         if( $model->getClassName()==GetContactModel::METHOD_NAME ){
-          // print_r($rec);
-          // print_r("</br>");
-          // print_r($model->getResult);
-          // exit;
           if( $model->success() ){
             $rec = $this->_queue->getCurrentCsvRecord();
-            if( !isset($rec["keycodeid"]) ){
-              $rec["keycodeid"] = $model->getResultID();
-              $this->_queue->processNextService($rec);
-            }else{ // when the change is on the contact
-              // print_r(UpdateNoteModel::METHOD_NAME."</br>");
-              $rec["keycodeid"] = $model->getResultID();
-              $this->_queue->processWithService(UpdateNoteModel::METHOD_NAME, $rec);
-            }
+            $rec["keycodeid"] = $model->getResultID();
+            $this->_queue->processNextService($rec);
           }else{
             $this->_queue->processNextRecord();
           }
         }elseif( $model->getClassName()==SearchNotesModel::METHOD_NAME ){
+          // $this->out($model, TRUE);
           if( $model->success() ){
             $rec = $this->_queue->getCurrentCsvRecord();
             $res = $model->getResult();
-            $note_dif = 10000;
-            foreach ($res->Notes as $value) {
+            foreach ($res->Notes as $note) {
               // print_r($rec['subject'] == $value->Subject);
               // print_r("</br>");
               // print_r(mb_convert_encoding($rec['note'], "UTF-8") . " : " . $value->Note);
@@ -69,40 +58,53 @@
               // print_r(DateConverter::equals($rec['notedate'], $value->NoteDate));
               // print_r("</br>");
 
-              if( mb_convert_encoding($rec['subject'], "UTF-8") == $value->Subject &&
-                  DateConverter::equals($rec['notedate'], $value->NoteDate)){
+              // if( mb_convert_encoding($rec['subject'], "UTF-8") == $value->Subject &&
+              //     DateConverter::equals($rec['notedate'], $value->NoteDate)){
+              //
+              //   $rec_note = preg_replace("/[^a-zA-Z0-9]+/", "", $rec["note"]);
+              //   $val_note = preg_replace("/[^a-zA-Z0-9]+/", "", $value->Note);
+              //
+              //   $dif = strcmp($rec_note, $val_note);
+              //
+              //   if( $dif == 0 ){
+              //     $note = $value;
+              //     break;
+              //   }
+              //
+              // }
 
+              if( $rec['changekey'] == 'note' ){
                 $rec_note = preg_replace("/[^a-zA-Z0-9]+/", "", $rec["note"]);
-                $val_note = preg_replace("/[^a-zA-Z0-9]+/", "", $value->Note);
-
-                // compare as UTF-8
-                $dif = strcmp($rec_note, $val_note);
-
-                // exact match
+                $note_note = preg_replace("/[^a-zA-Z0-9]+/", "", $note->Note);
+                $dif = strcmp($rec_note, $note_note);
                 if( $dif == 0 ){
-                  $note = $value;
-                  break;
-                // closest match (remove after Castoro)
+                    $change_note = $note;
+                    break;
                 }
-                // else if( abs($dif) < abs($note_dif) ){
-                //   $note_dif = $dif;
-                //   $note = $value;
-                // }
+              }elseif($rec['changekey'] == 'subject') {
+                $rec_note = preg_replace("/[^a-zA-Z0-9]+/", "", $rec["subject"]);
+                $note_note = preg_replace("/[^a-zA-Z0-9]+/", "", $note->Subject);
+                $dif = strcmp($rec_note, $note_note);
+                if( $dif == 0 ){
+                    $change_note = $note;
+                    break;
+                }
+              }
 
-              }
             }
-            // print_r($note);
-            //exit;
-            if( isset($note) ){
-              $rec['noteid'] = $note->NoteID;
-              if( $rec['changekey'] == 'email' ||
-                  $rec['changekey'] == 'customernumber' ){
-                $rec[ $rec['changekey'] ] = $rec['changevalue'];
-                $this->_queue->processWithService(GetContactModel::METHOD_NAME, $rec);
-              }else{
-                $rec[ $rec['changekey'] ] = $rec['changevalue'];
-                $this->_queue->processNextService($rec);
-              }
+
+            if( isset($change_note) ){
+              $rec['noteid'] = $change_note->NoteID;
+              $rec[ $rec['changekey'] ] = $rec['changevalue'];
+              $this->_queue->processNextService($rec);
+              // if( $rec['changekey'] == 'email' ||
+              //     $rec['changekey'] == 'customernumber' ){
+              //   $rec[ $rec['changekey'] ] = $rec['changevalue'];
+              //   $this->_queue->processWithService(GetContactModel::METHOD_NAME, $rec);
+              // }else{
+              //   $rec[ $rec['changekey'] ] = $rec['changevalue'];
+              //   $this->_queue->processNextService($rec);
+              // }
             }else{
               $this->_queue->recordModelError($model, "Unable to find Note");
               $this->_queue->processNextRecord();

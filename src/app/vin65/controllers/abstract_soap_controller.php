@@ -125,6 +125,13 @@
       return isset( $this->_input_form );
     }
 
+    public function out($value, $exit=FALSE){
+      print_r("[[" . $this->getClassName() . "]] ");
+      print_r($value);
+      print_r("<br/>");
+      if( $exit ) exit;
+    }
+
 
     // CALLBACKS
 
