@@ -58,6 +58,47 @@
         'IsPickupAtWinery' => '',
         'PickupLocationCode' => ''
       ];
+
+      $this->_nxt_map = [
+        'CustomerNo' = 0,
+        'Email' = '',
+        'FirstName' = '',
+        'LastName' = '',
+        'AddressType' = '',
+        'AddressID' = '',
+        'Company' = '',
+        'StreetAddress1' = '',
+        'StreetAddress2' = '',
+        'City' = '',
+        'StateProvCode' = '',
+        'ZipPostalCode' = '',
+        'CountryCode' = '',
+        'PhoneNumber' = '',
+        'BillingIsPrimaryShip' = 1,
+        'CustomerType' = '',
+        'Active' = 1,
+        'CreditCardType' = '',
+        'CreditCardNumber' = '',
+        'CreditCardExpDate' = '',
+        'Created' = '',
+        'LastUpd' = '',
+        'ShipAddressType' = '',
+        'ShipAddressID' = '',
+        'ShipCompany' = '',
+        'ShipStreetAddress1' = '',
+        'ShipStreetAddress2' = '',
+        'ShipCity' = '',
+        'ShipStateProvCode' = '',
+        'ShipZipPostalCode' = '',
+        'ShipCountryCode' = '',
+        'ShipPhoneNumber' = '',
+        'CustomField1' = '',
+        'CustomField2' = '',
+        'CustomField3' = '',
+        'CustomField4' = '',
+        'CustomField5' = '',
+        'CustomField6' = '',
+      ]
     }
 
     private function _parseV65Address($v, $n, $ship=FALSE){
@@ -105,31 +146,75 @@
       return $v;
     }
 
-    // public function convertOutputToCsv($data){
-    //   $keys = array_keys($data["Customer"][0]);
-    //   $csv;
-    //   print_r($data["Customer"][0]);exit;
-    //   $csvs = [];
-    //   foreach($data as $rec){
-    //     $csv = [];
-    //     foreach($rec as $k => $v){
-    //       $i = array_search($k, $keys);
-    //       $csv[$i] = $v;
-    //     }
-    //     array_push($csvs, $csv);
-    //
-    //   }
-    //   return $csvs;
-    // }
+    public function convertOutputToCsv($data){
+      $keys = array_keys($data["Customer"][0]);
+      $csv;
+      $csvs = [];
+
+      foreach($data["Customer"] as $rec){
+        $csv = $this->_nxt_map;
+        $csv["BillingIsPrimaryShip"] = 0;
+        $csv[]
+        foreach($rec as $k => $v){
+          if( $k=="Address" ){
+            foreach ($v as $l => $w) {
+              if( $l=="@attributes" ){
+                $csv['AddressType'] = $w['Type'];
+                $csv['AddressID'] = $w['ID'];
+              }elseif( $l=="Name" ){
+                $csv['FirstName'] = $v['FirstName'];
+                $csv['LastName'] = $v['LastName'];
+              }elseif ($l=="PrimaryShip") {
+                $csv["BillingIsPrimaryShip"] = 1;
+              }elseif( array_key_exists($l, $csv) ){
+                $csv[$l] = $w;
+              }
+            }
+          }elseif ($k=="SavedCreditCards") {
+            foreach ($v as $cc) {
+              if( isset($cc['PreferredCreditCard']) ){
+                $csv['CreditCardType'] = $cc['CreditCardType'];
+                $csv['CreditCardNumber'] = $cc['CreditCardNumber'];
+                $csv['CreditCardExpDate'] = $cc['CreditCardExpDate'];
+                break;
+              }
+            }
+          }elseif ( $k=='AdditionalAddresses' ) {
+            foreach ($v as $addr) {
+              if( array_key_exists('PrimaryShip') ){
+                foreach ($addr as $l => $w) {
+                  if( $l=="@attributes" ){
+                    $csv['ShipAddressType'] = $w['Type'];
+                    $csv['ShipAddressID'] = $w['ID'];
+                  }elseif( $l=="Name" ){
+                    $csv['ShipFirstName'] = $v['FirstName'];
+                    $csv['ShipLastName'] = $v['LastName'];
+                  }elseif( array_key_exists($l, $csv) ){
+                    $csv[$l] = $w;
+                  }
+                }
+                break;
+              }
+            }
+          }elseif( $k=='Created' ){
+            $csv[$k] = $v['DateTime']['Date'];
+          }elseif( $k=='LastUpd'){
+            $csv[$k] = $v['DateTime']['Date'];
+          }elseif ( array_key_exists($k, $csv) ) {
+            $csv[$k] = $v;
+          }
+        }
+        array_push($csvs, $csv);
+
+      }
+      return $csvs;
+    }
 
     public function getOutputToV65Array(){
       $o = $this->getOutputToArray();
       $vs = [];
 
-
       foreach ($o['Customer'] as $c) {
-
-        
 
         // CC & CLUB MEMBERS ONLY (used for Bar Z Wines)
         if( !array_key_exists('SavedCreditCards', $c) ){
@@ -180,7 +265,6 @@
             }
           }
         }
-
 
         // CLUB INFO
         $v['ClubName'] = $c['CustomerType'];
