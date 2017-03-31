@@ -20,7 +20,7 @@
 
     function __construct(){
       // override construct
-    
+
       $this->_message = "";
       $this->_description = "Makes sure zipcodes are valid in US and Canada";
       // $this->runTest();
@@ -36,7 +36,7 @@
       $this->_process .= " -> " . $params['column'];
       $i = $params['index'];
       $f = $params['file'];
-      $bad = [];
+      $bads = [];
       $nulls = 0;
       foreach ($f as $value) {
         if( $value[$i] === NULL ){

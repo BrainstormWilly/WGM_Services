@@ -60,45 +60,47 @@
       ];
 
       $this->_nxt_map = [
-        'CustomerNo' = 0,
-        'Email' = '',
-        'FirstName' = '',
-        'LastName' = '',
-        'AddressType' = '',
-        'AddressID' = '',
-        'Company' = '',
-        'StreetAddress1' = '',
-        'StreetAddress2' = '',
-        'City' = '',
-        'StateProvCode' = '',
-        'ZipPostalCode' = '',
-        'CountryCode' = '',
-        'PhoneNumber' = '',
-        'BillingIsPrimaryShip' = 1,
-        'CustomerType' = '',
-        'Active' = 1,
-        'CreditCardType' = '',
-        'CreditCardNumber' = '',
-        'CreditCardExpDate' = '',
-        'Created' = '',
-        'LastUpd' = '',
-        'ShipAddressType' = '',
-        'ShipAddressID' = '',
-        'ShipCompany' = '',
-        'ShipStreetAddress1' = '',
-        'ShipStreetAddress2' = '',
-        'ShipCity' = '',
-        'ShipStateProvCode' = '',
-        'ShipZipPostalCode' = '',
-        'ShipCountryCode' = '',
-        'ShipPhoneNumber' = '',
-        'CustomField1' = '',
-        'CustomField2' = '',
-        'CustomField3' = '',
-        'CustomField4' = '',
-        'CustomField5' = '',
-        'CustomField6' = '',
-      ]
+        'CustomerNo' => 0,
+        'Email' => '',
+        'FirstName' => '',
+        'LastName' => '',
+        'AddressType' => '',
+        'AddressID' => '',
+        'Company' => '',
+        'StreetAddress1' => '',
+        'StreetAddress2' => '',
+        'City' => '',
+        'StateProvCode' => '',
+        'ZipPostalCode' => '',
+        'CountryCode' => '',
+        'PhoneNumber' => '',
+        'BillingIsPrimaryShip' => 0,
+        'CustomerType' => '',
+        'Active' => 0,
+        'CreditCardType' => '',
+        'CreditCardNumber' => '',
+        'CreditCardExpDate' => '',
+        'Created' => '',
+        'LastUpd' => '',
+        'ShipAddressType' => '',
+        'ShipAddressID' => '',
+        'ShipFirstName' => '',
+        'ShipLastName' => '',
+        'ShipCompany' => '',
+        'ShipStreetAddress1' => '',
+        'ShipStreetAddress2' => '',
+        'ShipCity' => '',
+        'ShipStateProvCode' => '',
+        'ShipZipPostalCode' => '',
+        'ShipCountryCode' => '',
+        'ShipPhoneNumber' => '',
+        'CustomField1' => '',
+        'CustomField2' => '',
+        'CustomField3' => '',
+        'CustomField4' => '',
+        'CustomField5' => '',
+        'CustomField6' => '',
+      ];
     }
 
     private function _parseV65Address($v, $n, $ship=FALSE){
@@ -147,14 +149,13 @@
     }
 
     public function convertOutputToCsv($data){
-      $keys = array_keys($data["Customer"][0]);
+      // $keys = array_keys($data["Customer"][0]);
       $csv;
       $csvs = [];
 
       foreach($data["Customer"] as $rec){
         $csv = $this->_nxt_map;
         $csv["BillingIsPrimaryShip"] = 0;
-        $csv[]
         foreach($rec as $k => $v){
           if( $k=="Address" ){
             foreach ($v as $l => $w) {
@@ -162,8 +163,8 @@
                 $csv['AddressType'] = $w['Type'];
                 $csv['AddressID'] = $w['ID'];
               }elseif( $l=="Name" ){
-                $csv['FirstName'] = $v['FirstName'];
-                $csv['LastName'] = $v['LastName'];
+                $csv['FirstName'] = $w['FirstName'];
+                $csv['LastName'] = $w['LastName'];
               }elseif ($l=="PrimaryShip") {
                 $csv["BillingIsPrimaryShip"] = 1;
               }elseif( array_key_exists($l, $csv) ){
@@ -181,16 +182,28 @@
             }
           }elseif ( $k=='AdditionalAddresses' ) {
             foreach ($v as $addr) {
-              if( array_key_exists('PrimaryShip') ){
+              if( array_key_exists('PrimaryShip', $addr) ){
                 foreach ($addr as $l => $w) {
                   if( $l=="@attributes" ){
                     $csv['ShipAddressType'] = $w['Type'];
                     $csv['ShipAddressID'] = $w['ID'];
                   }elseif( $l=="Name" ){
-                    $csv['ShipFirstName'] = $v['FirstName'];
-                    $csv['ShipLastName'] = $v['LastName'];
-                  }elseif( array_key_exists($l, $csv) ){
-                    $csv[$l] = $w;
+                    $csv['ShipFirstName'] = $w['FirstName'];
+                    $csv['ShipLastName'] = $w['LastName'];
+                  }elseif( $l=='StreetAddress1' ){
+                    $csv['ShipStreetAddress1'] = $w;
+                  }elseif( $l=='StreetAddress2' ){
+                    $csv['ShipStreetAddress2'] = $w;
+                  }elseif( $l=='City' ){
+                    $csv['ShipCity'] = $w;
+                  }elseif( $l=='StateProvCode' ){
+                    $csv['ShipStateProvCode'] = $w;
+                  }elseif( $l=='ZipPostalCode' ){
+                    $csv['ShipZipPostalCode'] = $w;
+                  }elseif( $l=='CountryCode' ){
+                    $csv['ShipCountryCode'] = $w;
+                  }elseif( $l=='PhoneNumber' ){
+                    $csv['ShipPhoneNumber'] = $w;
                   }
                 }
                 break;
@@ -200,6 +213,8 @@
             $csv[$k] = $v['DateTime']['Date'];
           }elseif( $k=='LastUpd'){
             $csv[$k] = $v['DateTime']['Date'];
+          }elseif( $k == "Active" ){
+            $csv[$k] = 1;
           }elseif ( array_key_exists($k, $csv) ) {
             $csv[$k] = $v;
           }

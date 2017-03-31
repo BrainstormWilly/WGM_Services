@@ -1,8 +1,8 @@
 <?php namespace wgm\nexternal\models;
 
-  require_once $_ENV['APP_ROOT'] . '/models/csv.php';
+  require_once $_ENV['APP_ROOT'] . '/nexternal/models/csv.php';
 
-  use wgm\models\CSV as CSV;
+  use wgm\nexternal\models\CSV as CSV;
 
   abstract class AbstractXmlModel{
 

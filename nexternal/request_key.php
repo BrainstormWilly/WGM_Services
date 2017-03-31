@@ -5,6 +5,8 @@
 
   session_start();
 
+
+
   if( count($_SESSION) > 0 ){
     if( $_SESSION['service'] == 'Nexternal' ){
       if( !isset($_SESSION['username']) || !isset($_SESSION['password']) || !isset($_SESSION['account']) ){
@@ -22,6 +24,8 @@
     }
   }
 
+
+
   require_once $_ENV['APP_ROOT'] . "/nexternal/models/test_submit_request.php";
   require_once $_ENV['APP_ROOT'] . "/nexternal/models/test_verify_request.php";
 
@@ -33,6 +37,8 @@
   $submit = new TestSubmitRequestModel($_SESSION);
   $submit->processService();
   $submit_result = $submit->getOutputToArray();
+
+
 
   $status = "Sending Verify Request...";
   if( isset($submit_result['TestKey']) ){
