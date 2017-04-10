@@ -16,9 +16,19 @@
     function __construct($session, $version=3){
 
       $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'giftcardid';
+      $vf['name'] = "Gift Card ID";
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
       $vf['id'] = 'cardnumber';
       $vf['name'] = "Gift Card Number";
       $vf['type'] = "integer";
+      array_push($this->_value_fields, $vf);
+
+      $vf = ServiceInputForm::FieldValues();
+      $vf['id'] = 'code';
+      $vf['name'] = "Code";
       array_push($this->_value_fields, $vf);
 
       $vf = ServiceInputForm::FieldValues();

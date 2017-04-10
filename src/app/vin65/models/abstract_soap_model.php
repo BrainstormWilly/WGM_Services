@@ -73,7 +73,7 @@
     ** in __construct. Often overridden.
     */
     public function setValues($values){
-      print_r("Abstract::setValues<br/>");
+
       foreach ($values as $key => $value) {
         $lkey = strtolower($key);
         if( $this->_isRealValue($value) ){
@@ -82,6 +82,7 @@
           }
         }
       }
+      $this->out($this->_values, TRUE);
     }
 
 
@@ -176,7 +177,7 @@
     }
 
     public function out($value){
-      print_r($this->getClassName());
+      print_r("[[" . $this->getClassName() . "]]");
       print_r(": ");
       print_r($value);
       print_r("<br/>");

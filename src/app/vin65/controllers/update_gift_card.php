@@ -30,7 +30,10 @@
             $result = $model->getResult();
             $rec = $this->_queue->getCurrentCsvRecord();
             $rec["giftcardid"] = $result->GiftCard->GiftCardID;
-            $rec["code"] = $result->GiftCard->Code;
+            $rec['cardnumber'] = $result->GiftCard->CardNumber;
+            if( empty($rec['code']) ){
+              $rec["code"] = $result->GiftCard->Code;
+            }
             if( empty($rec["title"]) ){
               $rec["title"] = $result->GiftCard->Title;
             }

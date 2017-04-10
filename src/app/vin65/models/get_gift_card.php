@@ -41,13 +41,24 @@
       parent::__construct($session, $version);
     }
 
+    public function setValues($values){
+      if( array_key_exists("giftcardid", $values) ){
+        $this->_values["GiftCardID"] = $values['giftcardid'];
+      }elseif (array_key_exists("cardnumber", $values)) {
+        $this->_values["CardNumber"] = $values['cardnumber'];
+      }else{
+        $this->_values["Code"] = $values['code'];
+      }
+
+    }
+
     public function getValuesID(){
-      if( isset($this->_values["CardNumber"]) ){
-        return $this->_values["CardNumber"];
-      }elseif( isset($this->_values['Code']) ){
-        return $this->_values['Code'];
-      }elseif( isset($this->_values['GiftCardID']) ){
+      if( isset($this->_values['GiftCardID']) ){
         return $this->_values['GiftCardID'];
+      }elseif( isset($this->_values["CardNumber"]) ){
+        return $this->_values["CardNumber"];
+      }else{
+        return $this->_values['Code'];
       }
 
       return parent::getValuesID();
