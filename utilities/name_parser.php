@@ -5,7 +5,7 @@ if( !file_exists("names_in.csv") ){
 }
 
 $last_name_prefixes = ["st.", "st", "van", "von", "de", "da"];
-$last_name_suffixes = ["jr", "jr.", "sr", "sr.", "i", "ii", "iii", "i i", "i i i", "md", "m.d.", "m. d."];
+$last_name_suffixes = ["jr", "jr.", "sr", "sr.", "i", "ii", "iii", "i i", "i i i", "md", "m.d.", "cmp", "cpm", "ms", "m.s.", "dds", "d.d.s."];
 
 if( file_exists("names_out.csv") ){
   unlink("names_out.csv");
@@ -16,6 +16,8 @@ if (($handle = fopen("names_in.csv", "r")) !== FALSE) {
     while (($data = fgetcsv($handle, 0, ",")) !== FALSE) {
         $parts = explode( " ", $data[0] );
         $cnt = count($parts);
+        print_r($cnt);
+        print_r("<br/>");
         if( $cnt==1 ){
           if( empty(trim($parts[0])) ){
             $parts[0] = "NO";
