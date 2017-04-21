@@ -25,6 +25,12 @@
       // $this->runTest();
     }
 
+    public function getClassName(){
+      $class_ns = get_class($this);
+      $class_bits = explode("\\", $class_ns);
+      return array_pop($class_bits);
+    }
+
     public function getDescription(){
       return $this->_description;
     }
@@ -59,7 +65,15 @@
       return $this->_result === self::SUCCESS;
     }
 
+    public function out($output, $exit=FALSE){
+      print_r("[[" . $this->getClassName() . "]] ");
+      print_r($output);
+      print_r("<br/>");
+      if( $exit ){
+        exit;
+      }
 
+    }
 
   }
 

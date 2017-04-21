@@ -145,6 +145,17 @@
       }
     }
 
+    public function out($output, $exit=FALSE){
+      $str = "[[" . $this->getClassName() . "]] ";
+      if( gettype($output)==="array" ){
+        print_r($str . explode(";", $output));
+      }
+      return print_r($str . $output);
+      if( $exit ){
+        exit;
+      }
+
+    }
 
 
   }
