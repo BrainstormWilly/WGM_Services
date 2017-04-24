@@ -16,6 +16,7 @@
   require_once $_ENV['APP_ROOT'] . '/vin65/validators/tests/club_member_pu_location.php';
   require_once $_ENV['APP_ROOT'] . '/vin65/validators/tests/valid_birthdate.php';
   require_once $_ENV['APP_ROOT'] . '/vin65/validators/tests/valid_club_name.php';
+  require_once $_ENV['APP_ROOT'] . '/vin65/validators/tests/valid_club_status_dates.php';
 
   use \wgm\vin65\validators\tests\ColumnCount as ColumnCount;
   use \wgm\vin65\validators\tests\ColumnCase as ColumnCase;
@@ -32,6 +33,7 @@
   use \wgm\vin65\validators\tests\ClubMemberPULocation as ClubMemberPULocation;
   use \wgm\vin65\validators\tests\ValidBirthdate as ValidBirthdate;
   use \wgm\vin65\validators\tests\ValidClubName as ValidClubName;
+  use \wgm\vin65\validators\tests\ValidClubStatusDates as ValidClubStatusDates;
 
   // foreach (scandir(dirname(__FILE__)) as $filename) {
   //   $path = dirname(__FILE__) . '/' . $filename;
@@ -155,6 +157,8 @@
       $this->_tests["clubmemberpulocation"] =  new ClubMemberPULocation();
       $this->_tests["validbirthdate"] =  new ValidBirthdate();
       $this->_tests["validclubname"] =  new ValidClubName();
+      $this->_tests["validclubstatusdates"] =  new ValidClubStatusDates();
+
 
       $params = [
         "table" => count($this->_tables["club_members"]),
@@ -308,6 +312,17 @@
         "file" => $this->_reader->getRecords()
       ];
       $test = $this->_tests["validclubname"];
+      $test->runTest($params);
+      array_push( $this->_results, $test->getResult() );
+
+      $params = [
+        'signup_date_index' => array_search("SignupDate", $this->_reader->getHeaders()),
+        'on_hold_start_date_index' => array_search("OnHoldStartDate", $this->_reader->getHeaders()),
+        'on_hold_until_date_index' => array_search("OnHoldUntilDate", $this->_reader->getHeaders()),
+        'cancel_date_index' => array_search("CancelDate", $this->_reader->getHeaders()),
+        "file" => $this->_reader->getRecords()
+      ];
+      $test = $this->_tests["validclubstatusdates"];
       $test->runTest($params);
       array_push( $this->_results, $test->getResult() );
 
