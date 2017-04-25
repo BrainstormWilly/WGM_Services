@@ -326,6 +326,35 @@
       $test->runTest($params);
       array_push( $this->_results, $test->getResult() );
 
+      $params = [
+        'column' => "ShipBirthDate",
+        'index' => array_search("ShipBirthDate", $this->_reader->getHeaders()),
+        "file" => $this->_reader->getRecords()
+      ];
+      $test = $this->_tests["validbirthdate"];
+      $test->runTest($params);
+      array_push( $this->_results, $test->getResult() );
+
+      $params = [
+        'column' => "ShipZipCode",
+        'index' => array_search("ShipZipCode", $this->_reader->getHeaders()),
+        "file" => $this->_reader->getRecords()
+      ];
+      $test = $this->_tests["validzip"];
+      $test->runTest($params);
+      array_push( $this->_results, $test->getResult() );
+
+      $params = [
+        'column' => "ShipEmail",
+        'index' => array_search("ShipEmail", $this->_reader->getHeaders()),
+        "file" => $this->_reader->getRecords()
+      ];
+      $test = $this->_tests["validemail"];
+      $test->runTest($params);
+      array_push( $this->_results, $test->getResult() );
+
       $this->setState( self::STATE_TESTS_COMPLETE );
+
+
     }
   }
