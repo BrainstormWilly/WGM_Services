@@ -12,14 +12,15 @@
     }
 
     public function runTest($params = []){
-      $this->_process = "Column Case";
-      if( !isset($params['table']) || !isset($params['file']) ){
+      if( !isset($params['table_name']) || !isset($params['table']) || !isset($params['file']) ){
         $this->_message = 'Incorrect parameters';
         $this->_result = self::ERROR;
         return;
       }
+
       $tc = $params['table'];
       $fc = $params['file'];
+      $this->_process = "Column Case -> " . $params['table_name'];
       $this->_message = '';
       foreach ($tc as $value) {
         if( !in_array($value, $fc) ){

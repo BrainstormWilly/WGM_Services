@@ -31,7 +31,9 @@
             $nulls += 1;
             continue;
           }
-          array_push($this->_locations, $value[$li]);
+          if( !in_array($value[$li], $this->_locations) ){
+            array_push($this->_locations, $value[$li]);
+          }
         }
       }
       if( $nulls === 0 ){

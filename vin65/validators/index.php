@@ -35,6 +35,7 @@ require_once "../../src/config/bootstrap.php";
               <div class="list-group">
                 <a class="list-group-item" href='upload_contact.php'>Customer Importer<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
                 <a class="list-group-item" href='club_member_importer.php'>Club Member Importer<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
+                <a class="list-group-item" href='order_history_importer.php'>Order History Importer<span class="glyphicon glyphicon-chevron-right pull-right"></span></a>
               </div>
             </div>
           </div>

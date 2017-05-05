@@ -2,6 +2,7 @@
 
   require_once $_ENV['APP_ROOT'] . '/models/excel.php';
 
+
   use \ReflectionClass as ReflectionClass;
   use \wgm\models\Excel as Excel;
 
@@ -15,7 +16,7 @@
 
     protected $_db;
     protected $_tables = [];
-    protected $_sql = "";
+    protected $_sql = [];
     protected $_state = self::STATE_READY;
     protected $_results = [];
     protected $_tests = [];
@@ -57,16 +58,27 @@
 
     public function createTables(){
       $this->dropTables();
-      if( $this->_db->query($this->_sql) ){
-        return true;
+      foreach ($this->_sql as $value) {
+        // $this->out($value, true);
+        if( !$this->_db->query($value) ){
+          return false;
+        }
       }
-      return false;
+      // if( $this->_db->query($this->_sql) ){
+      //   return true;
+      // }
+      return true;
     }
 
     public function dropTables(){
       foreach ($this->_tables as $key => $value) {
         $this->_db->query( "DROP TABLE " . $key );
       }
+    }
+
+    public function insertRecord($rec){
+      $this->out($rec, true);
+      // $sql = $this->_insert_sql . "(" . ")";
     }
 
     public function csvForm(){
@@ -133,9 +145,14 @@
           $this->_status = "File uploaded successfully.</br>";
           if( $this->createTables() ){
             $this->_status .= "Database table(s) for " . implode(",", array_keys($this->_tables)) . " created.<br>";
+            // while( $this->_reader->hasNextRecord() ){
+            //   $rec = $this->_reader->getNextRecord();
+            //
+            // }
+            // $this->out($this->_reader->getNextRecord(), true);
             $this->_state = self::STATE_UPLOAD_COMPLETE;
           }else{
-            $this->_status .= "Unable to create database tables.</br>";
+            $this->_status .= "Unable to create database tables.</br>" . $this->_db->error;
           }
         }else{
           $this->_status = "Invalid file type. Requires .xls, .xlsx, or .csv.</br>";
@@ -146,15 +163,12 @@
     }
 
     public function out($output, $exit=FALSE){
-      $str = "[[" . $this->getClassName() . "]] ";
-      if( gettype($output)==="array" ){
-        print_r($str . explode(";", $output));
-      }
-      return print_r($str . $output);
+      print_r("[[" . $this->getClassName() . "]] ");
+      print_r($output);
+      print_r("<br/>");
       if( $exit ){
         exit;
       }
-
     }
 
 

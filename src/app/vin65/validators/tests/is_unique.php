@@ -20,7 +20,6 @@
         return;
       }
       $this->_process .= " -> " . $params['column'];
-      $c = $params['column'];
       $i = $params['index'];
       $f = $params['file'];
       $vals = [];

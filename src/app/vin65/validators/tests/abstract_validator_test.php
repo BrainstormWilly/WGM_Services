@@ -1,8 +1,10 @@
 <?php namespace wgm\vin65\validators\tests;
 
   require_once $_ENV['APP_ROOT'] . '/vin65/validators/result_model.php';
+  require_once $_ENV['APP_ROOT'] . '/vin65/validators/pluralize.php';
 
   use \wgm\vin65\validators\ResultModel as ResultModel;
+  use \wgm\vin65\validators\Pluralize as Pluralize;
 
 
   abstract class AbstractValidatorTest{
@@ -16,13 +18,16 @@
     protected $_message;
     protected $_description;
     protected $_result = 1;
+    protected $_db;
+    protected $_pluralizer;
 
     function __construct(){
-      // override construct
+
       $this->_process = "Invalid Test";
       $this->_message = "Abstract test not overriden";
       $this->_description = "Invalid Test description";
-      // $this->runTest();
+      $this->_pluralizer = new Pluralize();
+      // override construct
     }
 
     public function getClassName(){
@@ -59,6 +64,10 @@
     public function runTest($params = []){
       $this->_process = self::$PROCESS;
       // override;
+    }
+
+    public function pluralize($cnt, $word){
+      return $this->_pluralizer->replace($cnt, $word);
     }
 
     public function success(){

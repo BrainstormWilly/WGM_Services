@@ -6,6 +6,7 @@
   require_once $_ENV['APP_ROOT'] . '/vin65/validators/tests/no_nulls.php';
   require_once $_ENV['APP_ROOT'] . '/vin65/validators/tests/valid_email.php';
   require_once $_ENV['APP_ROOT'] . '/vin65/validators/tests/is_integer.php';
+  require_once $_ENV['APP_ROOT'] . '/vin65/validators/tests/is_unique.php';
   require_once $_ENV['APP_ROOT'] . '/vin65/validators/tests/valid_zip.php';
   require_once $_ENV['APP_ROOT'] . '/vin65/validators/tests/valid_cc_type.php';
   require_once $_ENV['APP_ROOT'] . '/vin65/validators/tests/valid_cc_number.php';
@@ -47,7 +48,7 @@
     function __construct($db){
       parent::__construct($db);
 
-      $this->_sql = "
+      $this->_sql["club_members"] = "
         CREATE TABLE club_members(
           id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
           CustomerNumber INT(6) UNSIGNED,
@@ -169,6 +170,7 @@
       array_push( $this->_results, $test->getResult() );
 
       $params = [
+        "table_name" => "ClubMembers",
         "table" => $this->_tables["club_members"],
         "file" => $this->_reader->getHeaders()
       ];

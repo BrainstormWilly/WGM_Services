@@ -16,7 +16,6 @@
       // override construct
       $this->_message = "";
       $this->_description = "Makes sure credit card numbers are valid.";
-
     }
 
     public function runTest($params = []){
@@ -38,17 +37,18 @@
           $nulls += 1;
           continue;
         }
-        if( array_key_exists($value[$ti], $this->_patterns) && preg_match("/" . $this->_patterns[$value[$ti]]."/i", $value[$ni]) ){
-          continue;
-        }
-        if( $value[$ti]=="MasterCard" && ($value[$ni]=="'5454545454545454" || $value[$ni]=="5454545454545454") ){
+        if( $value[$ti]=="MasterCard" && ($value[$ni]=="'5454545454545454" || $value[$ni]=="5454545454545454" || $value[$ni]==5454545454545454 ) ){
           $fakes += 1;
           continue;
         }
+        if( array_key_exists($value[$ti], $this->_patterns) && preg_match("/" . $this->_patterns[$value[$ti]]."/i", $value[$ni]) ){
+          continue;
+        }
+
         array_push($bads, $value[$ni]);
       }
       if( empty($bads) && empty($nulls) ){
-        $this->_message = "All " . count($f) . " records have valid credit card numbers with " . $fakes . " fakes and " . $nulls . "NULL values.";
+        $this->_message = "All " . count($f) . " records have valid credit card numbers with " . $fakes . " fakes and " . $nulls . " NULL values.";
         $this->_result = self::SUCCESS;
       }else{
         $this->message = '';
