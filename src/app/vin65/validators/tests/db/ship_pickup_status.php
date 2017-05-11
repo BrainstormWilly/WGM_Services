@@ -46,7 +46,7 @@
           $pu . " 'PickedUp' " . $this->pluralize($pu,"value");
         $this->_result = self::SUCCESS;
       }else{
-        $this->_message = $bad . " " . 
+        $this->_message = $bad . " " .
           $this->pluralize($q->num_rows,"record") . " " .
           $this->pluralize($q->num_rows,"is not") . " set to 'Shipped' or 'PickedUp'.";
         $this->_result = self::ERROR;

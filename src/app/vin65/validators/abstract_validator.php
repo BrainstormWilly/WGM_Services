@@ -28,6 +28,23 @@
       $this->_reader = new Excel();
     }
 
+    public function dateFormatter($date_str, $is_birthdate=false){
+      $parts = explode("/", $date_str);
+      if( $parts[2] < 1900 ){
+        if( $parts[2]>69 ){
+          $date = date_create_from_format("m/d/y", $date_str);
+        }elseif ($is_birthdate) {
+          $parts[2] = "19" . $parts[2];
+          $date = date_create_from_format("m/d/Y", implode("/", $parts));
+        }else{
+          $date = date_create_from_format("m/d/y", implode("/", $parts));
+        }
+      }else{
+        $date = date_create_from_format("m/d/Y", implode("/", $parts));
+      }
+      return date_format($date, 'Y-m-d');
+    }
+
     public function getClassName(){
       $class_ns = get_class($this);
       $class_bits = explode("\\", $class_ns);

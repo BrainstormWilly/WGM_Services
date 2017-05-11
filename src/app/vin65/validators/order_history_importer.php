@@ -224,19 +224,18 @@
         for($i=0; $i<$recs; $i++){
           // guard against blank columns
           if( $i<$this->_fields ){
-            switch ($i) {
-              case 1:
-              case 4:
-              case 16:
-              case 18:
-              case 30:
-                if( $rec[$i]!==NULL ){
-                  $ts = date_create_from_format("m/d/Y", $rec[$i]);
-                  $rec[$i] = date_format($ts, 'Y-m-d');
-                }
-                break;
-              default:
-                break;
+            if( $rec[$i] !== NULL ){
+              switch ($i) {
+                case 4:
+                case 18:
+                  $rec[$i] = $this->dateFormatter($rec[$i], true);
+                  break;
+                case 1:
+                case 16:
+                case 18:
+                case 30:
+                  $rec[$i] = $this->dateFormatter($rec[$i]);
+              }
             }
             if( $i==0 ){
               $stm_order_params[] = & $rec[$i];

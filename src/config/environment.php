@@ -17,20 +17,20 @@ if( $_ENV['APP_ENV'] === 'dev' ){
   $_ENV['APP_INCLUDES'] = $_ENV['SERVICES_ROOT'] . "/includes";
   $_ENV['TYPES_ROOT'] = $_ENV['SERVICES_ROOT'] . "/types";
   $_ENV['UPLOADS_PATH'] = "./uploads/";
-  $_ENV['APP_HOST'] = "/services";
+  $_ENV['APP_HOST'] = "/";
 
   $_ENV['DB_HOST'] = 'localhost';
   $_ENV['DB_USERNAME'] = 'root';
   $_ENV['DB_PASSWORD'] = 'ok4root';
   $_ENV['DB_NAME'] = 'wgm';
 
-  $_ENV['BLOYAL_HOST'] = "/services/bloyal";
+  $_ENV['BLOYAL_HOST'] = "/bloyal";
   $_ENV['BLOYAL_INCLUDES'] = $_ENV['SERVICES_ROOT'] . "/bloyal/includes";
 
-  $_ENV['NEX_HOST'] = "/services/nexternal";
+  $_ENV['NEX_HOST'] = "/nexternal";
   $_ENV['NEX_INCLUDES'] =  $_ENV['SERVICES_ROOT'] . "/nexternal/includes";
 
-  $_ENV['V65_HOST'] = "/services/vin65";
+  $_ENV['V65_HOST'] = "/vin65";
   $_ENV['V65_INCLUDES'] = $_ENV['SERVICES_ROOT'] . "/vin65/includes";
 }else if($_ENV['APP_ENV'] === 'syn'){
   $_ENV['SERVICES_ROOT'] = dirname(dirname(__DIR__));

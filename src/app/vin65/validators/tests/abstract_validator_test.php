@@ -30,6 +30,8 @@
       // override construct
     }
 
+    
+
     public function getClassName(){
       $class_ns = get_class($this);
       $class_bits = explode("\\", $class_ns);
