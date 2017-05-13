@@ -1,8 +1,11 @@
 <?php namespace wgm\models;
 
+  require_once $_ENV['APP_ROOT'] . "/abstract_base.php";
   require_once $_ENV['APP_ROOT'] . "/models/i_service_data.php";
 
-  abstract class AbstractServiceData implements IServiceData{
+  use \wgm\AbstractBase as AbstractBase;
+
+  abstract class AbstractServiceData extends AbstractBase implements IServiceData{
 
     protected $_display_limit = 50;   // max amount of records to show on screen
     protected $_field_cnt = 0;        // the amount of fields/keys in a record
@@ -173,6 +176,10 @@
       }else{
         $perm = 'a';
       }
+
+      $this->out(dirname(dirname(__DIR__)));
+      $this->out($file, true);
+
       if ( ($handle = fopen($file, $perm)) !== FALSE) {
         if( $include_headers && !empty($this->_headers) ){
           fputcsv($handle, $this->_headers);
