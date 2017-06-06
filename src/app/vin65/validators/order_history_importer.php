@@ -365,6 +365,19 @@
         $test->runTest($params);
         array_push( $this->_results, $test->getResult() );
 
+        $params = [
+          "subtotal_column" => 'OrderSubtotal',
+          "shipping_column" => 'OrderShipping',
+          "handling_column" => 'OrderHandling',
+          "tax_column" => 'OrderTax',
+          "item_quantity_column" => 'ItemQuantity',
+          "item_price_column" => 'ItemUnitPrice',
+          "table_name" => "orders"
+        ];
+        $test = $this->_tests["shippickupstatus"];
+        $test->runTest($params);
+        array_push( $this->_results, $test->getResult() );
+
       }
 
       $this->setState( self::STATE_TESTS_COMPLETE );
