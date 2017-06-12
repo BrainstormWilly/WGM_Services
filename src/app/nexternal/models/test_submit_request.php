@@ -4,6 +4,7 @@
 
   class TestSubmitRequest extends AbstractXmlModel{
 
+
     function __construct($session){
       $this->_url = "https://www.nexternal.com/shared/xml/testsubmit.rest";
       $this->_input = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" .

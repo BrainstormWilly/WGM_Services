@@ -7,12 +7,13 @@
 
     function __construct($session, $page=1){
       parent::__construct($session, $page);
+      // print_r($session['key']);exit;
       $this->_url = "https://www.nexternal.com/shared/xml/customerquery.rest";
       $this->_input = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" .
                         "<CustomerQueryRequest>" .
                            "<Credentials>" .
                             "<AccountName>{$session['account']}</AccountName>" .
-                            "<Key>{$session['key']}</Key>" .
+                            "<Key>Y;d7DK%ke4IF`eW,q=.(</Key>" .
                            "</Credentials>" .
                            "<Page>{$page}</Page>" .
                         "</CustomerQueryRequest>";

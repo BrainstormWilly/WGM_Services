@@ -4,7 +4,10 @@
 
   class TestVerifyRequest extends AbstractXmlModel{
 
+
+
     function __construct($session){
+
       $this->_url = "https://www.nexternal.com/shared/xml/testverify.rest";
       $this->_input = "<?xml version=\"1.0\" encoding=\"utf-8\" ?>" .
                         "<TestVerifyRequest>" .
@@ -14,7 +17,7 @@
                             "<Password>{$session['password']}</Password>" .
                           "</Credentials>" .
                         "</TestVerifyRequest>";
-      
+
     }
 
 

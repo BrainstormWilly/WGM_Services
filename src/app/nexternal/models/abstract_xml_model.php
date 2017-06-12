@@ -42,7 +42,7 @@
       curl_close($ch);
       //convert the XML result into array
       $this->_output = simplexml_load_string($data);
-
+      // print_r($this->_output);exit;
     }
 
     public function writeOutputToCsv($file, $data, $page=1){
@@ -86,11 +86,13 @@
     }
 
     public function hasErrors(){
-      return array_key_exists('Error', $this->_output);
+      return isset($this->_output->Error);
+      // return array_key_exists('Error', $this->_output);
     }
 
     public function hasNextPage(){
-      return array_key_exists("NextPage", $this->_output);
+      return isset($this->_output->NextPage);
+      // return array_key_exists("NextPage", $this->_output);
     }
 
   }
